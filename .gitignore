@@ -1,0 +1,8 @@
+*.pyc
+.idea/
+.project
+.pydevproject
+.directory
+.vscode
+/tg_bot/config.py
+/tempscript.sh
