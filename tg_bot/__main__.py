@@ -30,6 +30,8 @@ I also have a news channel, @MarieNews for announcements on new features, downti
 
 You can find the list of available commands with /help.
 You can also read my documentation at [karatek.net](https://karatek.net/Projects/Nemesisdocs/).
+
+By using Nemesis, you agree to the privacy policies of Karatek Software Development, located at [karatek.net](https://karatek.net/Legal/privacy/).
 """
 
 HELP_STRINGS = """
