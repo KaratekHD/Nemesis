@@ -109,7 +109,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                                           mention_html(user_member.user.id, user_member.user.first_name))
 
     except BadRequest:
-        message.reply_text("Could not demote. I might not be admin, or the admin status was appointed by another "
+        message.reply_text("Could not demote. I might not be an admin, or the admin status was appointed by another "
                            "user, so I can't act upon them!")
         return ""
 
