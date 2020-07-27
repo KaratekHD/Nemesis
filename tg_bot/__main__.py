@@ -72,7 +72,7 @@ for module_name in ALL_MODULES:
     if not imported_module.__mod_name__.lower() in IMPORTED:
         IMPORTED[imported_module.__mod_name__.lower()] = imported_module
     else:
-        raise Exception("Can't have two modules with the same name! Please change one")
+        raise Exception("Can't have two modules with the same name! Please change one") # NO_TOO_MODULES
 
     if hasattr(imported_module, "__help__") and imported_module.__help__:
         HELPABLE[imported_module.__mod_name__.lower()] = imported_module
@@ -117,7 +117,7 @@ def send_help(chat_id, text, keyboard=None):
 def test(bot: Bot, update: Update):
     # pprint(eval(str(update)))
     # update.effective_message.reply_text("Hola tester! _I_ *have* `markdown`", parse_mode=ParseMode.MARKDOWN)
-    update.effective_message.reply_text("This person edited a message")
+    update.effective_message.reply_text("This person edited a message") # EDITED_MESSAGE
     print(update.effective_message)
 
 
@@ -146,7 +146,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN)
     else:
-        update.effective_message.reply_text("Yo, whadup?")
+        update.effective_message.reply_text("Yo, whadup?") # START_IN_GROUP
 
 
 # for test purposes
@@ -189,7 +189,7 @@ def help_button(bot: Bot, update: Update):
         if mod_match:
             module = mod_match.group(1)
             text = "Here is the help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
-                   + HELPABLE[module].__help__
+                   + HELPABLE[module].__help__ # HELP_FOR_MODULE
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
@@ -218,14 +218,14 @@ def help_button(bot: Bot, update: Update):
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not modified":
+        if excp.message == "Message is not modified": # ERR_MSG_NOT_MODIFIED
             pass
-        elif excp.message == "Query_id_invalid":
+        elif excp.message == "Query_id_invalid": # ERR_QUERY_ID_INVALID
             pass
-        elif excp.message == "Message can't be deleted":
+        elif excp.message == "Message can't be deleted": # ERR_MSG_CANT_DELETE
             pass
         else:
-            LOGGER.exception("Exception in help buttons. %s", str(query.data))
+            LOGGER.exception("Exception in help buttons. %s", str(query.data)) # ERR_EXCP_HELP_BUTTONS
 
 
 @run_async
