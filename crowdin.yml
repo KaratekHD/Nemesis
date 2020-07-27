@@ -1,0 +1,3 @@
+files:
+  - source: /tg_bot/strings/en/*.py
+    translation: /tg_bot/strings/%two_letters_code%/%original_file_name%
