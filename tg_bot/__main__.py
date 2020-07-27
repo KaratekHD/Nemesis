@@ -259,11 +259,11 @@ def send_settings(chat_id, user_id, user=False):
             settings = "\n\n".join(
                 "*{}*:\n{}".format(mod.__mod_name__, mod.__user_settings__(user_id)) for mod in USER_SETTINGS.values())
             dispatcher.bot.send_message(user_id, "These are your current settings:" + "\n\n" + settings,
-                                        parse_mode=ParseMode.MARKDOWN)
+                                        parse_mode=ParseMode.MARKDOWN) # CURRENT_SETTINGS
 
         else:
             dispatcher.bot.send_message(user_id, "Seems like there aren't any user specific settings available :'(",
-                                        parse_mode=ParseMode.MARKDOWN)
+                                        parse_mode=ParseMode.MARKDOWN) # ERR_NO_USER_SETTINGS
 
     else:
         if CHAT_SETTINGS:
@@ -272,7 +272,7 @@ def send_settings(chat_id, user_id, user=False):
                                         text="Which module would you like to check {}'s settings for?".format(
                                             chat_name),
                                         reply_markup=InlineKeyboardMarkup(
-                                            paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)))
+                                            paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id))) # Q_SETTINGS_WHICH_MODULE
         else:
             dispatcher.bot.send_message(user_id, "Seems like there aren't any chat settings available :'(\nSend this "
                                                  "in a group chat you're admin in to find its current settings!",
@@ -295,7 +295,7 @@ def settings_button(bot: Bot, update: Update):
             text = "*{}* has the following settings for the *{}* module:\n\n".format(escape_markdown(chat.title),
                                                                                      CHAT_SETTINGS[
                                                                                          module].__mod_name__) + \
-                   CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
+                   CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id) # MODULE_SETTINGS
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
@@ -310,7 +310,7 @@ def settings_button(bot: Bot, update: Update):
                                      "you're interested in.".format(chat.title),
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(curr_page - 1, CHAT_SETTINGS, "stngs",
-                                                          chat=chat_id)))
+                                                          chat=chat_id))) # LOT_OF_SETTINGS
 
         elif next_match:
             chat_id = next_match.group(1)
@@ -320,7 +320,7 @@ def settings_button(bot: Bot, update: Update):
                                      "you're interested in.".format(chat.title),
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(next_page + 1, CHAT_SETTINGS, "stngs",
-                                                          chat=chat_id)))
+                                                          chat=chat_id))) # LOT_OF_SETTINGS
 
         elif back_match:
             chat_id = back_match.group(1)
@@ -329,21 +329,20 @@ def settings_button(bot: Bot, update: Update):
                                           "you're interested in.".format(escape_markdown(chat.title)),
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, CHAT_SETTINGS, "stngs",
-                                                                                        chat=chat_id)))
+                                                                                        chat=chat_id))) # LOT_OF_SETTINGS
 
         # ensure no spinny white circle
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not modified":
+        if excp.message == "Message is not modified": # ERR_MSG_NOT_MODIFIED
             pass
-        elif excp.message == "Query_id_invalid":
+        elif excp.message == "Query_id_invalid": # ERR_QUERY_ID_INVALID
             pass
-        elif excp.message == "Message can't be deleted":
+        elif excp.message == "Message can't be deleted": # ERR_MSG_CANT_DELETE
             pass
         else:
-            LOGGER.exception("Exception in settings buttons. %s", str(query.data))
-
+            LOGGER.exception("Exception in settings buttons. %s", str(query.data)) # ERR_EXCP_SETTINGS_BUTTONS
 
 @run_async
 def get_settings(bot: Bot, update: Update):
@@ -355,14 +354,14 @@ def get_settings(bot: Bot, update: Update):
     # ONLY send settings in PM
     if chat.type != chat.PRIVATE:
         if is_user_admin(chat, user.id):
-            text = "Click here to get this chat's settings, as well as yours."
+            text = "Click here to get this chat's settings, as well as yours." # CLICK_HERE_FOR_SETTINGS
             msg.reply_text(text,
                            reply_markup=InlineKeyboardMarkup(
                                [[InlineKeyboardButton(text="Settings",
                                                       url="t.me/{}?start=stngs_{}".format(
-                                                          bot.username, chat.id))]]))
+                                                          bot.username, chat.id))]])) # SETTINGS
         else:
-            text = "Click here to check your settings."
+            text = "Click here to check your settings." # YOUR_SETTINGS
 
     else:
         send_settings(chat.id, user.id, True)
@@ -378,11 +377,11 @@ def migrate_chats(bot: Bot, update: Update):
     else:
         return
 
-    LOGGER.info("Migrating from %s, to %s", str(old_chat), str(new_chat))
+    LOGGER.info("Migrating from %s, to %s", str(old_chat), str(new_chat)) # MIGRATING
     for mod in MIGRATEABLE:
         mod.__migrate__(old_chat, new_chat)
 
-    LOGGER.info("Successfully migrated!")
+    LOGGER.info("Successfully migrated!") # MIGRATING_SUCCESS
     raise DispatcherHandlerStop
 
 
@@ -412,7 +411,7 @@ def main():
     Dispatcher.process_update = process_update
 
     if WEBHOOK:
-        LOGGER.info("Using webhooks.")
+        LOGGER.info("Using webhooks.") # WEBHOOKS
         updater.start_webhook(listen="127.0.0.1",
                               port=PORT,
                               url_path=TOKEN)
@@ -424,7 +423,7 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN)
 
     else:
-        LOGGER.info("Using long polling.")
+        LOGGER.info("Using long polling.") # LONG_POLLING
         updater.start_polling(timeout=15, read_latency=4)
 
     updater.idle()
@@ -440,7 +439,7 @@ def process_update(self, update):
         try:
             self.dispatch_error(None, update)
         except Exception:
-            self.logger.exception('An uncaught error was raised while handling the error')
+            self.logger.exception('An uncaught error was raised while handling the error') # ERR_UNKNOWN
         return
 
     now = datetime.datetime.utcnow()
@@ -465,26 +464,26 @@ def process_update(self, update):
 
         # Stop processing with any other handler.
         except DispatcherHandlerStop:
-            self.logger.debug('Stopping further handlers due to DispatcherHandlerStop')
+            self.logger.debug('Stopping further handlers due to DispatcherHandlerStop') # ERR_DISPATCHERHANDLERSTOP
             break
 
         # Dispatch any error.
         except TelegramError as te:
-            self.logger.warning('A TelegramError was raised while processing the Update')
+            self.logger.warning('A TelegramError was raised while processing the Update') # ERR_TELEGRAM
 
             try:
                 self.dispatch_error(update, te)
             except DispatcherHandlerStop:
-                self.logger.debug('Error handler stopped further handlers')
+                self.logger.debug('Error handler stopped further handlers') # ERR_ERRHANDLER
                 break
             except Exception:
-                self.logger.exception('An uncaught error was raised while handling the error')
+                self.logger.exception('An uncaught error was raised while handling the error') # ERR_UNKNOWN
 
         # Errors should not stop the thread.
         except Exception:
-            self.logger.exception('An uncaught error was raised while processing the update')
+            self.logger.exception('An uncaught error was raised while processing the update') # ERR_UPDATE_UNKNOWN
 
 
 if __name__ == '__main__':
-    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
+    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES)) # MODULES_LOADED
     main()
