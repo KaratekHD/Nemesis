@@ -34,7 +34,7 @@ And the following:
 
 HELP_STRINGS_PART_2 = "\nAll commands can either be used with / or !.\n"
 
-NO_TOO_MODULES = "Can't have two modules with the same name! Please change one"
+NO_TWO_MODULES = "Can't have two modules with the same name! Please change one"
 
 EDITED_MESSAGE = "This person edited a message"
 
