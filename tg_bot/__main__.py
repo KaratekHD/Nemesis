@@ -240,13 +240,13 @@ def get_help(bot: Bot, update: Update):
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="Help",
                                                                        url="t.me/{}?start=help".format(
-                                                                           bot.username))]]))
+                                                                           bot.username))]])) # PM_FOR_HELP and PM_FOR_HELP_BUTTON
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
         text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
-               + HELPABLE[module].__help__
+               + HELPABLE[module].__help__ # HELP_FOR_MODULE_AVAILABLE
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
     else:

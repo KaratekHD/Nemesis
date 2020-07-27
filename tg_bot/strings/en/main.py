@@ -42,3 +42,19 @@ START_IN_GROUP = "Yo, whadup?"
 
 HELP_FOR_MODULE = "Here is the help for the *{}* module:\n"
 
+ERR_MSG_NOT_MODIFIED = "Message is not modified"
+
+ERR_QUERY_ID_INVALID = "Query_id_invalid"
+
+ERR_MSG_CANT_DELETE = "Message can't be deleted"
+
+ERR_EXCP_HELP_BUTTONS = "Exception in help buttons. %s"
+
+PM_FOR_HELP = "Contact me in PM to get the list of possible commands."
+
+PM_FOR_HELP_BUTTON = "Help"
+
+HELP_FOR_MODULE_AVAILABLE = "Here is the available help for the *{}* module:\n"
+
+
+
