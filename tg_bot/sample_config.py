@@ -23,6 +23,7 @@ class Config(object):
     NO_LOAD = ['translation', 'rss', 'sed']
     WEBHOOK = False
     URL = None
+    DEFAULT_LANG = "en"
 
     # OPTIONAL
     SUDO_USERS = []  # List of id's (not usernames) for users which have sudo access to the bot.
