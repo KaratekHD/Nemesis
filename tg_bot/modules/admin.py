@@ -141,7 +141,7 @@ def pin(bot: Bot, update: Update, args: List[str]) -> str:
                 raise
         return "<b>{}:</b>" \
                "\n#PINNED" \
-               "\n<b>Admin:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name))
+               "\n<b>Admin:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name)) # PINNED_HTML
 
     return ""
 
@@ -166,7 +166,7 @@ def unpin(bot: Bot, update: Update) -> str:
     return "<b>{}:</b>" \
            "\n#UNPINNED" \
            "\n<b>Admin:</b> {}".format(html.escape(chat.title),
-                                       mention_html(user.id, user.first_name))
+                                       mention_html(user.id, user.first_name)) # UNPINNED_HTML
 
 
 @run_async
@@ -182,15 +182,15 @@ def invite(bot: Bot, update: Update):
             invitelink = bot.exportChatInviteLink(chat.id)
             update.effective_message.reply_text(invitelink)
         else:
-            update.effective_message.reply_text("I don't have access to the invite link, try changing my permissions!")
+            update.effective_message.reply_text("I don't have access to the invite link, try changing my permissions!") # ERR_NO_PERMS_INVITELINK
     else:
-        update.effective_message.reply_text("I can only give you invite links for supergroups and channels, sorry!")
+        update.effective_message.reply_text("I can only give you invite links for supergroups and channels, sorry!") # ERR_NO_SUPERGROUP
 
 
 @run_async
 def adminlist(bot: Bot, update: Update):
     administrators = update.effective_chat.get_administrators()
-    text = "Admins in *{}*:".format(update.effective_chat.title or "this chat")
+    text = "Admins in *{}*:".format(update.effective_chat.title or "this chat") # ADMINS_IN and THIS_CHAT
     for admin in administrators:
         user = admin.user
         name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
@@ -203,7 +203,7 @@ def adminlist(bot: Bot, update: Update):
 
 def __chat_settings__(chat_id, user_id):
     return "You are *admin*: `{}`".format(
-        dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator"))
+        dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator")) # YOU_ADMIN
 
 
 __help__ = """
@@ -215,9 +215,9 @@ __help__ = """
  - /invitelink: gets invitelink
  - /promote: promotes the user replied to
  - /demote: demotes the user replied to
-"""
+""" # HELP
 
-__mod_name__ = "Admin"
+__mod_name__ = "Admin" # MODULE_NAME
 
 PIN_HANDLER = CommandHandler("pin", pin, pass_args=True, filters=Filters.group)
 UNPIN_HANDLER = CommandHandler("unpin", unpin, filters=Filters.group)
