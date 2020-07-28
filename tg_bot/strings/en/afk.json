@@ -1,0 +1,8 @@
+{
+  "MSG_IS_AFK_NOW" : "{} is now AFK!",
+  "MSG_IS_NOT_AFK" : "{} is no longer AFK!",
+  "MSG_IS_AFK" : "{} is AFK!",
+  "MSG_IS_AFK_REASON" : "{} is AFK! says its because of:\n{}",
+  "HELP" : " - /afk <reason>: mark yourself as AFK.\n - brb <reason>: same as the afk command - but not a command.\n\nWhen marked as AFK, any mentions will be replied to with a message to say you're not available!",
+  "MODULE_NAME" : "AFK"
+}
