@@ -1,4 +1,7 @@
 # Nemesis
+
+[![Crowdin](https://badges.crowdin.net/karatekbot/localized.svg)](https://translate.karatek.systems/project/karatekbot)
+
 A modular telegram Python bot running on python3 with an sqlalchemy database. This is a fork of [PaulSonOfLars tgbot](https://github.com/PaulSonOfLars/tgbot/pull/66).
 
 Originally a simple group management bot with multiple admin features, it has evolved into becoming a basis for modular
