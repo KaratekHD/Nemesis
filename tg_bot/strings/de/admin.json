@@ -16,7 +16,7 @@
   "ERR_NO_SUPERGROUP": "Ich kann Einladungslinks nur für Supergruppen und Kanäle ausgeben!",
   "THIS_CHAT": "dieser Chat",
   "ADMINS_IN": "Admins in *{}*:",
-  "YOU_ADMIN": "Herzlichen Glückwunsch! Du bist ein *admin*: `{}`",
+  "YOU_ADMIN": "Du bist ein *Admin*: `{}`",
   "HELP": " - /adminlist: list of admins in the chat\n\n*Admin only:*\n - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.\n - /unpin: unpins the currently pinned message\n - /invitelink: gets invitelink\n - /promote: promotes the user replied to\n - /demote: demotes the user replied to",
   "MODULE_NAME": "Admin"
 }
