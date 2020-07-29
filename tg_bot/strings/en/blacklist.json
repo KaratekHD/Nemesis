@@ -3,7 +3,7 @@
   "MSG_NO_BLACKLIST" : "There are no blacklisted messages here!",
   "MSG_BLACKLIST_ADD_SUCCESS" : "Added <code>{}</code> to the blacklist!",
   "MSG_BLACKLIST_ADD_SUCCESS_MULTIPLE" : "Added <code>{}</code> triggers to the blacklist.",
-  "ERR_BAD_REQUEST" : "Tell me which words you would like to add to the blacklist"
+  "ERR_BAD_REQUEST" : "Tell me which words you would like to add to the blacklist",
   "MSG_REMOVED_SUCCESS" : "Removed <code>{}</code> from the blacklist!",
   "ERR_NOT_VALID_TRIGGER" : "This isn't a blacklisted trigger...!",
   "MSG_REMOVED_SUCCESS_MULTIPLE" : "Removed <code>{}</code> triggers from the blacklist.",
