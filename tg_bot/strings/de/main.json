@@ -4,7 +4,7 @@
   "HELP_STRINGS_PART_2": "\nAll commands can either be used with / or !.\n",
   "NO_TWO_MODULES": "Es können keine zwei Module mit dem gleichen Namen gleichzeitig geladen werden! Bitte ändere eines",
   "EDITED_MESSAGE": "This person edited a message",
-  "START_IN_GROUP": "Yo, whadup?",
+  "START_IN_GROUP": "Hey, was geht?",
   "HELP_FOR_MODULE": "Here is the help for the *{}* module:\n",
   "ERR_MSG_NOT_MODIFIED": "Message is not modified",
   "ERR_QUERY_ID_INVALID": "Query_id_invalid",
