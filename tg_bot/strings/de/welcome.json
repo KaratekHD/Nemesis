@@ -11,7 +11,7 @@
   "CURRENT_SETTINGS": "Der Chat hat die Willkommens Nachricht Einstellungen auf: `{}`.\n*Die Willkommens Nachricht (Füllt nicht die {{}}) ist:*",
   "MSG_ACTIVATED": "Ich werd' höflich sein!",
   "MSG_DEACTIVATED": "I'm sulking, not saying hello anymore.",
-  "ERR_INVALID_COMMAND": "Ich verstehe nur 'An/Ja' oder 'Aus/Nein'!",
+  "ERR_INVALID_COMMAND": "Ich verstehe nur 'on/yes' oder 'off/no'!",
   "CURRENT_BYE_SETTINGS": "This chat has it's goodbye setting set to: `{}`.\n*The goodbye  message (not filling the {{}}) is:*",
   "MSG_BYE_ACTIVATED": "I'll be sorry when people leave!",
   "MSG_BYE_DEACTIVATED": "Sie gehen, sie sind für mich gestorben.",
