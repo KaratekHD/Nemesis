@@ -1,0 +1,18 @@
+{
+  "BASE_BLACKLIST_STRING" : "Current <b>blacklisted</b> words:\n",
+  "MSG_NO_BLACKLIST" : "There are no blacklisted messages here!",
+  "MSG_BLACKLIST_ADD_SUCCESS" : "Added <code>{}</code> to the blacklist!",
+  "MSG_BLACKLIST_ADD_SUCCESS_MULTIPLE" : "Added <code>{}</code> triggers to the blacklist.",
+  "ERR_BAD_REQUEST" : "Tell me which words you would like to add to the blacklist",
+  "MSG_REMOVED_SUCCESS" : "Removed <code>{}</code> from the blacklist!",
+  "ERR_NOT_VALID_TRIGGER" : "This isn't a blacklisted trigger...!",
+  "MSG_REMOVED_SUCCESS_MULTIPLE" : "Removed <code>{}</code> triggers from the blacklist.",
+  "ERR_NOT_VALID_TRIGGER_MULTIPLE" : "None of these triggers exist, so they weren't removed.",
+  "ERR_NOT_ALL_VALID_TRIGGER" : "Removed <code>{}</code> triggers from the blacklist. {} did not exist, so were not removed.",
+  "ERR_REMOVE_BAD_REQUEST" : "Tell me which words you would like to remove from the blacklist.",
+  "ERR_CONSOLE_CANT_DELETE_MESSAGE" : "Error while deleting blacklist message.",
+  "CHAT_SETTINGS" : "There are {} blacklisted words.",
+  "STATS" : "{} blacklist triggers, across {} chats.",
+  "MODULE_NAME" : "Word Blacklists",
+  "HELP" : "Blacklists are used to stop certain triggers from being said in a group. Any time the trigger is mentioned, the message will immediately be deleted. A good combo is sometimes to pair this up with warn filters!\n\n*NOTE:* blacklists do not affect group admins.\n\n - /blacklist: View the current blacklisted words.\n\n*Admin only:*\n - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different lines will allow you to add multiple triggers.\n - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove multiple triggers at once.\n - /rmblacklist <triggers>: Same as above."
+}
