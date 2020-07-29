@@ -1,0 +1,18 @@
+{
+  "MSG_KICK" : "I like to leave the flooding to natural disasters. But you, you were just a disappointment. Get out.",
+  "MSG_KICK_HTML" : "<b>{}:</b>\n#BANNED\n<b>User:</b> {}\nFlooded the group.",
+  "ERR_NO_PERMS" : "I can't kick people here, give me permissions first! Until then, I'll disable antiflood.",
+  "ERR_NO_PERMS_HTML" : "<b>{}:</b>\n#INFO\nDon't have kick permissions, so automatically disabled antiflood.",
+  "MSG_DISABLED" : "Antiflood has been disabled.",
+  "MSG_DISABLED_HTML" : "<b>{}:</b>\n#SETFLOOD\n<b>Admin:</b> {}\nDisabled antiflood.",
+  "ERR_BAD_AMOUNT" : "Antiflood has to be either 0 (disabled), or a number bigger than 3!",
+  "MSG_SUCCESS" : "Antiflood has been updated and set to {}",
+  "MSG_SUCCESS_HTML" : "<b>{}:</b>\n#SETFLOOD\n<b>Admin:</b> {}\nSet antiflood to <code>{}</code>.",
+  "ERR_BAD_REQUEST" : "Unrecognised argument - please use a number, 'off', or 'no'.",
+  "MSG_DISABLED" : "I'm not currently enforcing flood control!",
+  "MSG_INFO" : "I'm currently banning users if they send more than {} consecutive messages.",
+  "CHAT_SETTINGS_OFF" : "*Not* currently enforcing flood control.",
+  "CHAT_SETTINGS_ON" : "Antiflood is set to `{}` messages.",
+  "HELP" : " - /flood: Get the current flood control setting\n\n*Admin only:*\n - /setflood <int/'no'/'off'>: enables or disables flood control",
+  "MODULE_NAME" : "AntiFlood"
+}
