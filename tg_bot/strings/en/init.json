@@ -1,0 +1,11 @@
+{
+  "ERR_INVALID_PYTHON_VERSION" : "You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.",
+  "ERR_INVALID_OWNER_ID" : "Your OWNER_ID env variable is not a valid integer.",
+  "ERR_INVALID_SUDO_ID" : "Your sudo users list does not contain valid integers.",
+  "ERR_INVALID_SUPPORT_ID" : "Your support users list does not contain valid integers.",
+  "ERR_INVALID_WHITELIST_ID" : "Your whitelisted users list does not contain valid integers.",
+  "ERR_CONFIG_INVALID_OWNER_ID" : "Your OWNER_ID variable is not a valid integer.",
+  "ERR_CONFIG_INVALID_SUDO_ID" : "Your sudo users list does not contain valid integers.",
+  "ERR_CONFIG_INVALID_SUPPORT_ID" : "Your support users list does not contain valid integers.",
+  "ERR_CONFIG_INVALID_WHITELIST_ID"  : "Your whitelisted users list does not contain valid integers."
+}
