@@ -11,7 +11,7 @@
   "ERR_BAD_REQUEST": "Unrecognised argument - please use a number, 'off', or 'no'.",
   "MSG_INFO": "I'm currently banning users if they send more than {} consecutive messages.",
   "CHAT_SETTINGS_OFF": "*Not* currently enforcing flood control.",
-  "CHAT_SETTINGS_ON": "Antispamm ist auf `{}` Nachrichten eingestellt.",
+  "CHAT_SETTINGS_ON": "Antispam ist auf `{}` Nachrichten eingestellt.",
   "HELP": " - /flood: Get the current flood control setting\n\n*Admin only:*\n - /setflood <int/'no'/'off'>: enables or disables flood control",
   "MODULE_NAME": "Antispam"
 }
