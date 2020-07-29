@@ -6,7 +6,7 @@
   "MSG_BAN_HTML": "<b>{}:</b>\n#BANNED\n<b>Admin:</b> {}\n<b>User:</b> {} (<code>{}</code>)",
   "MSG_BAN_HTML_REASON": "\n<b>Grund:</b> {}",
   "MSG_BAN_SUCCESS": "User in your Channel was banned from the group.",
-  "ERR_CONSOLE_CANT_BAN": "FEHLER bein Bannen von %s im Chat %s (%s) Wegen %s",
+  "ERR_CONSOLE_CANT_BAN": "FEHLER beim Bannen von %s im Chat %s (%s) Wegen %s",
   "ERR_CANT_BAN": "Verdammt, ich kann diesen Benutzer nicht bannen.",
   "ERR_TEMPBAN_NO_TIME": "Du hattest keine Zeit angegeben, für die du diesen User sperren wolltest!",
   "MSG_TEMPBAN_HTML": "<b>{}:</b>\n#TEMP BANNED\n<b>Admin:</b> {}\n<b>User:</b> {} (<code>{}</code>)\n<b>Time:</b> {}",
