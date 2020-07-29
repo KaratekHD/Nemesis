@@ -13,5 +13,5 @@
   "CHAT_SETTINGS_OFF": "*Not* currently enforcing flood control.",
   "CHAT_SETTINGS_ON": "Antiflood is set to `{}` messages.",
   "HELP": " - /flood: Get the current flood control setting\n\n*Admin only:*\n - /setflood <int/'no'/'off'>: enables or disables flood control",
-  "MODULE_NAME": "AntiFlood"
+  "MODULE_NAME": "Antispam"
 }
