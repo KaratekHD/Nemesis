@@ -13,6 +13,9 @@ from tg_bot.modules.helper_funcs.chat_status import user_admin
 
 @run_async
 @user_admin
+
+# NOTE: This file won't be translated (for now), since this feature is gonna get rewritten completely.
+
 def import_data(bot: Bot, update):
     msg = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
