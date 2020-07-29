@@ -1,7 +1,7 @@
 {
   "MSG_KICK": "I like to leave the flooding to natural disasters. But you, you were just a disappointment. Get out.",
   "MSG_KICK_HTML": "<b>{}:</b>\n#BANNED\n<b>User:</b> {}\nFlooded the group.",
-  "ERR_NO_PERMS": "I can't kick people here, give me permissions first! Until then, I'll disable antiflood.",
+  "ERR_NO_PERMS": "Ich kann keine Leute Kicken. Gib mir erst Berechtigungen! Bis dahin deaktiviere ich Antispam.",
   "ERR_NO_PERMS_HTML": "<b>{}:</b>\n#INFO\nDon't have kick permissions, so automatically disabled antiflood.",
   "MSG_DISABLED": "I'm not currently enforcing flood control!",
   "MSG_DISABLED_HTML": "<b>{}:</b>\n#SETFLOOD\n<b>Admin:</b> {}\nDisabled antiflood.",
@@ -11,7 +11,7 @@
   "ERR_BAD_REQUEST": "Unrecognised argument - please use a number, 'off', or 'no'.",
   "MSG_INFO": "I'm currently banning users if they send more than {} consecutive messages.",
   "CHAT_SETTINGS_OFF": "*Not* currently enforcing flood control.",
-  "CHAT_SETTINGS_ON": "Antiflood is set to `{}` messages.",
+  "CHAT_SETTINGS_ON": "Antispamm ist auf `{}` Nachrichten eingestellt.",
   "HELP": " - /flood: Get the current flood control setting\n\n*Admin only:*\n - /setflood <int/'no'/'off'>: enables or disables flood control",
   "MODULE_NAME": "Antispam"
 }
