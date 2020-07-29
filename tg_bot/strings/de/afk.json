@@ -1,0 +1,8 @@
+{
+  "MSG_IS_AFK_NOW": "{} ist jetzt abwesend!",
+  "MSG_IS_NOT_AFK": "{} ist nicht mehr abwesend!",
+  "MSG_IS_AFK": "{} ist abwesend!",
+  "MSG_IS_AFK_REASON": "{} ist abwesend! Grund: {}",
+  "HELP": " - /afk <Grund>: Markiert dich als abwesend.\n - brb <Grund>: Wie der /afk Befehl, nur kein Befehl.\n\nWenn du als abwesend markiert bist, werden alle Erwähnungen mit einer Nachricht beantwortet, die sagt, dass du derzeit nicht verfügbar bist!",
+  "MODULE_NAME": "AFK"
+}

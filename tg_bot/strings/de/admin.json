@@ -1,0 +1,22 @@
+{
+  "ERR_NO_USER": "Sie nehmen auf keinen Benutzer Bezug.",
+  "ERR_CANT_PROMOTE_ADMIN": "Wie soll ich jemanden zum Admin ernennen, der schon einer ist?",
+  "ERR_CANT_PROMOTE_MYSELF": "Ich kann mich nicht selber befördern! Lass es einen Admin für mich machen.",
+  "PROMOTE_SUCCESS": "Erfolgreich befördert!",
+  "PROMOTE_SUCCESS_HTML": "<b>{}:</b>\n#BEFÖRDERT\n<b>Admin:</b>{}\n<b>Benutzer:</b>{}",
+  "ERR_DEMOTE_CREATOR": "Diese Person ist der BESITZER des Chats, wie soll ich ihm seine Rechte entziehen?!",
+  "ERR_DEMOTE_NON_ADMIN": "Ich kann niemandem Rechte entziehen, der nie welche hatte!",
+  "ERR_CANT_DEMOTE_MYSELF": "Ich kann mir nicht selber die Rechte entziehen! Und wollte es auch nicht...",
+  "DEMOTE_SUCCESS": "Erfolgreich degradiert!",
+  "DEMOTE_SUCCESS_HTML": "<b>{}:</b>\n#DEMOTED\n<b>Admin:</b> {}\n<b>User:</b> {}",
+  "ERR_GENERAL": "Could not demote. I might not be an admin, or the admin status was appointed by another user, so I can't act upon them!",
+  "PINNED_HTML": "<b>{}:</b>\n#PINNED\n<b>Admin:</b> {}",
+  "UNPINNED_HTML": "<b>{}:</b>\nUNPINNED\n<b>Admin:</b> {}",
+  "ERR_NO_PERMS_INVITELINK": "Ich habe keinen Zugang zum Einladungslink, bitte überprüfe meine Rechte!",
+  "ERR_NO_SUPERGROUP": "Ich kann Einladungslinks nur für Supergruppen und Kanäle ausgeben!",
+  "THIS_CHAT": "dieser Chat",
+  "ADMINS_IN": "Admins in *{}*:",
+  "YOU_ADMIN": "Du bist ein *Admin*: `{}`",
+  "HELP": " - /adminlist: list of admins in the chat\n\n*Admin only:*\n - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.\n - /unpin: unpins the currently pinned message\n - /invitelink: gets invitelink\n - /promote: promotes the user replied to\n - /demote: demotes the user replied to",
+  "MODULE_NAME": "Admin"
+}

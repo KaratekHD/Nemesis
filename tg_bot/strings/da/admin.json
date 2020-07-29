@@ -1,0 +1,22 @@
+{
+  "ERR_NO_USER": "You don't seem to be referring to a user.",
+  "ERR_CANT_PROMOTE_ADMIN": "How am I meant to promote someone that's already an admin?",
+  "ERR_CANT_PROMOTE_MYSELF": "I can't promote myself! Get an admin to do it for me.",
+  "PROMOTE_SUCCESS": "Successfully promoted!",
+  "PROMOTE_SUCCESS_HTML": "<b>{}:</b>\n#PROMOTED\n<b>Admin:</b> {}\n<b>User:</b> {}",
+  "ERR_DEMOTE_CREATOR": "This person CREATED the chat, how would I demote them?",
+  "ERR_DEMOTE_NON_ADMIN": "Can't demote what wasn't promoted!",
+  "ERR_CANT_DEMOTE_MYSELF": "I can't demote myself! Get an admin to do it for me.",
+  "DEMOTE_SUCCESS": "Successfully demoted!",
+  "DEMOTE_SUCCESS_HTML": "<b>{}:</b>\n#DEMOTED\n<b>Admin:</b> {}\n<b>User:</b> {}",
+  "ERR_GENERAL": "Could not demote. I might not be an admin, or the admin status was appointed by another user, so I can't act upon them!",
+  "PINNED_HTML": "<b>{}:</b>\n#PINNED\n<b>Admin:</b> {}",
+  "UNPINNED_HTML": "<b>{}:</b>\nUNPINNED\n<b>Admin:</b> {}",
+  "ERR_NO_PERMS_INVITELINK": "I don't have access to the invite link, try changing my permissions!",
+  "ERR_NO_SUPERGROUP": "I can only give you invite links for supergroups and channels, sorry!",
+  "THIS_CHAT": "this chat",
+  "ADMINS_IN": "Admins in *{}*:",
+  "YOU_ADMIN": "ou are *admin*: `{}`",
+  "HELP": " - /adminlist: list of admins in the chat\n\n*Admin only:*\n - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.\n - /unpin: unpins the currently pinned message\n - /invitelink: gets invitelink\n - /promote: promotes the user replied to\n - /demote: demotes the user replied to",
+  "MODULE_NAME": "Admin"
+}
