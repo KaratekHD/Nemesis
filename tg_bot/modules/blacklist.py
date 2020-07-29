@@ -37,7 +37,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
     split_text = split_message(filter_list)
     for text in split_text:
         if text == BASE_BLACKLIST_STRING:
-            msg.reply_text("There are no blacklisted messages here!")
+            msg.reply_text("There are no blacklisted messages here!") # MSG_NO_BLACKLIST
             return
         msg.reply_text(text, parse_mode=ParseMode.HTML)
 
@@ -56,14 +56,14 @@ def add_blacklist(bot: Bot, update: Update):
 
         if len(to_blacklist) == 1:
             msg.reply_text("Added <code>{}</code> to the blacklist!".format(html.escape(to_blacklist[0])),
-                           parse_mode=ParseMode.HTML)
+                           parse_mode=ParseMode.HTML) # MSG_BLACKLIST_ADD_SUCCESS
 
         else:
             msg.reply_text(
-                "Added <code>{}</code> triggers to the blacklist.".format(len(to_blacklist)), parse_mode=ParseMode.HTML)
+                "Added <code>{}</code> triggers to the blacklist.".format(len(to_blacklist)), parse_mode=ParseMode.HTML) # MSG_BLACKLIST_ADD_SUCCESS_MULTIPLE
 
     else:
-        msg.reply_text("Tell me which words you would like to add to the blacklist.")
+        msg.reply_text("Tell me which words you would like to add to the blacklist.") # ERR_BAD_REQUEST
 
 
 @run_async
@@ -84,27 +84,27 @@ def unblacklist(bot: Bot, update: Update):
         if len(to_unblacklist) == 1:
             if successful:
                 msg.reply_text("Removed <code>{}</code> from the blacklist!".format(html.escape(to_unblacklist[0])),
-                               parse_mode=ParseMode.HTML)
+                               parse_mode=ParseMode.HTML) # MSG_REMOVED_SUCCESS
             else:
-                msg.reply_text("This isn't a blacklisted trigger...!")
+                msg.reply_text("This isn't a blacklisted trigger...!") # ERR_NOT_VALID_TRIGGER
 
         elif successful == len(to_unblacklist):
             msg.reply_text(
                 "Removed <code>{}</code> triggers from the blacklist.".format(
-                    successful), parse_mode=ParseMode.HTML)
+                    successful), parse_mode=ParseMode.HTML) # MSG_REMOVED_SUCCESS_MULTIPLE
 
         elif not successful:
             msg.reply_text(
                 "None of these triggers exist, so they weren't removed.".format(
-                    successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML)
+                    successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML) # ERR_NOT_VALID_TRIGGER_MULTIPLE
 
         else:
             msg.reply_text(
                 "Removed <code>{}</code> triggers from the blacklist. {} did not exist, "
                 "so were not removed.".format(successful, len(to_unblacklist) - successful),
-                parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML) # ERR_NOT_ALL_VALID_TRIGGER
     else:
-        msg.reply_text("Tell me which words you would like to remove from the blacklist.")
+        msg.reply_text("Tell me which words you would like to remove from the blacklist.") # ERR_REMOVE_BAD_REQUEST
 
 
 @run_async
@@ -126,7 +126,7 @@ def del_blacklist(bot: Bot, update: Update):
                 if excp.message == "Message to delete not found":
                     pass
                 else:
-                    LOGGER.exception("Error while deleting blacklist message.")
+                    LOGGER.exception("Error while deleting blacklist message.") # ERR_CONSOLE_CANT_DELETE_MESSAGE
             break
 
 
@@ -136,15 +136,15 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
     blacklisted = sql.num_blacklist_chat_filters(chat_id)
-    return "There are {} blacklisted words.".format(blacklisted)
+    return "There are {} blacklisted words.".format(blacklisted) # CHAT_SETTINGS
 
 
 def __stats__():
     return "{} blacklist triggers, across {} chats.".format(sql.num_blacklist_filters(),
-                                                            sql.num_blacklist_filter_chats())
+                                                            sql.num_blacklist_filter_chats()) # STATS
 
 
-__mod_name__ = "Word Blacklists"
+__mod_name__ = "Word Blacklists" # MODULE_NAME
 
 __help__ = """
 Blacklists are used to stop certain triggers from being said in a group. Any time the trigger is mentioned, \
