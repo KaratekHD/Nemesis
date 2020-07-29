@@ -9,7 +9,7 @@
   "MSG_REMOVED_SUCCESS_MULTIPLE" : "Removed <code>{}</code> triggers from the blacklist.",
   "ERR_NOT_VALID_TRIGGER_MULTIPLE" : "None of these triggers exist, so they weren't removed.",
   "ERR_NOT_ALL_VALID_TRIGGER" : "Removed <code>{}</code> triggers from the blacklist. {} did not exist, so were not removed.",
-  "ERR_REMOVE_BAD_REQUEST" : "Tell me which words you would like to remove from the blacklist."
+  "ERR_REMOVE_BAD_REQUEST" : "Tell me which words you would like to remove from the blacklist.",
   "ERR_CONSOLE_CANT_DELETE_MESSAGE" : "Error while deleting blacklist message.",
   "CHAT_SETTINGS" : "There are {} blacklisted words.",
   "STATS" : "{} blacklist triggers, across {} chats.",
