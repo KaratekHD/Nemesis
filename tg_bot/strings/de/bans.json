@@ -1,6 +1,6 @@
 {
   "ERR_NO_TARGET": "You don't seem to be referring to a user.",
-  "ERR_USER_NOT_FOUND": "I can't seem to find this user",
+  "ERR_USER_NOT_FOUND": "Ich kann diesen User nicht finden",
   "ERR_TARGET_IS_ADMIN": " really wish I could ban admins...",
   "ERR_TARGET_ITSELF": "I'm not gonna BAN myself, are you crazy?",
   "MSG_BAN_HTML": "<b>{}:</b>\n#BANNED\n<b>Admin:</b> {}\n<b>User:</b> {} (<code>{}</code>)",
