@@ -5,6 +5,9 @@ import sys
 import telegram.ext as tg
 from tg_bot.strings.string_helper import get_string
 
+# Module name
+module = "init"
+
 # enable logging
 logging.basicConfig(
     format="[%(asctime)s | %(levelname)s] %(message)s",
@@ -21,7 +24,7 @@ else:
 
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
-    LOGGER.error(get_string("init", "ERR_INVALID_PYTHON_VERSION", DEFAULT_LANG)) # ERR_INVALID_PYTHON_VERSION
+    LOGGER.error(get_string(module, "ERR_INVALID_PYTHON_VERSION", DEFAULT_LANG)) # ERR_INVALID_PYTHON_VERSION
     quit(1)
 
 
@@ -31,7 +34,7 @@ if ENV:
     try:
         OWNER_ID = int(os.environ.get('OWNER_ID', None))
     except ValueError:
-        raise Exception("Your OWNER_ID env variable is not a valid integer.") # ERR_INVALID_OWNER_ID
+        raise Exception(get_string(module, "ERR_INVALID_OWNER_ID", DEFAULT_LANG)) # ERR_INVALID_OWNER_ID
 
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None)
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
@@ -39,17 +42,17 @@ if ENV:
     try:
         SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
     except ValueError:
-        raise Exception("Your sudo users list does not contain valid integers.") # ERR_INVALID_SUDO_ID
+        raise Exception(get_string(module, "ERR_INVALID_SUDO_ID", DEFAULT_LANG)) # ERR_INVALID_SUDO_ID
 
     try:
         SUPPORT_USERS = set(int(x) for x in os.environ.get("SUPPORT_USERS", "").split())
     except ValueError:
-        raise Exception("Your support users list does not contain valid integers.") # ERR_INVALID_SUPPORT_ID
+        raise Exception(get_string(module, "ERR_INVALID_SUPPORT_ID", DEFAULT_LANG)) # ERR_INVALID_SUPPORT_ID
 
     try:
         WHITELIST_USERS = set(int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
     except ValueError:
-        raise Exception("Your whitelisted users list does not contain valid integers.") # ERR_INVALID_WHITELIST_ID
+        raise Exception(get_string(module, "ERR_INVALID_WHITELIST_ID", DEFAULT_LANG)) # ERR_INVALID_WHITELIST_ID
 
     WEBHOOK = bool(os.environ.get('WEBHOOK', False))
     URL = os.environ.get('URL', "")  # Does not contain token
@@ -73,7 +76,7 @@ else:
     try:
         OWNER_ID = int(Config.OWNER_ID)
     except ValueError:
-        raise Exception("Your OWNER_ID variable is not a valid integer.") # ERR_CONFIG_INVALID_OWNER_ID
+        raise Exception(get_string(module, "ERR_CONFIG_INVALID_OWNER_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_OWNER_ID
 
     MESSAGE_DUMP = Config.MESSAGE_DUMP
     OWNER_USERNAME = Config.OWNER_USERNAME
@@ -81,17 +84,17 @@ else:
     try:
         SUDO_USERS = set(int(x) for x in Config.SUDO_USERS or [])
     except ValueError:
-        raise Exception("Your sudo users list does not contain valid integers.") # ERR_CONFIG_INVALID_SUDO_ID
+        raise Exception(get_string(module, "ERR_CONFIG_INVALID_SUDO_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_SUDO_ID
 
     try:
         SUPPORT_USERS = set(int(x) for x in Config.SUPPORT_USERS or [])
     except ValueError:
-        raise Exception("Your support users list does not contain valid integers.") # ERR_CONFIG_INVALID_SUPPORT_ID
+        raise Exception(get_string(module, "ERR_CONFIG_INVALID_SUPPORT_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_SUPPORT_ID
 
     try:
         WHITELIST_USERS = set(int(x) for x in Config.WHITELIST_USERS or [])
     except ValueError:
-        raise Exception("Your whitelisted users list does not contain valid integers.") # ERR_CONFIG_INVALID_WHITELIST_ID
+        raise Exception(get_string(module, "ERR_CONFIG_INVALID_WHITELIST_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_WHITELIST_ID
 
     WEBHOOK = Config.WEBHOOK
     URL = Config.URL
