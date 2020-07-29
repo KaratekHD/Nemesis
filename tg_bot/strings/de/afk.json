@@ -1,8 +1,8 @@
 {
-  "MSG_IS_AFK_NOW": "{} is now AFK!",
-  "MSG_IS_NOT_AFK": "{} is no longer AFK!",
-  "MSG_IS_AFK": "{} is AFK!",
-  "MSG_IS_AFK_REASON": "{} is AFK! says its because of:\n{}",
-  "HELP": " - /afk <reason>: mark yourself as AFK.\n - brb <reason>: same as the afk command - but not a command.\n\nWhen marked as AFK, any mentions will be replied to with a message to say you're not available!",
+  "MSG_IS_AFK_NOW": "{} ist jetzt abwesend!",
+  "MSG_IS_NOT_AFK": "{} ist nicht mehr abwesend!",
+  "MSG_IS_AFK": "{} ist abwesend!",
+  "MSG_IS_AFK_REASON": "{} ist abwesend! Grund: {}",
+  "HELP": " - /afk <Grund>: Markiert dich als abwesend.\n - brb <Grund>: Wie der /afk Befehl, nur kein Befehl.\n\nWenn du als abwesend markiert bist, werden alle Erwähnungen mit einer Nachricht beantwortet, die sagt, dass du derzeit nicht verfügbar bist!",
   "MODULE_NAME": "AFK"
 }
