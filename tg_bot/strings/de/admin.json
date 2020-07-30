@@ -17,6 +17,6 @@
   "THIS_CHAT": "dieser Chat",
   "ADMINS_IN": "Admins in *{}*:",
   "YOU_ADMIN": "Du bist ein *Admin*: `{}`",
-  "HELP": " - /adminlist: list of admins in the chat\n\n*Admin only:*\n - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.\n - /unpin: unpins the currently pinned message\n - /invitelink: gets invitelink\n - /promote: promotes the user replied to\n - /demote: demotes the user replied to",
+  "HELP": " -/adminlist: Liste der Admins im Chat\n\n*Nur Admins:*\n - /pin: pinnt die Nachricht, auf die geantwortet wird, still an - füge 'laut' oder 'benachrichtigen' hinzu, um die Benutzer zu benachrichtigen.\n - /unpin: hebt die aktuell angeheftete Nachricht auf\n - /invitelink: Einladungslink wird gesendet\n - /befördern: befördert den Benutzer, auf den geantwortet wurde\n - /demote: degradiert den Benutzer, auf den geantwortet wurde",
   "MODULE_NAME": "Admin"
 }
