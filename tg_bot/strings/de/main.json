@@ -3,7 +3,7 @@
   "HELP_STRINGS": "Hey there! My name is *{}*.\nI'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of\nthe things I can help you with. You can also read my documentation at [karatek.net](https://karatek.net/Projects/Nemesisdocs/).\n\n*Main* commands available:\n - /start: start the bot\n - /help: PM's you this message.\n - /help <module name>: PM's you info about that module.\n - /settings:\n   - in PM: will send you your settings for all supported modules.\n   - in a group: will redirect you to pm, with all that chat's settings.\n\n{}\nAnd the following:",
   "HELP_STRINGS_PART_2": "\nAll commands can either be used with / or !.\n",
   "NO_TWO_MODULES": "Es können keine zwei Module mit dem gleichen Namen gleichzeitig geladen werden! Bitte ändere eines",
-  "EDITED_MESSAGE": "This person edited a message",
+  "EDITED_MESSAGE": "Diese Person hat eine Nachricht bearbeitet",
   "START_IN_GROUP": "Hey, was geht?",
   "HELP_FOR_MODULE": "Here is the help for the *{}* module:\n",
   "ERR_MSG_NOT_MODIFIED": "Nachricht ist nicht bearbeitet",
