@@ -24,8 +24,8 @@
   "ERR_UNBAN_ITSELF": "How would I unban myself if I wasn't here...?",
   "ERR_UNBAN_NOT_BANNED": "Warum versuchst du jemanden zu entbannen der bereits im Chat ist?",
   "MSG_UNBAN_SUCCESS": "Jap, dieser User kann beitreten!",
-  "MSG_UNBAN_HTML": "<b>{}:</b>\n#UNBANNED\n<b>Admin:</b> {}\n<b>User:</b> {} (<code>{}</code>)",
+  "MSG_UNBAN_HTML": "<b>{}:</b>\n#ENTBANNT\n<b>Admin:</b> {}\n<b>Benutzer:</b> {} (<code>{}</code>)",
   "MSG_UNBAN_HTML_REASON": "\n<b>Grund:</b> {}",
-  "HELP": " - /kickme: kicks the user who issued the command\n\n*Admin only:*\n - /ban <userhandle>: bans a user. (via handle, or reply)\n - /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.\n - /unban <userhandle>: unbans a user. (via handle, or reply)\n - /unban <userhandle>: unbans a user. (via handle, or reply)",
-  "MODULE_NAME": "Bans"
+  "HELP": " - /kickme: kickt den Benutzer, der den Befehl erteilt hat\n\n*nur Admins*\n - /ban <userhandle>: bannt einen Benutzer. (über antworten oder mit @)\n - /tban<userhandle> x(m/st/t): bannt einen Benutzer für eine x Zeit. (über antworten oder mit @). m = Minuten, st = Stunden, t = Tage.\n - /unban <userhandle>: entbannt einen Benutzer. (über antworten oder mit @)\n - /unban <userhandle>: entbannt einen Benutzer. (über antworten oder mit @)",
+  "MODULE_NAME": "Banns"
 }
