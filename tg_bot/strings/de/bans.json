@@ -1,7 +1,7 @@
 {
   "ERR_NO_TARGET": "Du beziehst dich auf keinen Benutzer.",
   "ERR_USER_NOT_FOUND": "Ich kann diesen Benutzer nicht finden",
-  "ERR_TARGET_IS_ADMIN": " ich wünschte, ich könnte einen Admin bannen",
+  "ERR_TARGET_IS_ADMIN": "I really wish I could ban admins...",
   "ERR_TARGET_ITSELF": "Ich werde mich doch nicht selber bannen, bist du verrückt?",
   "MSG_BAN_HTML": "<b>{}:</b>\n#GEBANNT\n<b>Admin:</b> {}\n<b>Benutzer:</b> {} (<code>{}</code>)",
   "MSG_BAN_HTML_REASON": "\n<b>Grund:</b> {}",
@@ -26,6 +26,6 @@
   "MSG_UNBAN_SUCCESS": "Jap, dieser User kann beitreten!",
   "MSG_UNBAN_HTML": "<b>{}:</b>\n#ENTBANNT\n<b>Admin:</b> {}\n<b>Benutzer:</b> {} (<code>{}</code>)",
   "MSG_UNBAN_HTML_REASON": "\n<b>Grund:</b> {}",
-  "HELP": " - /kickme: kickt den Benutzer, der den Befehl erteilt hat\n\n*nur Admins*\n - /ban <userhandle>: bannt einen Benutzer. (über antworten oder mit @)\n - /tban<userhandle> x(m/st/t): bannt einen Benutzer für eine x Zeit. (über antworten oder mit @). m = Minuten, st = Stunden, t = Tage.\n - /unban <userhandle>: entbannt einen Benutzer. (über antworten oder mit @)\n - /unban <userhandle>: entbannt einen Benutzer. (über antworten oder mit @)",
+  "HELP": " - /kickme: kicks the user who issued the command\n\n*Admin only:*\n - /ban <userhandle>: bans a user. (via handle, or reply)\n - /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.\n - /unban <userhandle>: unbans a user. (via handle, or reply)\n - /kick <userhandle>: kicks a user, (via handle, or reply)",
   "MODULE_NAME": "Banns"
 }
