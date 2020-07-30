@@ -21,7 +21,7 @@
   "ERR_KICKME_TARGET_IS_ADMIN": "Ich wünschte, ich könnte... aber du bist ein Admin.",
   "MSG_KICKME_SUCCESS": "Kein Problem.",
   "ERR_KICKME_GENERAL": "Was? Ich kann nicht :/",
-  "ERR_UNBAN_ITSELF": "How would I unban myself if I wasn't here...?",
+  "ERR_UNBAN_ITSELF": "Wie sollte ich mich selbst entbannen, wenn ich gar nicht da wäre...?",
   "ERR_UNBAN_NOT_BANNED": "Warum versuchst du jemanden zu entbannen der bereits im Chat ist?",
   "MSG_UNBAN_SUCCESS": "Jap, dieser User kann beitreten!",
   "MSG_UNBAN_HTML": "<b>{}:</b>\n#ENTBANNT\n<b>Admin:</b> {}\n<b>Benutzer:</b> {} (<code>{}</code>)",
