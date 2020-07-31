@@ -2,10 +2,10 @@
   "ERR_INVALID_PYTHON_VERSION": "Es wird MINDESTENS Python 3.6 benötigt! Einige Funktionen hängen davon ab. Ende.",
   "ERR_INVALID_OWNER_ID": "Deine OWNER_ID Umgebungsvariable ist kein gültiger Zahlenwert.",
   "ERR_INVALID_SUDO_ID": "Deine Sudo User Lists beinhaltet keine gültigen Zahlenwerte.",
-  "ERR_INVALID_SUPPORT_ID": "Your support users list does not contain valid integers.",
-  "ERR_INVALID_WHITELIST_ID": "Your whitelisted users list does not contain valid integers.",
+  "ERR_INVALID_SUPPORT_ID": "Deine Liste der Support-Benutzer enthält keine gültigen ganzen Zahlen.",
+  "ERR_INVALID_WHITELIST_ID": "Deine Whitelist-Benutzerliste enthält keine gültigen ganzen Zahlen.",
   "ERR_CONFIG_INVALID_OWNER_ID": "Your OWNER_ID variable is not a valid integer.",
-  "ERR_CONFIG_INVALID_SUDO_ID": "Your sudo users list does not contain valid integers.",
+  "ERR_CONFIG_INVALID_SUDO_ID": "Deine sudo-Benutzerliste enthält keine gültigen Zahlen.",
   "ERR_CONFIG_INVALID_SUPPORT_ID": "Your support users list does not contain valid integers.",
   "ERR_CONFIG_INVALID_WHITELIST_ID": "Your whitelisted users list does not contain valid integers."
 }
