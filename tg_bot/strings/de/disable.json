@@ -1,0 +1,9 @@
+{
+  "DISABLED_COMMAND": "Disabled the use of `{}`",
+  "ERR_INVALID_COMMAND": "That command can't be disabled",
+  "ERR_NO_COMMAND": "What should I disable?",
+  "ENABLED_COMMAND": "Enabled the use of `{}`",
+  "ERR_NOT_DISABLED": "Is that even disabled?",
+  "ERR_NO_COMMAND_TO_ENABLE": "What should I enable?",
+  "LIST_OF_COMMANDS": "The following commands are toggleable:\n{}"
+}
