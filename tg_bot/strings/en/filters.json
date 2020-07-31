@@ -1,0 +1,17 @@
+{
+  "BASIC_FILTER_STRING" : "*Filters in this chat:*\n",
+  "NO_FILTERS_ACTIVE" : "No filters are active here!",
+  "ERR_NO_MESSAGE" : "There is no note message - You can't JUST have buttons, you need a message to go with it!",
+  "ERR_NO_ANSWER" : "You didn't specify what to reply with!",
+  "HANDLER_ADDED" : "Handler '{}' added!",
+  "HANDLER_REMOVED" : "Yep, I'll stop replying to that.",
+  "ERR_NOT_A_FILTER" : "That's not a current filter - run /filters for all active filters.",
+  "ERR_BAD_URL" : "You seem to be trying to use an unsupported url protocol. Telegram doesn't support buttons for some protocols, such as tg://. Please try again, or ask in @MarieSupport for help.",
+  "ERR_NO_REPLY" : "his note could not be sent, as it is incorrectly formatted. Ask in @MarieSupport if you can't figure out why!",
+  "ERR_COULDNT_PARSE" : "Message %s could not be parsed",
+  "ERR_COULDNT_PARSE_FILTER" : "Could not parse filter %s in chat %s",
+  "STATS" : "{} filters, across {} chats.",
+  "CHAT_SETTINGS" : "There are `{}` custom filters here.",
+  "HELP" : " - /filters: list all active filters in this chat.\n\n*Admin only:*\n - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword' is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter \"hey there\" How you doin?\n - /stop <filter keyword>: stop that filter.",
+  "MODULE_NAME" : "Filters"
+}
