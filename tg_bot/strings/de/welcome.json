@@ -1,9 +1,9 @@
 {
   "ERR_INDEX": "nNote: the current message was invalid due to markdown issues. Could be due to the user's name.",
-  "ERR_KEY": "\nNote: the current message is invalid due to an issue with some misplaced curly brackets. Please update",
-  "ERR_INVALID_BUTTON": "\nNote: the current message has an invalid url in one of its buttons. Please update.",
-  "ERR_UNSUPPORTED_URL": "\nNote: the current message has buttons which use url protocols that are unsupported by telegram. Please update.",
-  "ERR_BAD_URL": "\nNote: the current message has some bad urls. Please update.",
+  "ERR_KEY": "\nHinweis: Die aktuelle Nachricht ist aufgrund eines Problems mit einigen falsch gesetzten geschweiften Klammern ungültig. Bitte aktualisiere",
+  "ERR_INVALID_BUTTON": "\nHinweis: Die aktuelle Nachricht hat eine ungültige url in einer ihrer Schaltflächen. Bitte aktualisieren.",
+  "ERR_UNSUPPORTED_URL": "\nHinweis: Die aktuelle Nachricht hat Schaltflächen, die url-Protokolle verwenden, die vom Telegram nicht unterstützt werden. Bitte aktualisieren.",
+  "ERR_BAD_URL": "\nHinweis: Die aktuelle Nachricht hat einige schlechte urls. Bitte aktualisiere sie.",
   "ERR_COULDNT_PARSE": "Could not parse! got invalid url host errors",
   "ERR_GENERAL": "\nNote: An error occured when sending the custom message. Please update.",
   "WELCOME_OWNER": "Master is in the houseeee, let's get this party started!",
