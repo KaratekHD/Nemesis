@@ -1,5 +1,5 @@
 {
-  "ERR_NO_USER": "Sie nehmen auf keinen Benutzer Bezug.",
+  "ERR_NO_USER": "Du nimmst auf keinen Benutzer Bezug.",
   "ERR_CANT_PROMOTE_ADMIN": "Wie soll ich jemanden zum Admin ernennen, der schon einer ist?",
   "ERR_CANT_PROMOTE_MYSELF": "Ich kann mich nicht selber befördern! Lass es einen Admin für mich machen.",
   "PROMOTE_SUCCESS": "Erfolgreich befördert!",
@@ -17,6 +17,6 @@
   "THIS_CHAT": "dieser Chat",
   "ADMINS_IN": "Admins in *{}*:",
   "YOU_ADMIN": "Du bist ein *Admin*: `{}`",
-  "HELP": " -/adminlist: Liste der Admins im Chat\n\n*Nur Admins:*\n - /pin: pinnt die Nachricht, auf die geantwortet wird, still an - füge 'laut' oder 'benachrichtigen' hinzu, um die Benutzer zu benachrichtigen.\n - /unpin: hebt die aktuell angeheftete Nachricht auf\n - /invitelink: Einladungslink wird gesendet\n - /befördern: befördert den Benutzer, auf den geantwortet wurde\n - /demote: degradiert den Benutzer, auf den geantwortet wurde",
+  "HELP": " -/adminlist: Liste der Admins im Chat\n\n*Nur Admins:*\n - /pin: pinnt die Nachricht, auf die geantwortet wird, still an - füge 'laut' oder 'benachrichtigen' hinzu, um die Benutzer zu benachrichtigen.\n - /unpin: hebt die aktuell angeheftete Nachricht auf\n - /invitelink: Einladungslink wird gesendet\n - /promote: befördert den Benutzer, auf den geantwortet wurde\n - /demote: degradiert den Benutzer, auf den geantwortet wurde",
   "MODULE_NAME": "Admin"
 }
