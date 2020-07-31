@@ -18,7 +18,7 @@ from tg_bot.modules.helper_funcs.string_handling import split_quotes, button_mar
 from tg_bot.modules.sql import cust_filters_sql as sql
 
 HANDLER_GROUP = 10
-BASIC_FILTER_STRING = "*Filters in this chat:*\n"
+BASIC_FILTER_STRING = "*Filters in this chat:*\n" # BASIC_FILTER_STRING
 
 
 @run_async
@@ -27,7 +27,7 @@ def list_handlers(bot: Bot, update: Update):
     all_handlers = sql.get_chat_triggers(chat.id)
 
     if not all_handlers:
-        update.effective_message.reply_text("No filters are active here!")
+        update.effective_message.reply_text("No filters are active here!") # NO_FILTERS_ACTIVE
         return
 
     filter_list = BASIC_FILTER_STRING
@@ -73,7 +73,7 @@ def filters(bot: Bot, update: Update):
         content, buttons = button_markdown_parser(extracted[1], entities=msg.parse_entities(), offset=offset)
         content = content.strip()
         if not content:
-            msg.reply_text("There is no note message - You can't JUST have buttons, you need a message to go with it!")
+            msg.reply_text("There is no note message - You can't JUST have buttons, you need a message to go with it!") # ERR_NO_MESSAGE
             return
 
     elif msg.reply_to_message and msg.reply_to_message.sticker:
@@ -101,7 +101,7 @@ def filters(bot: Bot, update: Update):
         is_video = True
 
     else:
-        msg.reply_text("You didn't specify what to reply with!")
+        msg.reply_text("You didn't specify what to reply with!") # ERR_NO_ANSWER
         return
 
     # Add the filter
@@ -113,7 +113,7 @@ def filters(bot: Bot, update: Update):
     sql.add_filter(chat.id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
 
-    msg.reply_text("Handler '{}' added!".format(keyword))
+    msg.reply_text("Handler '{}' added!".format(keyword)) # HANDLER_ADDED
     raise DispatcherHandlerStop
 
 
@@ -129,16 +129,16 @@ def stop_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_triggers(chat.id)
 
     if not chat_filters:
-        update.effective_message.reply_text("No filters are active here!")
+        update.effective_message.reply_text("No filters are active here!") # NO_FILTERS_ACTIVE
         return
 
     for keyword in chat_filters:
         if keyword == args[1]:
             sql.remove_filter(chat.id, args[1])
-            update.effective_message.reply_text("Yep, I'll stop replying to that.")
+            update.effective_message.reply_text("Yep, I'll stop replying to that.") # HANDLER_REMOVED
             raise DispatcherHandlerStop
 
-    update.effective_message.reply_text("That's not a current filter - run /filters for all active filters.")
+    update.effective_message.reply_text("That's not a current filter - run /filters for all active filters.") # ERR_NOT_A_FILTER
 
 
 @run_async
@@ -179,16 +179,16 @@ def reply_filter(bot: Bot, update: Update):
                     if excp.message == "Unsupported url protocol":
                         message.reply_text("You seem to be trying to use an unsupported url protocol. Telegram "
                                            "doesn't support buttons for some protocols, such as tg://. Please try "
-                                           "again, or ask in @MarieSupport for help.")
+                                           "again, or ask in @MarieSupport for help.") # ERR_BAD_URL
                     elif excp.message == "Reply message not found":
                         bot.send_message(chat.id, filt.reply, parse_mode=ParseMode.MARKDOWN,
                                          disable_web_page_preview=True,
                                          reply_markup=keyboard)
                     else:
                         message.reply_text("This note could not be sent, as it is incorrectly formatted. Ask in "
-                                           "@MarieSupport if you can't figure out why!")
-                        LOGGER.warning("Message %s could not be parsed", str(filt.reply))
-                        LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id))
+                                           "@MarieSupport if you can't figure out why!") # ERR_NO_REPLY
+                        LOGGER.warning("Message %s could not be parsed", str(filt.reply)) # ERR_COULDNT_PARSE
+                        LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id)) # ERR_COULDNT_PARSE_FILTER
 
             else:
                 # LEGACY - all new filters will have has_markdown set to True.
@@ -197,7 +197,7 @@ def reply_filter(bot: Bot, update: Update):
 
 
 def __stats__():
-    return "{} filters, across {} chats.".format(sql.num_filters(), sql.num_chats())
+    return "{} filters, across {} chats.".format(sql.num_filters(), sql.num_chats()) # STATS
 
 
 def __migrate__(old_chat_id, new_chat_id):
@@ -206,7 +206,7 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
     cust_filters = sql.get_chat_triggers(chat_id)
-    return "There are `{}` custom filters here.".format(len(cust_filters))
+    return "There are `{}` custom filters here.".format(len(cust_filters)) # CHAT_SETTINGS
 
 
 __help__ = """
