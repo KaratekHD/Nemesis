@@ -28,8 +28,8 @@
   "LONG_POLLING": "Benutze long polling.",
   "ERR_UNKNOWN": "Ein unerwarteter Fehler trat auf beim Versuch den Fehler zu verarbeiten.",
   "ERR_DISPATCHERHANDLERSTOP": "Stoppe weitere Behandlungen dank DispatcherHandlerStop",
-  "ERR_TELEGRAM": "Ein Telegram Fehler passierte beim verarbeiten des Updates",
+  "ERR_TELEGRAM": "Ein Telegram Fehler passierte beim Verarbeiten des Updates",
   "ERR_ERRHANDLER": "Fehlerbehandlung stoppt weitere Handlungen",
-  "ERR_UPDATE_UNKNOWN": "Ein unerwarteter Fehler trat auf beim verarbeiten des Updates",
+  "ERR_UPDATE_UNKNOWN": "Ein unerwarteter Fehler trat auf beim Verarbeiten des Updates",
   "MODULES_LOADED": "Folgende Module wurden erfolgreich geladen: "
 }
