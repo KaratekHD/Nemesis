@@ -7,7 +7,7 @@
   "MSG_REMOVED_SUCCESS": "<code><{}</code> wurde von der schwarzen Liste entfernt!",
   "ERR_NOT_VALID_TRIGGER": "Das ist kein gültiger Blacklist Auslöser...!",
   "MSG_REMOVED_SUCCESS_MULTIPLE": "<code><{}</code> wurden von der schwarzen Liste entfernt.",
-  "ERR_NOT_VALID_TRIGGER_MULTIPLE": "Keiner dieser Auslöser existiert, also könnten sie nicht entfernt werden.",
+  "ERR_NOT_VALID_TRIGGER_MULTIPLE": "Keiner dieser Auslöser existiert, also konnten sie nicht entfernt werden.",
   "ERR_NOT_ALL_VALID_TRIGGER": "<code>{}</code> wurden entfernt. {} existieren nicht, wurden entsprechend auch nicht entfernt.",
   "ERR_REMOVE_BAD_REQUEST": "Sag mir, welche Wörter ich von der schwarzen Liste entfernen soll.",
   "ERR_CONSOLE_CANT_DELETE_MESSAGE": "Es gab einen Fehler beim Löschen der Nachrichten auf der schwarzen Liste.",
