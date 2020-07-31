@@ -76,12 +76,12 @@ if is_module_loaded(FILENAME):
             if disable_cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 sql.disable_command(chat.id, disable_cmd)
                 update.effective_message.reply_text("Disabled the use of `{}`".format(disable_cmd),
-                                                    parse_mode=ParseMode.MARKDOWN)
+                                                    parse_mode=ParseMode.MARKDOWN) # DISABLED_COMMAND
             else:
-                update.effective_message.reply_text("That command can't be disabled")
+                update.effective_message.reply_text("That command can't be disabled") # ERR_INVALID_COMMAND
 
         else:
-            update.effective_message.reply_text("What should I disable?")
+            update.effective_message.reply_text("What should I disable?") # ERR_NO_COMMAND
 
 
     @run_async
@@ -95,12 +95,12 @@ if is_module_loaded(FILENAME):
 
             if sql.enable_command(chat.id, enable_cmd):
                 update.effective_message.reply_text("Enabled the use of `{}`".format(enable_cmd),
-                                                    parse_mode=ParseMode.MARKDOWN)
+                                                    parse_mode=ParseMode.MARKDOWN) # ENABLED_COMMAND
             else:
-                update.effective_message.reply_text("Is that even disabled?")
+                update.effective_message.reply_text("Is that even disabled?") # ERR_NOT_DISABLED
 
         else:
-            update.effective_message.reply_text("What should I enable?")
+            update.effective_message.reply_text("What should I enable?") # ERR_NO_COMMAND_TO_ENABLE
 
 
     @run_async
@@ -111,7 +111,7 @@ if is_module_loaded(FILENAME):
             for cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 result += " - `{}`\n".format(escape_markdown(cmd))
             update.effective_message.reply_text("The following commands are toggleable:\n{}".format(result),
-                                                parse_mode=ParseMode.MARKDOWN)
+                                                parse_mode=ParseMode.MARKDOWN) # LIST_OF_COMMANDS
         else:
             update.effective_message.reply_text("No commands can be disabled.")
 
