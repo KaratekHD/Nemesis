@@ -113,19 +113,19 @@ if is_module_loaded(FILENAME):
             update.effective_message.reply_text("The following commands are toggleable:\n{}".format(result),
                                                 parse_mode=ParseMode.MARKDOWN) # LIST_OF_COMMANDS
         else:
-            update.effective_message.reply_text("No commands can be disabled.")
+            update.effective_message.reply_text("No commands can be disabled.") # NO_CMD_AVAILABLE
 
 
     # do not async
     def build_curr_disabled(chat_id: Union[str, int]) -> str:
         disabled = sql.get_all_disabled(chat_id)
         if not disabled:
-            return "No commands are disabled!"
+            return "No commands are disabled!" # NO_CMD_DISABLED
 
         result = ""
         for cmd in disabled:
             result += " - `{}`\n".format(escape_markdown(cmd))
-        return "The following commands are currently restricted:\n{}".format(result)
+        return "The following commands are currently restricted:\n{}".format(result) # DISABLED_COMMANDS
 
 
     @run_async
@@ -135,7 +135,7 @@ if is_module_loaded(FILENAME):
 
 
     def __stats__():
-        return "{} disabled items, across {} chats.".format(sql.num_disabled(), sql.num_chats())
+        return "{} disabled items, across {} chats.".format(sql.num_disabled(), sql.num_chats()) # STATS
 
 
     def __migrate__(old_chat_id, new_chat_id):
