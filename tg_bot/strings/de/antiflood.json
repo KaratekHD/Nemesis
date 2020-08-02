@@ -10,8 +10,8 @@
   "MSG_SUCCESS_HTML": "<b>{}:</b>\n#SETFLOOD \n<b>Admin:</b> {}\nSetz Antiflood auf <code>{}</code>.",
   "ERR_BAD_REQUEST": "Unrecognised argument - please use a number, 'off', or 'no'.",
   "MSG_INFO": "Ich bin gerade dabei, Benutzer zu sperren, wenn sie mehr als {} aufeinanderfolgende Nachrichten senden.",
-  "CHAT_SETTINGS_OFF": "*Not* currently enforcing flood control.",
+  "CHAT_SETTINGS_OFF": "*Nicht* derzeit den Flutschutz durchsetzen.",
   "CHAT_SETTINGS_ON": "Antispam ist auf `{}` Nachrichten eingestellt.",
-  "HELP": " - /flood: Get the current flood control setting\n\n*Admin only:*\n - /setflood <int/'no'/'off'>: enables or disables flood control",
+  "HELP": " - /flood: Abrufen der aktuellen Flutkontrolleinstellung\n\n*nur Admins:*\n - /setflood <int/'no'/'off'>: aktiviert oder deaktiviert den Flutschutz",
   "MODULE_NAME": "Antispam"
 }
