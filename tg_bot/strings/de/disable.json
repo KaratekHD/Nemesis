@@ -1,15 +1,15 @@
 {
-  "DISABLED_COMMAND": "Disabled the use of `{}`",
-  "ERR_INVALID_COMMAND": "That command can't be disabled",
-  "ERR_NO_COMMAND": "What should I disable?",
-  "ENABLED_COMMAND": "Enabled the use of `{}`",
-  "ERR_NOT_DISABLED": "Is that even disabled?",
-  "ERR_NO_COMMAND_TO_ENABLE": "What should I enable?",
-  "LIST_OF_COMMANDS": "The following commands are toggleable:\n{}",
-  "NO_CMD_AVAILABLE": "No commands can be disabled.",
-  "NO_CMD_DISABLED": "No commands are disabled!",
-  "DISABLED_COMMANDS": "The following commands are currently restricted:\n{}",
-  "STATS": "{} disabled items, across {} chats.",
-  "MODULE_NAME": "Command disabling",
-  "HELP": " - /cmds: check the current status of disabled commands\n\n*Admin only:*\n - /enable <cmd name>: enable that command\n - /disable <cmd name>: disable that command\n - /listcmds: list all possible toggleable commands"
+  "DISABLED_COMMAND": "Die Verwendung von `{}` deaktiviert",
+  "ERR_INVALID_COMMAND": "Dieser Befehl kann nicht deaktiviert werden",
+  "ERR_NO_COMMAND": "Was soll ich deaktivieren?",
+  "ENABLED_COMMAND": "Die Verwendung von `{}` ist aktiviert",
+  "ERR_NOT_DISABLED": "Ist das überhaupt deaktiviert?",
+  "ERR_NO_COMMAND_TO_ENABLE": "Was sollte ich aktivieren?",
+  "LIST_OF_COMMANDS": "Die folgenden Befehle sind umschaltbar:\n{}",
+  "NO_CMD_AVAILABLE": "Es können keine Befehle deaktiviert werden.",
+  "NO_CMD_DISABLED": "Keine Befehle sind deaktiviert!",
+  "DISABLED_COMMANDS": "Die folgenden Befehle sind derzeit eingeschränkt:\n{}",
+  "STATS": "{} deaktivierte Elemente, über {} Chats hinweg.",
+  "MODULE_NAME": "Befehl deaktivieren",
+  "HELP": " - /cmds: den aktuellen Status von deaktivierten Befehlen überprüfen\n\n*Nur Admins:*\n - /enable <cmd name>: diesen Befehl aktivieren\n - /disable <cmd name>: diesen Befehl deaktivieren\n - /listcmds: alle möglichen umschaltbaren Befehle auflisten"
 }
