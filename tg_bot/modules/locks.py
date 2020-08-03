@@ -92,7 +92,7 @@ def unrestr_members(bot, chat_id, members, messages=True, media=True, other=True
 
 @run_async
 def locktypes(bot: Bot, update: Update):
-    update.effective_message.reply_text("\n - ".join(["Locks: "] + list(LOCK_TYPES) + list(RESTRICTION_TYPES)))
+    update.effective_message.reply_text("\n - ".join(["Locks: "] + list(LOCK_TYPES) + list(RESTRICTION_TYPES))) # LOCKS
 
 
 @user_admin
@@ -106,13 +106,13 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=True)
-                message.reply_text("Locked {} messages for all non-admins!".format(args[0]))
+                message.reply_text("Locked {} messages for all non-admins!".format(args[0])) # LOCK_SUCCESS
 
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
                        "\n<b>Admin:</b> {}" \
                        "\nLocked <code>{}</code>.".format(html.escape(chat.title),
-                                                          mention_html(user.id, user.first_name), args[0])
+                                                          mention_html(user.id, user.first_name), args[0]) # LOCK_SUCCESS_HTML
 
             elif args[0] in RESTRICTION_TYPES:
                 sql.update_restriction(chat.id, args[0], locked=True)
@@ -120,18 +120,18 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                     members = users_sql.get_chat_members(str(chat.id))
                     restr_members(bot, chat.id, members, messages=True, media=True, other=True)
 
-                message.reply_text("Locked {} for all non-admins!".format(args[0]))
+                message.reply_text("Locked {} for all non-admins!".format(args[0])) # LOCK_SUCCESS_2
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
                        "\n<b>Admin:</b> {}" \
                        "\nLocked <code>{}</code>.".format(html.escape(chat.title),
-                                                          mention_html(user.id, user.first_name), args[0])
+                                                          mention_html(user.id, user.first_name), args[0]) # LOCK_SUCCESS_HTML
 
             else:
-                message.reply_text("What are you trying to lock...? Try /locktypes for the list of lockables")
+                message.reply_text("What are you trying to lock...? Try /locktypes for the list of lockables") # ERR_NO_ARGS
 
     else:
-        message.reply_text("I'm not an administrator, or haven't got delete rights.")
+        message.reply_text("I'm not an administrator, or haven't got delete rights.") # ERR_NO_PERMS
 
     return ""
 
@@ -147,12 +147,12 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=False)
-                message.reply_text("Unlocked {} for everyone!".format(args[0]))
+                message.reply_text("Unlocked {} for everyone!".format(args[0])) # UNLOCK_SUCCESS
                 return "<b>{}:</b>" \
                        "\n#UNLOCK" \
                        "\n<b>Admin:</b> {}" \
                        "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
-                                                            mention_html(user.id, user.first_name), args[0])
+                                                            mention_html(user.id, user.first_name), args[0]) # UNLOCK_SUCCESS_HTML
 
             elif args[0] in RESTRICTION_TYPES:
                 sql.update_restriction(chat.id, args[0], locked=False)
@@ -173,18 +173,18 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                 elif args[0] == "all":
                     unrestr_members(bot, chat.id, members, True, True, True, True)
                 """
-                message.reply_text("Unlocked {} for everyone!".format(args[0]))
+                message.reply_text("Unlocked {} for everyone!".format(args[0])) # UNLOCK_SUCCESS
 
                 return "<b>{}:</b>" \
                        "\n#UNLOCK" \
                        "\n<b>Admin:</b> {}" \
                        "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
-                                                            mention_html(user.id, user.first_name), args[0])
+                                                            mention_html(user.id, user.first_name), args[0]) # UNLOCK_SUCCESS_HTML
             else:
-                message.reply_text("What are you trying to unlock...? Try /locktypes for the list of lockables")
+                message.reply_text("What are you trying to unlock...? Try /locktypes for the list of lockables") # ERR_UNLOCK_NO_PERMS
 
         else:
-            bot.sendMessage(chat.id, "What are you trying to unlock...?")
+            bot.sendMessage(chat.id, "What are you trying to unlock...?") # ERR_NO_ARGS_BUT_DIFFERENT
 
     return ""
 
@@ -203,11 +203,11 @@ def del_lockables(bot: Bot, update: Update):
                     if new_mem.is_bot:
                         if not is_bot_admin(chat, bot.id):
                             message.reply_text("I see a bot, and I've been told to stop them joining... "
-                                               "but I'm not admin!")
+                                               "but I'm not admin!") # ERR_IS_BOT_WITHOUT_PERMS
                             return
 
                         chat.kick_member(new_mem.id)
-                        message.reply_text("Only admins are allowed to add bots to this chat! Get outta here.")
+                        message.reply_text("Only admins are allowed to add bots to this chat! Get outta here.") # MSG_BOT_KICKED
             else:
                 try:
                     message.delete()
@@ -215,7 +215,7 @@ def del_lockables(bot: Bot, update: Update):
                     if excp.message == "Message to delete not found":
                         pass
                     else:
-                        LOGGER.exception("ERROR in lockables")
+                        LOGGER.exception("ERROR in lockables") # ERR_LOCKABLE
 
             break
 
@@ -233,7 +233,7 @@ def rest_handler(bot: Bot, update: Update):
                 if excp.message == "Message to delete not found":
                     pass
                 else:
-                    LOGGER.exception("ERROR in restrictions")
+                    LOGGER.exception("ERROR in restrictions") # ERR_RESTRICTIONS
             break
 
 
@@ -241,11 +241,11 @@ def build_lock_message(chat_id):
     locks = sql.get_locks(chat_id)
     restr = sql.get_restr(chat_id)
     if not (locks or restr):
-        res = "There are no current locks in this chat."
+        res = "There are no current locks in this chat." # NO_LOCKS
     else:
         res = "These are the locks in this chat:"
         if locks:
-            res += "\n - sticker = `{}`" \
+            res += "\n - sticker = `{}`" \ 
                    "\n - audio = `{}`" \
                    "\n - voice = `{}`" \
                    "\n - document = `{}`" \
@@ -260,7 +260,7 @@ def build_lock_message(chat_id):
                    "\n - game = `{}`" \
                    "\n - location = `{}`".format(locks.sticker, locks.audio, locks.voice, locks.document,
                                                  locks.video, locks.videonote, locks.contact, locks.photo, locks.gif, locks.url,
-                                                 locks.bots, locks.forward, locks.game, locks.location)
+                                                 locks.bots, locks.forward, locks.game, locks.location) # STICKER,
         if restr:
             res += "\n - messages = `{}`" \
                    "\n - media = `{}`" \
