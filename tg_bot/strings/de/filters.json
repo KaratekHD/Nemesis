@@ -6,12 +6,12 @@
   "HANDLER_ADDED": "Handler '{}' hinzugefügt!",
   "HANDLER_REMOVED": "Ja, ich höre auf, darauf zu antworten.",
   "ERR_NOT_A_FILTER": "Das ist kein aktueller Filter - führ /filters für alle aktiven Filter aus.",
-  "ERR_BAD_URL": "You seem to be trying to use an unsupported url protocol. Telegram doesn't support buttons for some protocols, such as tg://. Please try again, or ask in @MarieSupport for help.",
-  "ERR_NO_REPLY": "his note could not be sent, as it is incorrectly formatted. Ask in @MarieSupport if you can't figure out why!",
-  "ERR_COULDNT_PARSE": "Message %s could not be parsed",
+  "ERR_BAD_URL": "Du scheinst zu versuchen, ein nicht unterstütztes url-Protokoll zu verwenden. Telegram unterstützt keine Schaltflächen für einige Protokolle, wie zum Beispiel tg://. Bitte versuch es erneut, oder frag in @MarieSupport nach Hilfe.",
+  "ERR_NO_REPLY": "deine Nachricht konnte nicht gesendet werden, da sie falsch formatiert ist. Frag in @MarieSupport nach, wenn du nicht herausfinden kannst, warum!",
+  "ERR_COULDNT_PARSE": "Nachricht %s konnte nicht geparst werden",
   "ERR_COULDNT_PARSE_FILTER": "Could not parse filter %s in chat %s",
-  "STATS": "{} filters, across {} chats.",
-  "CHAT_SETTINGS": "There are `{}` custom filters here.",
-  "HELP": " - /filters: list all active filters in this chat.\n\n*Admin only:*\n - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword' is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter \"hey there\" How you doin?\n - /stop <filter keyword>: stop that filter.",
-  "MODULE_NAME": "Filters"
+  "STATS": "{} Filter, über {} Chats.",
+  "CHAT_SETTINGS": "Es gibt hier `{}` benutzerdefinierte Filter.",
+  "HELP": " - /filters: listet alle aktiven Filter in diesem Chat auf.\n\n*nur Admins:*\n - /filter <keyword> <reply message>: diesem Chat einen Filter hinzufügen. The bot will now reply that message whenever 'keyword' is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter \"hey there\" How you doin?\n - /stop <filter keyword>: diesen Filter stoppen.",
+  "MODULE_NAME": "Filter"
 }
