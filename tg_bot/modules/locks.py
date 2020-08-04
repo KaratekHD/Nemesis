@@ -260,7 +260,8 @@ def build_lock_message(chat_id):
                    "\n - game = `{}`" \
                    "\n - location = `{}`".format(locks.sticker, locks.audio, locks.voice, locks.document,
                                                  locks.video, locks.videonote, locks.contact, locks.photo, locks.gif, locks.url,
-                                                 locks.bots, locks.forward, locks.game, locks.location) # STICKER,
+                                                 locks.bots, locks.forward, locks.game, locks.location) # STICKER, AUDIO, VOICE, DOCUMENT
+            # VIDEO,  VIDEONOTE, CONTACT, PHOTO, GIF, URL, BOTS, FORWARD, GAME, LOCATION
         if restr:
             res += "\n - messages = `{}`" \
                    "\n - media = `{}`" \
@@ -268,6 +269,7 @@ def build_lock_message(chat_id):
                    "\n - previews = `{}`" \
                    "\n - all = `{}`".format(restr.messages, restr.media, restr.other, restr.preview,
                                             all([restr.messages, restr.media, restr.other, restr.preview]))
+    # MESSAGES, MEDIA, OTHER, PREVIEWS, ALL
     return res
 
 
@@ -302,9 +304,9 @@ eg:
 Locking urls will auto-delete all messages with urls, locking stickers will delete all \
 stickers, etc.
 Locking bots will stop non-admins from adding bots to the chat.
-"""
+""" # HELP
 
-__mod_name__ = "Locks"
+__mod_name__ = "Locks" # MODULE_NAME
 
 LOCKTYPES_HANDLER = DisableAbleCommandHandler("locktypes", locktypes)
 LOCK_HANDLER = CommandHandler("lock", lock, pass_args=True, filters=Filters.group)
