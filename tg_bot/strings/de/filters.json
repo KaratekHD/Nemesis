@@ -1,0 +1,17 @@
+{
+  "BASIC_FILTER_STRING": "*Filter in diesem Chat:*\n",
+  "NO_FILTERS_ACTIVE": "Hier sind keine Filter aktiv!",
+  "ERR_NO_MESSAGE": "There is no note message - You can't JUST have buttons, you need a message to go with it!",
+  "ERR_NO_ANSWER": "Du hast nicht angegeben, womit ich antworten soll!",
+  "HANDLER_ADDED": "Handler '{}' hinzugefügt!",
+  "HANDLER_REMOVED": "Ja, ich höre auf, darauf zu antworten.",
+  "ERR_NOT_A_FILTER": "Das ist kein aktueller Filter - führ /filters für alle aktiven Filter aus.",
+  "ERR_BAD_URL": "Du scheinst zu versuchen, ein nicht unterstütztes url-Protokoll zu verwenden. Telegram unterstützt keine Schaltflächen für einige Protokolle, wie zum Beispiel tg://. Bitte versuch es erneut, oder frag in @MarieSupport nach Hilfe.",
+  "ERR_NO_REPLY": "deine Nachricht konnte nicht gesendet werden, da sie falsch formatiert ist. Frag in @MarieSupport nach, wenn du nicht herausfinden kannst, warum!",
+  "ERR_COULDNT_PARSE": "Nachricht %s konnte nicht geparst werden",
+  "ERR_COULDNT_PARSE_FILTER": "Could not parse filter %s in chat %s",
+  "STATS": "{} Filter, über {} Chats.",
+  "CHAT_SETTINGS": "Es gibt hier `{}` benutzerdefinierte Filter.",
+  "HELP": " - /filters: listet alle aktiven Filter in diesem Chat auf.\n\n*nur Admins:*\n - /filter <keyword> <reply message>: diesem Chat einen Filter hinzufügen. Der Bot antwortet nun auf diese Nachricht immer dann, wenn 'Schlüsselwörter' erwähnt werden. Wenn du auf einen Sticker mit einem Schlüsselwort antwortest, wird der Bot mit diesem Sticker antworten. HINWEIS: Alle Filter-Schlüsselwörter sind klein geschrieben. Wenn du möchtest, dass dein Schlüsselwort ein Satz ist, verwende Anführungszeichen. zum Beispiel: /filter \"hey there\" Wie geht es dir?\n - /stop <filter keyword>: diesen Filter stoppen.",
+  "MODULE_NAME": "Filter"
+}
