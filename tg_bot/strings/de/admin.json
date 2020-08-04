@@ -1,5 +1,5 @@
 {
-  "ERR_NO_USER": "Sie nehmen auf keinen Benutzer Bezug.",
+  "ERR_NO_USER": "Du nimmst auf keinen Benutzer Bezug.",
   "ERR_CANT_PROMOTE_ADMIN": "Wie soll ich jemanden zum Admin ernennen, der schon einer ist?",
   "ERR_CANT_PROMOTE_MYSELF": "Ich kann mich nicht selber befördern! Lass es einen Admin für mich machen.",
   "PROMOTE_SUCCESS": "Erfolgreich befördert!",
@@ -8,15 +8,15 @@
   "ERR_DEMOTE_NON_ADMIN": "Ich kann niemandem Rechte entziehen, der nie welche hatte!",
   "ERR_CANT_DEMOTE_MYSELF": "Ich kann mir nicht selber die Rechte entziehen! Und wollte es auch nicht...",
   "DEMOTE_SUCCESS": "Erfolgreich degradiert!",
-  "DEMOTE_SUCCESS_HTML": "<b>{}:</b>\n#DEMOTED\n<b>Admin:</b> {}\n<b>User:</b> {}",
-  "ERR_GENERAL": "Could not demote. I might not be an admin, or the admin status was appointed by another user, so I can't act upon them!",
-  "PINNED_HTML": "<b>{}:</b>\n#PINNED\n<b>Admin:</b> {}",
-  "UNPINNED_HTML": "<b>{}:</b>\nUNPINNED\n<b>Admin:</b> {}",
+  "DEMOTE_SUCCESS_HTML": "<b>{}:</b>\n#DEGRADIEREN\n<b>Admin:</b> {}\n<b>Benutzer:</b> {}",
+  "ERR_GENERAL": "Ich konnte nicht degradieren. Möglicherweise bin ich kein Admin, oder der Admin-Status wurde von einem anderen Benutzer ernannt, so dass ich nicht nach dir handeln kann!",
+  "PINNED_HTML": "<b>{}:</b>\n#ANGEPINNT\n<b>Admin:</b> {}",
+  "UNPINNED_HTML": "<b>{}:</b>\nABGEPINNT\n<b>Admin:</b> {}",
   "ERR_NO_PERMS_INVITELINK": "Ich habe keinen Zugang zum Einladungslink, bitte überprüfe meine Rechte!",
   "ERR_NO_SUPERGROUP": "Ich kann Einladungslinks nur für Supergruppen und Kanäle ausgeben!",
   "THIS_CHAT": "dieser Chat",
   "ADMINS_IN": "Admins in *{}*:",
   "YOU_ADMIN": "Du bist ein *Admin*: `{}`",
-  "HELP": " - /adminlist: list of admins in the chat\n\n*Admin only:*\n - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.\n - /unpin: unpins the currently pinned message\n - /invitelink: gets invitelink\n - /promote: promotes the user replied to\n - /demote: demotes the user replied to",
+  "HELP": " -/adminlist: Liste der Admins im Chat\n\n*Nur Admins:*\n - /pin: pinnt die Nachricht, auf die geantwortet wird, still an - füge 'laut' oder 'benachrichtigen' hinzu, um die Benutzer zu benachrichtigen.\n - /unpin: hebt die aktuell angeheftete Nachricht auf\n - /invitelink: Einladungslink wird gesendet\n - /promote: befördert den Benutzer, auf den geantwortet wurde\n - /demote: degradiert den Benutzer, auf den geantwortet wurde",
   "MODULE_NAME": "Admin"
 }

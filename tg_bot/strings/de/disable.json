@@ -1,0 +1,15 @@
+{
+  "DISABLED_COMMAND": "Die Verwendung von `{}` deaktiviert",
+  "ERR_INVALID_COMMAND": "Dieser Befehl kann nicht deaktiviert werden",
+  "ERR_NO_COMMAND": "Was soll ich deaktivieren?",
+  "ENABLED_COMMAND": "Die Verwendung von `{}` ist aktiviert",
+  "ERR_NOT_DISABLED": "Ist das überhaupt deaktiviert?",
+  "ERR_NO_COMMAND_TO_ENABLE": "Was sollte ich aktivieren?",
+  "LIST_OF_COMMANDS": "Die folgenden Befehle sind umschaltbar:\n{}",
+  "NO_CMD_AVAILABLE": "Es können keine Befehle deaktiviert werden.",
+  "NO_CMD_DISABLED": "Keine Befehle sind deaktiviert!",
+  "DISABLED_COMMANDS": "Die folgenden Befehle sind derzeit eingeschränkt:\n{}",
+  "STATS": "{} deaktivierte Elemente, über {} Chats hinweg.",
+  "MODULE_NAME": "Befehl deaktivieren",
+  "HELP": " - /cmds: den aktuellen Status von deaktivierten Befehlen überprüfen\n\n*Nur Admins:*\n - /enable <cmd name>: diesen Befehl aktivieren\n - /disable <cmd name>: diesen Befehl deaktivieren\n - /listcmds: alle möglichen umschaltbaren Befehle auflisten"
+}
