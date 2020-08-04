@@ -1,0 +1,21 @@
+{
+  "LINK" : "\n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">click here</a>",
+  "ERR_MISSING_RETURN_STATE" : "%s was set as loggable, but had no return statement.",
+  "ERR_LOG_CHANNEL_DELETED" : "This log channel has been deleted - unsetting.",
+  "ERR_IN_FORMATING" : "\n\nFormatting has been disabled due to an unexpected error.",
+  "CURRENT_LOG" : "This group has all it's logs sent to: {} (`{}`)",
+  "NO_LOG" : "No log channel has been set for this group!",
+  "MSG_FORWARD" : "Now, forward the /setlog to the group you want to tie this channel to!",
+  "ERR_CANT_DELETE" : "Error deleting message in log channel. Should work anyway though.",
+  "LOG_SET" : "This channel has been set as the log channel for {}.",
+  "SUCCESS_SET" : "Successfully set log channel!",
+  "ERR_GENERAL" : "ERROR in setting the log channel.",
+  "STEPS" : "The steps to set a log channel are:\n - add bot to the desired channel\n - send /setlog to the channel\n - forward the /setlog to the group\n",
+  "SUCCESS_UNSET" : "Log channel has been un-set.",
+  "SUCCESS_UNSET_CHANNEL" : "Channel has been unlinked from {}",
+  "ERR_NO_LOG" : "No log channel has been set yet!",
+  "SETTINGS" : "This group has all it's logs sent to: {} (`{}`)",
+  "SETTINGS_CLEAN" : "No log channel is set for this group!",
+  "HELP" : "*Admin only:*\n- /logchannel: get log channel info\n- /setlog: set the log channel.\n- /unsetlog: unset the log channel.\n\nSetting the log channel is done by:\n- adding the bot to the desired channel (as an admin!)\n- sending /setlog in the channel\n- forwarding the /setlog to the group",
+  "MODULE_NAME" : "Log Channels"
+}
