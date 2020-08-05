@@ -257,10 +257,10 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
 
-    LOGGER.info("Target: %s CO_OWNER_ID: %s", user.id, CO_OWNER_ID)
     if user.id == OWNER_ID:
         text += "\n\nThis person is my owner - I would never do anything against them!"
     elif user.id == CO_OWNER_ID:
+        LOGGER.info("HIT!")
         text += "\n\nThis person is my co-owner - Just as powerful as my owner! Seems like he really trusts them, so will I."
 
     else:
