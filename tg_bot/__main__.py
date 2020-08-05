@@ -177,7 +177,7 @@ def help_button(bot: Bot, update: Update):
     try:
         if mod_match:
             module = mod_match.group(1)
-            text = get_string("main", "HELP_FOR_MODULE", update.effective_chat.id).format(HELPABLE[module].__mod_name__) \
+            text = get_string("main", "HELP_FOR_MODULE", lang.get_lang(update.effective_chat.id)).format(HELPABLE[module].__mod_name__) \
                    + HELPABLE[module].__help__ # HELP_FOR_MODULE
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
@@ -186,20 +186,20 @@ def help_button(bot: Bot, update: Update):
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
-            query.message.reply_text(HELP_STRINGS,
+            query.message.reply_text(get_string("main", "HELP_FOR_MODULE", lang.get_lang(update.effective_chat.id)),
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(curr_page - 1, HELPABLE, "help")))
 
         elif next_match:
             next_page = int(next_match.group(1))
-            query.message.reply_text(HELP_STRINGS,
+            query.message.reply_text(get_string("main", "HELP_FOR_MODULE", lang.get_lang(update.effective_chat.id)),
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(next_page + 1, HELPABLE, "help")))
 
         elif back_match:
-            query.message.reply_text(text=HELP_STRINGS,
+            query.message.reply_text(text=get_string("main", "HELP_FOR_MODULE", lang.get_lang(update.effective_chat.id)),
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")))
 
@@ -225,7 +225,7 @@ def get_help(bot: Bot, update: Update):
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
 
-        update.effective_message.reply_text(get_string("main", "PM_FOR_HELP", update.effective_chat.id),
+        update.effective_message.reply_text(get_string("main", "PM_FOR_HELP", lang.get_lang(update.effective_chat.id)),
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text=get_string("main", "PM_FOR_HELP_BUTTON", lang.get_lang(chat.id)),
                                                                        url="t.me/{}?start=help".format(
@@ -234,7 +234,7 @@ def get_help(bot: Bot, update: Update):
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
-        text = get_string("main", "HELP_FOR_MODULE_AVAILABLE", update.effective_chat.id).format(HELPABLE[module].__mod_name__) \
+        text = get_string("main", "HELP_FOR_MODULE_AVAILABLE", lang.get_lang(update.effective_chat.id)).format(HELPABLE[module].__mod_name__) \
                + HELPABLE[module].__help__ # HELP_FOR_MODULE_AVAILABLE
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
