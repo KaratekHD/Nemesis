@@ -23,22 +23,6 @@ from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
-HELP_STRINGS = """
-Hey there! My name is *{}*.
-I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of \
-the things I can help you with. You can also read my documentation at [karatek.net](https://karatek.net/Projects/Nemesisdocs/).
-
-*Main* commands available:
- - /start: start the bot
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
-
-{}
-And the following:
-""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -177,7 +161,9 @@ def help_button(bot: Bot, update: Update):
     try:
         if mod_match:
             module = mod_match.group(1)
-            text = get_string("main", "HELP_FOR_MODULE", lang.get_lang(update.effective_chat.id)).format(HELPABLE[module].__mod_name__) \
+            HELP_STRINGS = get_string("main", "HELP_STRINGS", lang.get_lang(update.effective_chat.id)).format(dispatcher.bot.first_name,
+                       "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
+            text = HELP_STRINGS.format(HELPABLE[module].__mod_name__) \
                    + HELPABLE[module].__help__ # HELP_FOR_MODULE
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
@@ -186,20 +172,20 @@ def help_button(bot: Bot, update: Update):
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
-            query.message.reply_text(get_string("main", "HELP_FOR_MODULE", lang.get_lang(update.effective_chat.id)),
+            query.message.reply_text(HELP_STRINGS,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(curr_page - 1, HELPABLE, "help")))
 
         elif next_match:
             next_page = int(next_match.group(1))
-            query.message.reply_text(get_string("main", "HELP_FOR_MODULE", lang.get_lang(update.effective_chat.id)),
+            query.message.reply_text(HELP_STRINGS,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(next_page + 1, HELPABLE, "help")))
 
         elif back_match:
-            query.message.reply_text(text=get_string("main", "HELP_FOR_MODULE", lang.get_lang(update.effective_chat.id)),
+            query.message.reply_text(text=HELP_STRINGS,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")))
 
@@ -239,7 +225,8 @@ def get_help(bot: Bot, update: Update):
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
     else:
-        send_help(chat.id, get_string("main", "HELP_STRINGS", lang.get_lang(chat.id)))
+        send_help(chat.id, get_string("main", "HELP_STRINGS", lang.get_lang(chat.id)).format(dispatcher.bot.first_name,
+                       "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n"))
 
 
 def send_settings(chat_id, user_id, user=False):
