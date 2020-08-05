@@ -259,7 +259,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     if user.id == OWNER_ID:
         text += "\n\nThis person is my owner - I would never do anything against them!"
-    if user.id == CO_OWNER_ID:
+    elif user.id == CO_OWNER_ID:
         text += "\n\nThis person is my co-owner - Just as powerful as my owner! Seems like he really trusts them, so will I."
     else:
         if user.id in SUDO_USERS:
