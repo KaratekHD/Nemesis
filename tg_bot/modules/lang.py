@@ -30,6 +30,13 @@ def setlang(bot: Bot, update: Update, args: List[str]):
 
 __mod_name__ = "Languages"
 
+def __chat_settings__(chat_id):
+    return "Language in this chat, change with /lang: `{}`".format(sql.get_lang(chat_id))
+
+def __user_settings__(user_id):
+    return "Your current language is `{}`.\nChange this with /lang in PM.".format(
+        sql.get_lang(user_id)
+
 __help__ = "Test\n\nThis is a test."
 
 LANG_HANDLER = CommandHandler("lang", setlang, pass_args=True)
