@@ -3,6 +3,7 @@ import threading
 from sqlalchemy import Column, String, UnicodeText, func, distinct
 
 from tg_bot.modules.sql import SESSION, BASE
+from tg_bot import DEFAULT_LANG
 
 
 class Lang(BASE):
@@ -35,7 +36,7 @@ def set_lang(chat_id, lang_text):
 
 def get_lang(chat_id):
     lang = SESSION.query(Lang).get(str(chat_id))
-    ret = ""
+    ret = DEFAULT_LANG
     if lang:
         ret = lang.lang
 
