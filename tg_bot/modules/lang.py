@@ -18,11 +18,12 @@ def setlang(bot: Bot, update: Update, args: List[str]):
     args = raw_text.split(None, 1)  # use python's maxsplit to separate cmd and args
     if len(args) == 2:
         txt = args[1]
-        if txt == de:
+        if txt == "de":
             sql.set_lang(chat_id, "de")
             msg.reply_text("Die Sprache wurde auf 'Deutsch' gesetzt.'")
-        else:
-            msg.reply_text("Bad syntax.")
+    else:
+        msg.reply_text("Bad syntax.")
+
 
 __mod_name__ = "Languages"
 
