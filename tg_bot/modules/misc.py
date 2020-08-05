@@ -259,21 +259,24 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     if user.id == OWNER_ID:
         text += "\n\nThis person is my owner - I would never do anything against them!"
-    elif user.id == CO_OWNER_ID:
-        LOGGER.info("HIT!")
-        text += "\n\nThis person is my co-owner - Just as powerful as my owner! Seems like he really trusts them, so will I."
+
 
     else:
-        if user.id in SUDO_USERS:
-            text += "\nThis person is one of my sudo users! " \
-                    "Nearly as powerful as my owner - so watch it."
+        if user.id == CO_OWNER_ID:
+            LOGGER.info("HIT!")
+            text += "\n\nThis person is my co-owner - Just as powerful as my owner! Seems like he really trusts them, so will I."
+
         else:
-            if user.id in SUPPORT_USERS:
-                text += "\nThis person is one of my support users! " \
+            if user.id in SUDO_USERS:
+                text += "\nThis person is one of my sudo users! " \
+                    "Nearly as powerful as my owner - so watch it."
+            else:
+                if user.id in SUPPORT_USERS:
+                    text += "\nThis person is one of my support users! " \
                         "Not quite a sudo user, but can still gban you off the map."
 
-            if user.id in WHITELIST_USERS:
-                text += "\nThis person has been whitelisted! " \
+                if user.id in WHITELIST_USERS:
+                    text += "\nThis person has been whitelisted! " \
                         "That means I'm not allowed to ban/kick them."
 
     for mod in USER_INFO:
