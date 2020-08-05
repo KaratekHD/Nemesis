@@ -36,6 +36,11 @@ if ENV:
     except ValueError:
         raise Exception(get_string(module, "ERR_INVALID_OWNER_ID", DEFAULT_LANG)) # ERR_INVALID_OWNER_ID
 
+    try:
+        CO_OWNER_ID = int(os.environ.get('CO_OWNER_ID', None))
+    except ValueError:
+        raise Exception(get_string(module, "ERR_INVALID_OWNER_ID", DEFAULT_LANG)) # ERR_INVALID_OWNER_ID # TODO CHange!
+
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None)
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
@@ -68,7 +73,6 @@ if ENV:
     WORKERS = int(os.environ.get('WORKERS', 8))
     BAN_STICKER = os.environ.get('BAN_STICKER', 'CAADAgADOwADPPEcAXkko5EB3YGYAg')
     ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
-    CO_OWNER_ID = os.environ.get('CO_OWNER_ID')
 
 
 else:
@@ -79,6 +83,10 @@ else:
     except ValueError:
         raise Exception(get_string(module, "ERR_CONFIG_INVALID_OWNER_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_OWNER_ID
 
+    try:
+        CO_OWNER_ID = int(Config.CO_OWNER_ID)
+    except ValueError:
+        raise Exception(get_string(module, "ERR_CONFIG_INVALID_OWNER_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_OWNER_ID # TODO CHANGE!
     MESSAGE_DUMP = Config.MESSAGE_DUMP
     OWNER_USERNAME = Config.OWNER_USERNAME
 
@@ -111,7 +119,6 @@ else:
     WORKERS = Config.WORKERS
     BAN_STICKER = Config.BAN_STICKER
     ALLOW_EXCL = Config.ALLOW_EXCL
-    CO_OWNER_ID = Config.CO_OWNER_ID
 
 
 
