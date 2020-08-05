@@ -5,6 +5,7 @@ from telegram.ext import run_async, CommandHandler
 
 from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
+import tg_bot.modules.sql.lang_sql as sql
 
 
 @run_async
@@ -12,9 +13,16 @@ from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
 @user_admin
 def setlang(bot: Bot, update: Update, args: List[str]):
     chat_id = update.effective_chat.id
-    message = update.effective_message  # type: Optional[Message]
-    chat = update.effective_chat  # type: Optional[Chat]
-    message.reply_text("Test")
+    msg = update.effective_message  # type: Optional[Message]
+    raw_text = msg.text
+    args = raw_text.split(None, 1)  # use python's maxsplit to separate cmd and args
+    if len(args) == 2:
+        txt = args[1]
+        if txt == de:
+            sql.set_lang(chat_id, "de")
+            msg.reply_text("Die Sprache wurde auf 'Deutsch' gesetzt.'")
+        else:
+            msg.reply_text("Bad syntax.")
 
 __mod_name__ = "Languages"
 

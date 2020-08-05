@@ -33,7 +33,7 @@ def set_lang(chat_id, lang_text):
         SESSION.commit()
 
 
-def get_rules(chat_id):
+def get_lang(chat_id):
     lang = SESSION.query(Lang).get(str(chat_id))
     ret = ""
     if lang:
