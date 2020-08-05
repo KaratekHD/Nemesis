@@ -1,3 +1,5 @@
+from typing import List
+
 from telegram import Bot, Update
 from telegram.ext import run_async, CommandHandler
 
