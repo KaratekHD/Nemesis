@@ -148,8 +148,8 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_text(
-                get_string("main", "PM_START_TEXT", lang.get_lang(update.effective_chat.id).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
-                parse_mode=ParseMode.MARKDOWN))
+                get_string("main", "PM_START_TEXT", lang.get_lang(update.effective_chat.id)).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
+                parse_mode=ParseMode.MARKDOWN)
     else:
         update.effective_message.reply_text(get_string("main", "START_IN_GROUP", lang.get_lang(update.effective_chat.id))) # START_IN_GROUP
 
