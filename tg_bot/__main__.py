@@ -159,10 +159,12 @@ def help_button(bot: Bot, update: Update):
     next_match = re.match(r"help_next\((.+?)\)", query.data)
     back_match = re.match(r"help_back", query.data)
     try:
+        HELP_STRINGS = get_string("main", "HELP_STRINGS", lang.get_lang(update.effective_chat.id)).format(
+            dispatcher.bot.first_name,
+            "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
         if mod_match:
             module = mod_match.group(1)
-            HELP_STRINGS = get_string("main", "HELP_STRINGS", lang.get_lang(update.effective_chat.id)).format(dispatcher.bot.first_name,
-                       "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
+
             text = HELP_STRINGS.format(HELPABLE[module].__mod_name__) \
                    + HELPABLE[module].__help__ # HELP_FOR_MODULE
             query.message.reply_text(text=text,

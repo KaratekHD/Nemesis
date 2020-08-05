@@ -13,7 +13,8 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.log_channel import loggable
-
+from tg_bot.strings.string_helper import get_string
+import tg_bot.modules.sql.lang_sql as lang
 
 @run_async
 @bot_admin
@@ -28,16 +29,16 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.") # ERR_NO_USER
+        message.reply_text(get_string("admin", "ERR_NO_USER", lang.get_lang(update.effective_chat.id))) # ERR_NO_USER
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'administrator' or user_member.status == 'creator':
-        message.reply_text("How am I meant to promote someone that's already an admin?") # ERR_CANT_PROMOTE_ADMIN
+        message.reply_text(get_string("admin", "ERR_CANT_PROMOTE_ADMIN", lang.get_lang(update.effective_chat.id))) # ERR_CANT_PROMOTE_ADMIN
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't promote myself! Get an admin to do it for me.") # ERR_CANT_PROMOTE_MYSELF
+        message.reply_text(get_string("admin", "ERR_CANT_PROMOTE_MYSELF", lang.get_lang(update.effective_chat.id))) # ERR_CANT_PROMOTE_MYSELF
         return ""
 
     # set same perms as bot - bot can't assign higher perms than itself!
@@ -53,11 +54,8 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
 
-    message.reply_text("Successfully promoted!") # PROMOTE_SUCCESS
-    return "<b>{}:</b>" \
-           "\n#PROMOTED" \
-           "\n<b>Admin:</b> {}" \
-           "\n<b>User:</b> {}".format(html.escape(chat.title),
+    message.reply_text(get_string("admin", "PROMOTE_SUCCESS", lang.get_lang(update.effective_chat.id))) # PROMOTE_SUCCESS
+    return get_string("admin", "PROMOTE_SUCCESS_HTML", lang.get_lang(update.effective_chat.id)).format(html.escape(chat.title),
                                       mention_html(user.id, user.first_name),
                                       mention_html(user_member.user.id, user_member.user.first_name)) # PROMOTE_SUCCESS_HTML
 
@@ -74,20 +72,20 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.") # ERR_NO_USER
+        message.reply_text(get_string("admin", "ERR_NO_USER", lang.get_lang(update.effective_chat.id))) # ERR_NO_USER
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'creator':
-        message.reply_text("This person CREATED the chat, how would I demote them?") # ERR_DEMOTE_CREATOR
+        message.reply_text(get_string("admin", "ERR_DEMOTE_CREATOR", lang.get_lang(update.effective_chat.id))) # ERR_DEMOTE_CREATOR
         return ""
 
     if not user_member.status == 'administrator':
-        message.reply_text("Can't demote what wasn't promoted!") # ERR_DEMOTE_NON_ADMIN
+        message.reply_text(get_string("admin", "ERR_DEMOTE_NON_ADMIN", lang.get_lang(update.effective_chat.id))) # ERR_DEMOTE_NON_ADMIN
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't demote myself! Get an admin to do it for me.") # ERR_CANT_DEMOTE_MYSELF
+        message.reply_text(get_string("admin", "ERR_CANT_DEMOTE_MYSELF", lang.get_lang(update.effective_chat.id))) # ERR_CANT_DEMOTE_MYSELF
         return ""
 
     try:
@@ -100,17 +98,13 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_restrict_members=False,
                               can_pin_messages=False,
                               can_promote_members=False)
-        message.reply_text("Successfully demoted!") # DEMOTE_SUCCESS
-        return "<b>{}:</b>" \
-               "\n#DEMOTED" \
-               "\n<b>Admin:</b> {}" \
-               "\n<b>User:</b> {}".format(html.escape(chat.title),
+        message.reply_text(get_string("admin", "DEMOTE_SUCCESS", lang.get_lang(update.effective_chat.id))) # DEMOTE_SUCCESS
+        return get_string("admin", "DEMOTE_SUCCESS_HTML", lang.get_lang(update.effective_chat.id)).format(html.escape(chat.title),
                                           mention_html(user.id, user.first_name),
                                           mention_html(user_member.user.id, user_member.user.first_name)) # DEMOTE_SUCCESS_HTML
 
     except BadRequest:
-        message.reply_text("Could not demote. I might not be an admin, or the admin status was appointed by another "
-                           "user, so I can't act upon them!") # ERR_GENERAL
+        message.reply_text(get_string("admin", "ERR_GENERAL", lang.get_lang(update.effective_chat.id))) # ERR_GENERAL
         return ""
 
 
@@ -139,9 +133,7 @@ def pin(bot: Bot, update: Update, args: List[str]) -> str:
                 pass
             else:
                 raise
-        return "<b>{}:</b>" \
-               "\n#PINNED" \
-               "\n<b>Admin:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name)) # PINNED_HTML
+        return get_string("admin", "PINNED_HTML", lang.get_lang(update.effective_chat.id)).format(html.escape(chat.title), mention_html(user.id, user.first_name)) # PINNED_HTML
 
     return ""
 
@@ -163,9 +155,7 @@ def unpin(bot: Bot, update: Update) -> str:
         else:
             raise
 
-    return "<b>{}:</b>" \
-           "\n#UNPINNED" \
-           "\n<b>Admin:</b> {}".format(html.escape(chat.title),
+    return get_string("admin", "UNPINNED_HTML", lang.get_lang(update.effective_chat.id)).format(html.escape(chat.title),
                                        mention_html(user.id, user.first_name)) # UNPINNED_HTML
 
 
@@ -182,15 +172,15 @@ def invite(bot: Bot, update: Update):
             invitelink = bot.exportChatInviteLink(chat.id)
             update.effective_message.reply_text(invitelink)
         else:
-            update.effective_message.reply_text("I don't have access to the invite link, try changing my permissions!") # ERR_NO_PERMS_INVITELINK
+            update.effective_message.reply_text(get_string("admin", "ERR_NO_PERMS_INVITELINK", lang.get_lang(update.effective_chat.id))) # ERR_NO_PERMS_INVITELINK
     else:
-        update.effective_message.reply_text("I can only give you invite links for supergroups and channels, sorry!") # ERR_NO_SUPERGROUP
+        update.effective_message.reply_text(get_string("admin", "ERR_NO_PERMS_INVITELINK", lang.get_lang(update.effective_chat.id))) # ERR_NO_SUPERGROUP
 
 
 @run_async
 def adminlist(bot: Bot, update: Update):
     administrators = update.effective_chat.get_administrators()
-    text = "Admins in *{}*:".format(update.effective_chat.title or "this chat") # ADMINS_IN and THIS_CHAT
+    text = get_string("admin", "ADMINS_IN", lang.get_lang(update.effective_chat.id)).format(update.effective_chat.title or get_string("admin", "THIS_CHAT", lang.get_lang(update.effective_chat.id))) # ADMINS_IN and THIS_CHAT
     for admin in administrators:
         user = admin.user
         name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
@@ -202,7 +192,7 @@ def adminlist(bot: Bot, update: Update):
 
 
 def __chat_settings__(chat_id, user_id):
-    return "You are *admin*: `{}`".format(
+    return get_string("admin", "YOU_ADMIN", lang.get_lang(chat_id)).format(
         dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator")) # YOU_ADMIN
 
 
