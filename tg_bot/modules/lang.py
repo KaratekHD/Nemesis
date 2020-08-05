@@ -14,7 +14,7 @@ def setlang(bot: Bot, update: Update, args: List[str]):
     chat_id = update.effective_chat.id
     message = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
-    message.reply_message("Test")
+    message.reply_text("Test")
 
 __mod_name__ = "Languages"
 
