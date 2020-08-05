@@ -68,6 +68,7 @@ if ENV:
     WORKERS = int(os.environ.get('WORKERS', 8))
     BAN_STICKER = os.environ.get('BAN_STICKER', 'CAADAgADOwADPPEcAXkko5EB3YGYAg')
     ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
+    CO_OWNER_ID = os.environ.get('CO_OWNER_ID')
 
 
 else:
@@ -110,10 +111,12 @@ else:
     WORKERS = Config.WORKERS
     BAN_STICKER = Config.BAN_STICKER
     ALLOW_EXCL = Config.ALLOW_EXCL
+    CO_OWNER_ID = Config.CO_OWNER_ID
 
 
 
 SUDO_USERS.add(OWNER_ID)
+SUDO_USERS.add(CO_OWNER_ID)
 updater = tg.Updater(TOKEN, workers=WORKERS)
 
 dispatcher = updater.dispatcher

@@ -8,7 +8,7 @@ from telegram.ext import MessageHandler, Filters, CommandHandler, run_async
 from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
 
 import tg_bot.modules.sql.welcome_sql as sql
-from tg_bot import dispatcher, OWNER_ID, LOGGER
+from tg_bot import dispatcher, OWNER_ID, LOGGER, CO_OWNER_ID
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from tg_bot.modules.helper_funcs.msg_types import get_welcome_type
@@ -86,7 +86,7 @@ def new_member(bot: Bot, update: Update):
         new_members = update.effective_message.new_chat_members
         for new_mem in new_members:
             # Give the owner a special welcome
-            if new_mem.id == OWNER_ID:
+            if new_mem.id == OWNER_ID or new_mem.id == CO_OWNER_ID:
                 update.effective_message.reply_text("Master is in the houseeee, let's get this party started!") # WELCOME_OWNER
                 continue
 
@@ -153,7 +153,7 @@ def left_member(bot: Bot, update: Update):
                 return
 
             # Give the owner a special goodbye
-            if left_mem.id == OWNER_ID:
+            if left_mem.id == OWNER_ID or left_mem.id == CO_OWNER_ID:
                 update.effective_message.reply_text("RIP Master") # GOODBYE_OWNER
                 return
 

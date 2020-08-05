@@ -37,6 +37,7 @@ class Config(object):
     WORKERS = 8  # Number of subthreads to use. This is the recommended amount - see for yourself what works best!
     BAN_STICKER = 'CAADAgADOwADPPEcAXkko5EB3YGYAg'  # banhammer marie sticker
     ALLOW_EXCL = False  # Allow ! commands as well as /
+    CO_OWNER_ID = "" # a persons ID
 
 
 class Production(Config):
