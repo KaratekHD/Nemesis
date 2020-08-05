@@ -20,7 +20,10 @@ def setlang(bot: Bot, update: Update, args: List[str]):
         txt = args[1]
         if txt == "de":
             sql.set_lang(chat_id, "de")
-            msg.reply_text("Die Sprache wurde auf 'Deutsch' gesetzt.'")
+            msg.reply_text("Die Sprache wurde auf 'Deutsch' gesetzt.")
+        else:
+            sql.set_lang(chat_id, "en")
+            msg.reply_text("Set language to English.")
     else:
         msg.reply_text("Bad syntax.")
 
