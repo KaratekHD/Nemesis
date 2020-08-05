@@ -1,6 +1,6 @@
 {
   "PM_START_TEXT": "Hallo {}, ich bin {}! Wenn du irgendwelche Fragen über mich hast, lies /help und [meine Dokumentation](https://karatek.net/Projects/Nemesisdocs/).\n\nIch bin ein Gruppemverwaltungs Bot geschrieben in Python3, mit der python-telegram-bot Bibliothek, und bin komplett OpenSource;\ndu kannst meinen Quellcode [hier](github.com/KaratekHD/Nemesis) einsehen.\n\nÖffne gerne Pull Request und Issues, wenn du Probleme oder Dinge beizutragen hast. \n\nIn dem du Nemesis benutzt, stimmst du den Datenschutzrichtlinien von Karatek Software Development zu, zu finden auf [karatek.net](https://karatek.net/Legal/privacy_de/).",
-  "HELP_STRINGS": "Hallo! Mein Name ist *{}*.\nIch bin modularer Gruppenverwaltungs Bot mit einigen Extras! Sieh dir einige Dinge an, mit denen ich dir helfen kann. Auch kannst du meine Dokumentation auf [karatek.net](https://karatek.net/Projects/Nemesisdocs/) lesen.\n\n*Grundlegende* Befehle:\n - /start: den Bot starten\n - /help: Schickt dir diese Nachricht.\n - /help <Modul Name>: Schickt dir die Hilfe für das angegebene Modul.\n - /settings:\n   - als Privatnachricht: schickt dir die Einstellungen für alle unterstützten Module.\n   - in einer Gruppe: leitet dich zu einer Privatnachricht, die die jeweiligen Chat Einstellungen beinhaltet.\n\n{}\nUnd das folgende:",
+  "HELP_STRINGS": "Hey there! My name is {}.\nI'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of\nthe things I can help you with. You can also read my documentation at [karatek.net](https://karatek.net/Projects/Nemesisdocs/).\n\n*Main* commands available:\n - /start: start the bot\n - /help: PM's you this message.\n - /help <module name>: PM's you info about that module.\n - /settings:\n   - in PM: will send you your settings for all supported modules.\n   - in a group: will redirect you to pm, with all that chat's settings.\n\n{}\nAnd the following:",
   "HELP_STRINGS_PART_2": "\nAlle Befehle können entweder mit / oder ! benutzt werden.\n",
   "NO_TWO_MODULES": "Es können keine zwei Module mit dem gleichen Namen gleichzeitig geladen werden! Bitte ändere eines",
   "EDITED_MESSAGE": "Diese Person hat eine Nachricht bearbeitet",
@@ -15,7 +15,8 @@
   "HELP_FOR_MODULE_AVAILABLE": "Hier ist die verfügbare Hilfe des *{}* Moduls:\n",
   "CURRENT_SETTINGS": "Das sind deine Momentanen Einstellungen:",
   "ERR_NO_USER_SETTINGS": "Siehst so aus als gäbe es keine Benutzerspezifischen Einstellungen :'(",
-  "Q_SETTINGS_WHICH_MODULE": "Sieht so aus als wären keine Chat Einstellungen verfügbar :'(\nSende diese Nachricht in eine Gruppe in der du Administrator bist, um dessen aktuelle Einstellungen zu sehen!",
+  "Q_SETTINGS_WHICH_MODULE": "Which module would you like to check {}'s settings for?",
+  "Q_SETTINGS_TO_GROUP": "Seems like there aren't any chat settings available :'(\\nSend this in a group chat you're admin in to find its current settings!",
   "MODULE_SETTINGS": "*{}* hat die folgenden Einstellungen für das *{}* Modul:\n\n",
   "LOT_OF_SETTINGS": "Hallo! Hier sind ein paar Einstellungen für {} - geh los und such dir aus, was dich interessiert!",
   "ERR_EXCP_SETTINGS_BUTTONS": "Ausnahme in den Einstellungsknöpfen. %s",
