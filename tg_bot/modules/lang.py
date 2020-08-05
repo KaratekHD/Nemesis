@@ -35,7 +35,7 @@ def __chat_settings__(chat_id):
 
 def __user_settings__(user_id):
     return "Your current language is `{}`.\nChange this with /lang in PM.".format(
-        sql.get_lang(user_id)
+        sql.get_lang(user_id))
 
 __help__ = "Test\n\nThis is a test."
 
