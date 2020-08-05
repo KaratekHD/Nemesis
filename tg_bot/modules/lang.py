@@ -25,7 +25,7 @@ def setlang(bot: Bot, update: Update, args: List[str]):
             sql.set_lang(chat_id, "en")
             msg.reply_text("Set language to English.")
     else:
-        msg.reply_text("Bad syntax.")
+        msg.reply_text("You didn't tell me what language to set! Use /lang <de or en>!")
 
 
 __mod_name__ = "Languages"
