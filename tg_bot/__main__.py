@@ -1,6 +1,8 @@
 import datetime
 import importlib
 import re
+import tg_bot.modules.sql.lang_sql as lang
+
 from typing import Optional, List
 
 from telegram import Message, Chat, Update, Bot, User
@@ -12,6 +14,9 @@ from telegram.utils.helpers import escape_markdown
 
 from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
     ALLOW_EXCL
+
+from tg_bot.strings.string_helper import  get_string
+
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from tg_bot.modules import ALL_MODULES
@@ -146,7 +151,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN)
     else:
-        update.effective_message.reply_text("Yo, whadup?") # START_IN_GROUP
+        update.effective_message.reply_text(get_string("main", "START_IN_GROUP", lang.get_lang(update.effective_chat.id))) # START_IN_GROUP
 
 
 # for test purposes
