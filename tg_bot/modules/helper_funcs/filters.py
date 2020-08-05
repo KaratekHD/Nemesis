@@ -1,7 +1,7 @@
 from telegram import Message
 from telegram.ext import BaseFilter
 
-from tg_bot import SUPPORT_USERS, SUDO_USERS
+from tg_bot import SUPPORT_USERS, SUDO_USERS, OWNER_ID, CO_OWNER_ID
 
 
 class CustomFilters(object):
@@ -16,6 +16,12 @@ class CustomFilters(object):
             return bool(message.from_user and message.from_user.id in SUDO_USERS)
 
     sudo_filter = _Sudoers()
+
+    class _Admins(BaseFilter):
+        def filter(self, message: Message):
+            return bool((message.from_user and message.from_user.id == OWNER_ID) or (message.from_user and message.from_user.id == CO_OWNER_ID))
+
+    admin_filter = _Admins()
 
     class _MimeType(BaseFilter):
         def __init__(self, mimetype):

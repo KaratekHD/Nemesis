@@ -245,7 +245,7 @@ def build_lock_message(chat_id):
     else:
         res = "These are the locks in this chat:"
         if locks:
-            res += "\n - sticker = `{}`" \ 
+            res += "\n - sticker = `{}`" \
                    "\n - audio = `{}`" \
                    "\n - voice = `{}`" \
                    "\n - document = `{}`" \
