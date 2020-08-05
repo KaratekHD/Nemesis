@@ -262,9 +262,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 
 
     else:
-        LOGGER.info("Test")
         if user.id == CO_OWNER_ID:
-            LOGGER.info("HIT!")
             text += "\n\nThis person is my co-owner - Just as powerful as my owner! Seems like he really trusts them, so will I."
 
         else:
