@@ -16,6 +16,9 @@ from tg_bot.__main__ import STATS, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.helper_funcs.filters import CustomFilters
+from tg_bot.strings.string_helper import get_string, get_random_string
+
+import tg_bot.modules.sql.lang_sql as lang
 
 RUN_STRINGS = (
     "Where do you think you're going?",
@@ -146,7 +149,7 @@ GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
 
 @run_async
 def runs(bot: Bot, update: Update):
-    update.effective_message.reply_text(random.choice(RUN_STRINGS))
+    update.effective_message.reply_text(get_random_string("runs", lang.get_lang(update.effective_chat.id)))
 
 
 @run_async
@@ -209,20 +212,20 @@ def get_id(bot: Bot, update: Update, args: List[str]):
                     user2.id,
                     escape_markdown(user1.first_name),
                     user1.id),
-                parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN) # MSG_ID_WITH_FORWARD
         else:
             user = bot.get_chat(user_id)
             update.effective_message.reply_text("{}'s id is `{}`.".format(escape_markdown(user.first_name), user.id),
-                                                parse_mode=ParseMode.MARKDOWN)
+                                                parse_mode=ParseMode.MARKDOWN) # MSG_ID_USER
     else:
         chat = update.effective_chat  # type: Optional[Chat]
         if chat.type == "private":
             update.effective_message.reply_text("Your id is `{}`.".format(chat.id),
-                                                parse_mode=ParseMode.MARKDOWN)
+                                                parse_mode=ParseMode.MARKDOWN) # MSG_YOUR_ID
 
         else:
             update.effective_message.reply_text("This group's id is `{}`.".format(chat.id),
-                                                parse_mode=ParseMode.MARKDOWN)
+                                                parse_mode=ParseMode.MARKDOWN) # MSG_GROUP_ID
 
 
 @run_async
@@ -239,7 +242,7 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text("I can't extract a user from this.")
+        msg.reply_text("I can't extract a user from this.") # ERR_CANT_EXTRACT_USER
         return
 
     else:
@@ -247,36 +250,36 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     text = "<b>User info</b>:" \
            "\nID: <code>{}</code>" \
-           "\nFirst Name: {}".format(user.id, html.escape(user.first_name))
+           "\nFirst Name: {}".format(user.id, html.escape(user.first_name)) # MSG_USER_INFO_GENERAL
 
     if user.last_name:
-        text += "\nLast Name: {}".format(html.escape(user.last_name))
+        text += "\nLast Name: {}".format(html.escape(user.last_name)) # MSG_USER_INFO_LAST_NAME
 
     if user.username:
-        text += "\nUsername: @{}".format(html.escape(user.username))
+        text += "\nUsername: @{}".format(html.escape(user.username)) # MSG_USER_INFO_USERNAME
 
-    text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
+    text += "\nPermanent user link: {}".format(mention_html(user.id, "link")) # MSG_USER_INFO_LINK
 
     if user.id == OWNER_ID:
-        text += "\n\nThis person is my owner - I would never do anything against them!"
+        text += "\n\nThis person is my owner - I would never do anything against them!" # MSG_USER_INFO_OWNER
 
 
     else:
         if user.id == CO_OWNER_ID:
-            text += "\n\nThis person is my co-owner - Just as powerful as my owner! Seems like he really trusts them, so will I."
+            text += "\n\nThis person is my co-owner - Just as powerful as my owner! Seems like he really trusts them, so will I." # MSG_USER_INFO_CO_OWNER
 
         else:
             if user.id in SUDO_USERS:
                 text += "\nThis person is one of my sudo users! " \
-                    "Nearly as powerful as my owner - so watch it."
+                    "Nearly as powerful as my owner - so watch it." # MSG_USER_INFO_SUDO
             else:
                 if user.id in SUPPORT_USERS:
                     text += "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map."
+                        "Not quite a sudo user, but can still gban you off the map." # MSG_USER_INFO_SUPPORT
 
                 if user.id in WHITELIST_USERS:
                     text += "\nThis person has been whitelisted! " \
-                        "That means I'm not allowed to ban/kick them."
+                        "That means I'm not allowed to ban/kick them." # MSG_USER_INFO_WHITELIST
 
     for mod in USER_INFO:
         mod_info = mod.__user_info__(user.id).strip()
@@ -290,7 +293,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 def get_time(bot: Bot, update: Update, args: List[str]):
     location = " ".join(args)
     if location.lower() == bot.first_name.lower():
-        update.effective_message.reply_text("Its always banhammer time for me!")
+        update.effective_message.reply_text("Its always banhammer time for me!") # MSG_BANHAMMER_TIME
         bot.send_sticker(update.effective_chat.id, BAN_STICKER)
         return
 
@@ -325,7 +328,7 @@ def get_time(bot: Bot, update: Update, args: List[str]):
                 offset = json.loads(res.text)['dstOffset']
                 timestamp = json.loads(res.text)['rawOffset']
                 time_there = datetime.fromtimestamp(timenow + timestamp + offset).strftime("%H:%M:%S on %A %d %B")
-                update.message.reply_text("It's {} in {}".format(time_there, location))
+                update.message.reply_text("It's {} in {}".format(time_there, location)) # MSG_TIME
 
 
 @run_async
@@ -341,18 +344,18 @@ def echo(bot: Bot, update: Update):
 
 @run_async
 def gdpr(bot: Bot, update: Update):
-    update.effective_message.reply_text("Deleting identifiable data...")
+    update.effective_message.reply_text("Deleting identifiable data...") # MSG_DELETING_DATA
     for mod in GDPR:
         mod.__gdpr__(update.effective_user.id)
 
     update.effective_message.reply_text("Your personal data has been deleted.\n\nNote that this will not unban "
-                                        "you from any chats, as that is telegram data, not Marie data. "
+                                        "you from any chats, as that is telegram data, not Nemesis data. "
                                         "Flooding, warns, and gbans are also preserved, as of "
                                         "[this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
                                         "which clearly states that the right to erasure does not apply "
                                         "\"for the performance of a task carried out in the public interest\", as is "
                                         "the case for the aforementioned pieces of data.",
-                                        parse_mode=ParseMode.MARKDOWN)
+                                        parse_mode=ParseMode.MARKDOWN) # MSG_DELETING_SUCCESS
 
 
 MARKDOWN_HELP = """
@@ -377,16 +380,16 @@ If you want multiple buttons on the same line, use :same, as such:
 This will create two buttons on a single line, instead of one button per line.
 
 Keep in mind that your message <b>MUST</b> contain some text other than just a button!
-""".format(dispatcher.bot.first_name)
+""".format(dispatcher.bot.first_name) # MARKDOWN_HELP
 
 
 @run_async
 def markdown_help(bot: Bot, update: Update):
     update.effective_message.reply_text(MARKDOWN_HELP, parse_mode=ParseMode.HTML)
-    update.effective_message.reply_text("Try forwarding the following message to me, and you'll see!")
+    update.effective_message.reply_text("Try forwarding the following message to me, and you'll see!") # MARKDOWN_HELP_FORWARD
     update.effective_message.reply_text("/save test This is a markdown test. _italics_, *bold*, `code`, "
                                         "[URL](example.com) [button](buttonurl:github.com) "
-                                        "[button2](buttonurl://google.com:same)")
+                                        "[button2](buttonurl://google.com:same)") # MARKDOWN_HELP_FORWARD_MSG
 
 
 @run_async
