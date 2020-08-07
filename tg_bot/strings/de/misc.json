@@ -21,5 +21,5 @@
   "MARKDOWN_HELP_FORWARD": "Versuche mir die folgende Nachricht weiterzuleiten, und du wirst es sehen!",
   "MARKDOWN_HELP_FORWARD_MSG": "/save Test Dies ist ein Markdown Test. _kursiv_, *fett*, `code`, [URL](example.com) [button](buttonurl:karatek.net) [button2](buttonurl://github.com:same)",
   "CURRENT_STATS": "Aktuelle Statistiken:",
-  "HELP": " - /id: get the current group id. If used by replying to a message, gets that user's id.\n - /runs: reply a random string from an array of replies.\n - /slap: slap a user, or get slapped if not a reply.\n - /info: get information about a user.\n - /gdpr: deletes your information from the bot's database. Private chats only.\n\n - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats."
+  "HELP": " - /id: ruft die aktuelle Gruppen-ID auf. Wenn diese verwendet wird, indem auf eine Nachricht geantwortet wird, erhält diese Benutzer-ID.\n - /runs: antworte einen zufälligen String aus einem Array von Antworten.\n - /slap: \"schlägt\" einen Benutzer\n - /info: holt Informationen über einen Benutzer.\n - /gdpr: löscht deine Informationen aus der Datenbank des Bots. Nur private Chats.\n\n - /markdownhelp: Schnellübersicht wie Markdown im Telegramm funktioniert - kann nur in privaten Chats aufgerufen werden."
 }
