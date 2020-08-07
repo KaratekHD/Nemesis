@@ -1,0 +1,16 @@
+{
+  "1" : "{user1} {hits} {user2} with a {item}.",
+  "2" : "{user1} {hits} {user2} in the face with a {item}.",
+  "3" : "{user1} {hits} {user2} around a bit with a {item}.",
+  "4" : "{user1} {throws} a {item} at {user2}.",
+  "5" : "{user1} grabs a {item} and {throws} it at {user2}'s face.",
+  "6" : "{user1} launches a {item} in {user2}'s general direction.",
+  "7" : "{user1} starts slapping {user2} silly with a {item}.",
+  "8" : "{user1} pins {user2} down and repeatedly {hits} them with a {item}.",
+  "9" : "{user1} grabs up a {item} and {hits} {user2} with it.",
+  "10" : "{user1} ties {user2} to a chair and {throws} a {item} at them.",
+  "11" : "{user1} gave a friendly push to help {user2} learn to swim in lava.",
+  "12" : "{user1} takes a billiardtable and starts hiting {user2}.",
+  "13" : "{user1} rips out a tree and throws it at {user2}.",
+  "14" : "{user1} throws a steak at {user2}."
+}
