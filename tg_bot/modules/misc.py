@@ -20,65 +20,6 @@ from tg_bot.strings.string_helper import get_string, get_random_string
 
 import tg_bot.modules.sql.lang_sql as lang
 
-RUN_STRINGS = (
-    "Where do you think you're going?",
-    "Huh? what? did they get away?",
-    "ZZzzZZzz... Huh? what? oh, just them again, nevermind.",
-    "Get back here!",
-    "Not so fast...",
-    "Look out for the wall!",
-    "Don't leave me alone with them!!",
-    "You run, you die.",
-    "Jokes on you, I'm everywhere",
-    "You're gonna regret that...",
-    "You could also try /kickme, I hear that's fun.",
-    "Go bother someone else, no-one here cares.",
-    "You can run, but you can't hide.",
-    "Is that all you've got?",
-    "I'm behind you...",
-    "You've got company!",
-    "We can do this the easy way, or the hard way.",
-    "You just don't get it, do you?",
-    "Yeah, you better run!",
-    "Please, remind me how much I care?",
-    "I'd run faster if I were you.",
-    "That's definitely the droid we're looking for.",
-    "May the odds be ever in your favour.",
-    "Famous last words.",
-    "And they disappeared forever, never to be seen again.",
-    "\"Oh, look at me! I'm so cool, I can run from a bot!\" - this person",
-    "Yeah yeah, just tap /kickme already.",
-    "Here, take this ring and head to Mordor while you're at it.",
-    "Legend has it, they're still running...",
-    "Unlike Harry Potter, your parents can't protect you from me.",
-    "Fear leads to anger. Anger leads to hate. Hate leads to suffering. If you keep running in fear, you might "
-    "be the next Vader.",
-    "Multiple calculations later, I have decided my interest in your shenanigans is exactly 0.",
-    "Legend has it, they're still running.",
-    "Keep it up, not sure we want you here anyway.",
-    "You're a wiza- Oh. Wait. You're not Harry, keep moving.",
-    "NO RUNNING IN THE HALLWAYS!",
-    "Hasta la vista, baby.",
-    "Who let the dogs out?",
-    "It's funny, because no one cares.",
-    "Ah, what a waste. I liked that one.",
-    "Frankly, my dear, I don't give a damn.",
-    "My milkshake brings all the boys to yard... So run faster!",
-    "You can't HANDLE the truth!",
-    "A long time ago, in a galaxy far far away... Someone would've cared about that. Not anymore though.",
-    "Hey, look at them! They're running from the inevitable banhammer... Cute.",
-    "Han shot first. So will I.",
-    "What are you running after, a white rabbit?",
-    "As The Doctor would say... RUN!",
-    "I take you to the Castle of Aaaarrrrrgggghhhh!",
-    "The Enrichment Center is required to remind you that you will be baked, and then there will be cake.",
-    "I'm going to kill you, and all the cake is gone.",
-    "Is Konrad spamming again?!",
-    "I will get you.",
-    "Wait, are you trying to run?",
-    "Thats the wrong direction."
-)
-
 SLAP_TEMPLATES = (
     "{user1} {hits} {user2} with a {item}.",
     "{user1} {hits} {user2} in the face with a {item}.",
@@ -180,10 +121,10 @@ def slap(bot: Bot, update: Update, args: List[str]):
         user1 = "[{}](tg://user?id={})".format(bot.first_name, bot.id)
         user2 = curr_user
 
-    temp = random.choice(SLAP_TEMPLATES)
-    item = random.choice(ITEMS)
-    hit = random.choice(HIT)
-    throw = random.choice(THROW)
+    temp = get_random_string("slap", lang.get_lang(update.effective_chat.id))
+    item = get_random_string("items", lang.get_lang(update.effective_chat.id))
+    hit = get_random_string("hit", lang.get_lang(update.effective_chat.id))
+    throw = get_random_string("throws", lang.get_lang(update.effective_chat.id))
 
     repl = temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw)
 
@@ -207,7 +148,7 @@ def get_id(bot: Bot, update: Update, args: List[str]):
             user1 = update.effective_message.reply_to_message.from_user
             user2 = update.effective_message.reply_to_message.forward_from
             update.effective_message.reply_text(
-                "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.".format(
+                get_string("misc", "MSG_ID_WITH_FORWARD", lang.get_lang(update.effective_chat.id)).format(
                     escape_markdown(user2.first_name),
                     user2.id,
                     escape_markdown(user1.first_name),
@@ -215,16 +156,16 @@ def get_id(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN) # MSG_ID_WITH_FORWARD
         else:
             user = bot.get_chat(user_id)
-            update.effective_message.reply_text("{}'s id is `{}`.".format(escape_markdown(user.first_name), user.id),
+            update.effective_message.reply_text(get_string("misc", "MSG_ID_USER", lang.get_lang(update.effective_chat.id)).format(escape_markdown(user.first_name), user.id),
                                                 parse_mode=ParseMode.MARKDOWN) # MSG_ID_USER
     else:
         chat = update.effective_chat  # type: Optional[Chat]
         if chat.type == "private":
-            update.effective_message.reply_text("Your id is `{}`.".format(chat.id),
+            update.effective_message.reply_text(get_string("misc", "MSG_YOUR_ID", lang.get_lang(update.effective_chat.id)).format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN) # MSG_YOUR_ID
 
         else:
-            update.effective_message.reply_text("This group's id is `{}`.".format(chat.id),
+            update.effective_message.reply_text(get_string("misc", "MSG_GROUP_ID", lang.get_lang(update.effective_chat.id)).format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN) # MSG_GROUP_ID
 
 
@@ -242,44 +183,39 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text("I can't extract a user from this.") # ERR_CANT_EXTRACT_USER
+        msg.reply_text(get_string("misc", "ERR_CANT_EXTRACT_USER", lang.get_lang(update.effective_chat.id))) # ERR_CANT_EXTRACT_USER
         return
 
     else:
         return
 
-    text = "<b>User info</b>:" \
-           "\nID: <code>{}</code>" \
-           "\nFirst Name: {}".format(user.id, html.escape(user.first_name)) # MSG_USER_INFO_GENERAL
+    text = get_string("misc", "MSG_USER_INFO_GENERAL", lang.get_lang(update.effective_chat.id)).format(user.id, html.escape(user.first_name)) # MSG_USER_INFO_GENERAL
 
     if user.last_name:
-        text += "\nLast Name: {}".format(html.escape(user.last_name)) # MSG_USER_INFO_LAST_NAME
+        text += get_string("misc", "MSG_USER_INFO_LAST_NAME", lang.get_lang(update.effective_chat.id)).format(html.escape(user.last_name)) # MSG_USER_INFO_LAST_NAME
 
     if user.username:
-        text += "\nUsername: @{}".format(html.escape(user.username)) # MSG_USER_INFO_USERNAME
+        text += get_string("misc", "MSG_USER_INFO_USERNAME", lang.get_lang(update.effective_chat.id)).format(html.escape(user.username)) # MSG_USER_INFO_USERNAME
 
-    text += "\nPermanent user link: {}".format(mention_html(user.id, "link")) # MSG_USER_INFO_LINK
+    text += get_string("misc", "MSG_USER_INFO_LINK", lang.get_lang(update.effective_chat.id)).format(mention_html(user.id, "link")) # MSG_USER_INFO_LINK
 
     if user.id == OWNER_ID:
-        text += "\n\nThis person is my owner - I would never do anything against them!" # MSG_USER_INFO_OWNER
+        text += get_string("misc", "MSG_USER_INFO_OWNER", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_OWNER
 
 
     else:
         if user.id == CO_OWNER_ID:
-            text += "\n\nThis person is my co-owner - Just as powerful as my owner! Seems like he really trusts them, so will I." # MSG_USER_INFO_CO_OWNER
+            text += get_string("misc", "MSG_USER_INFO_CO_OWNER", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_CO_OWNER
 
         else:
             if user.id in SUDO_USERS:
-                text += "\nThis person is one of my sudo users! " \
-                    "Nearly as powerful as my owner - so watch it." # MSG_USER_INFO_SUDO
+                text += get_string("misc", "MSG_USER_INFO_SUDO", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_SUDO
             else:
                 if user.id in SUPPORT_USERS:
-                    text += "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map." # MSG_USER_INFO_SUPPORT
+                    text += get_string("misc", "MSG_USER_INFO_SUPPORT", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_SUPPORT
 
                 if user.id in WHITELIST_USERS:
-                    text += "\nThis person has been whitelisted! " \
-                        "That means I'm not allowed to ban/kick them." # MSG_USER_INFO_WHITELIST
+                    text += get_string("misc", "MSG_USER_INFO_WHITELIST", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_WHITELIST
 
     for mod in USER_INFO:
         mod_info = mod.__user_info__(user.id).strip()
@@ -293,7 +229,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 def get_time(bot: Bot, update: Update, args: List[str]):
     location = " ".join(args)
     if location.lower() == bot.first_name.lower():
-        update.effective_message.reply_text("Its always banhammer time for me!") # MSG_BANHAMMER_TIME
+        update.effective_message.reply_text(get_string("misc", "MSG_BANHAMMER_TIME", lang.get_lang(update.effective_chat.id))) # MSG_BANHAMMER_TIME
         bot.send_sticker(update.effective_chat.id, BAN_STICKER)
         return
 
@@ -328,7 +264,7 @@ def get_time(bot: Bot, update: Update, args: List[str]):
                 offset = json.loads(res.text)['dstOffset']
                 timestamp = json.loads(res.text)['rawOffset']
                 time_there = datetime.fromtimestamp(timenow + timestamp + offset).strftime("%H:%M:%S on %A %d %B")
-                update.message.reply_text("It's {} in {}".format(time_there, location)) # MSG_TIME
+                update.message.reply_text(get_string("misc", "MSG_TIME", lang.get_lang(update.effective_chat.id)).format(time_there, location)) # MSG_TIME
 
 
 @run_async
@@ -344,57 +280,23 @@ def echo(bot: Bot, update: Update):
 
 @run_async
 def gdpr(bot: Bot, update: Update):
-    update.effective_message.reply_text("Deleting identifiable data...") # MSG_DELETING_DATA
+    update.effective_message.reply_text(get_string("misc", "MSG_DELETING_DATA", lang.get_lang(update.effective_chat.id))) # MSG_DELETING_DATA
     for mod in GDPR:
         mod.__gdpr__(update.effective_user.id)
 
-    update.effective_message.reply_text("Your personal data has been deleted.\n\nNote that this will not unban "
-                                        "you from any chats, as that is telegram data, not Nemesis data. "
-                                        "Flooding, warns, and gbans are also preserved, as of "
-                                        "[this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
-                                        "which clearly states that the right to erasure does not apply "
-                                        "\"for the performance of a task carried out in the public interest\", as is "
-                                        "the case for the aforementioned pieces of data.",
-                                        parse_mode=ParseMode.MARKDOWN) # MSG_DELETING_SUCCESS
-
-
-MARKDOWN_HELP = """
-Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
-saved messages are correctly parsed, and to allow you to create buttons.
-
-- <code>_italic_</code>: wrapping text with '_' will produce italic text
-- <code>*bold*</code>: wrapping text with '*' will produce bold text
-- <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
-- <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
-and tapping on it will open the page at <code>someURL</code>.
-EG: <code>[test](example.com)</code>
-
-- <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
-buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
-will be the url which is opened.
-EG: <code>[This is a button](buttonurl:example.com)</code>
-
-If you want multiple buttons on the same line, use :same, as such:
-<code>[one](buttonurl://example.com)
-[two](buttonurl://google.com:same)</code>
-This will create two buttons on a single line, instead of one button per line.
-
-Keep in mind that your message <b>MUST</b> contain some text other than just a button!
-""".format(dispatcher.bot.first_name) # MARKDOWN_HELP
+    update.effective_message.reply_text(get_string("misc", "MSG_DELETING_SUCCESS", lang.get_lang(update.effective_chat.id)), parse_mode=ParseMode.MARKDOWN) # MSG_DELETING_SUCCESS
 
 
 @run_async
 def markdown_help(bot: Bot, update: Update):
-    update.effective_message.reply_text(MARKDOWN_HELP, parse_mode=ParseMode.HTML)
-    update.effective_message.reply_text("Try forwarding the following message to me, and you'll see!") # MARKDOWN_HELP_FORWARD
-    update.effective_message.reply_text("/save test This is a markdown test. _italics_, *bold*, `code`, "
-                                        "[URL](example.com) [button](buttonurl:github.com) "
-                                        "[button2](buttonurl://google.com:same)") # MARKDOWN_HELP_FORWARD_MSG
+    update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP", lang.get_lang(update.effective_chat.id)), parse_mode=ParseMode.HTML)
+    update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP_FORWARD", lang.get_lang(update.effective_chat.id))) # MARKDOWN_HELP_FORWARD
+    update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP_FORWARD_MSG", lang.get_lang(update.effective_chat.id))) # MARKDOWN_HELP_FORWARD_MSG
 
 
 @run_async
 def stats(bot: Bot, update: Update):
-    update.effective_message.reply_text("Current stats:\n" + "\n".join([mod.__stats__() for mod in STATS]))
+    update.effective_message.reply_text(get_string("misc", "CURRENT_STATS", lang.get_lang(update.effective_chat.id)) + "\n".join([mod.__stats__() for mod in STATS]))
 
 
 # /ip is for private use
