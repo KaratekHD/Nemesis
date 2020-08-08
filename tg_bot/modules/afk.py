@@ -8,6 +8,8 @@ from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler
 from tg_bot.modules.sql import afk_sql as sql
 from tg_bot.modules.users import get_user_id
+import tg_bot.modules.sql.lang_sql as lang
+from tg_bot.strings.string_helper import get_string
 
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
@@ -22,7 +24,7 @@ def afk(bot: Bot, update: Update):
         reason = ""
 
     sql.set_afk(update.effective_user.id, reason)
-    update.effective_message.reply_text("{} is now AFK!".format(update.effective_user.first_name)) # MSG_IS_AFK_NOW
+    update.effective_message.reply_text(get_string("afk", "MSG_IS_AFK_NOW", lang.get_lang(update.effective_chat.id)).format(update.effective_user.first_name)) # MSG_IS_AFK_NOW
 
 
 @run_async
@@ -34,7 +36,7 @@ def no_longer_afk(bot: Bot, update: Update):
 
     res = sql.rm_afk(user.id)
     if res:
-        update.effective_message.reply_text("{} is no longer AFK!".format(update.effective_user.first_name)) # MSG_IS_NOT_AFK
+        update.effective_message.reply_text(get_string("afk", "MSG_IS_NOT_AFK", lang.get_lang(update.effective_chat.id)).format(update.effective_user.first_name)) # MSG_IS_NOT_AFK
 
 
 @run_async
@@ -62,9 +64,9 @@ def reply_afk(bot: Bot, update: Update):
                 valid, reason = sql.check_afk_status(user_id)
                 if valid:
                     if not reason:
-                        res = "{} is AFK!".format(fst_name) # MSG_IS_AFK
+                        res = get_string("afk", "MSG_IS_AFK", lang.get_lang(update.effective_chat.id)).format(fst_name) # MSG_IS_AFK
                     else:
-                        res = "{} is AFK! says its because of:\n{}".format(fst_name, reason) # MSG_IS_AFK_REASON
+                        res = get_string("afk", "MSG_IS_AFK_REASON", lang.get_lang(update.effective_chat.id)).format(fst_name, reason) # MSG_IS_AFK_REASON
                     message.reply_text(res)
 
 
@@ -73,10 +75,7 @@ def __gdpr__(user_id):
 
 
 def __help__(update: Update) -> str:
-    return "\n - /afk <reason>: mark yourself as AFK.\n" \
-           " - brb <reason>: same as the afk command - but not a command.\n\n" \
-           "When marked as AFK, any mentions will be replied to with a message to say you're not available!"
-        # HELP
+    return get_string("afk", "HELP", lang.get_lang(update.effective_chat.id))
 
 __mod_name__ = "AFK" # MODULE_NAME
 
