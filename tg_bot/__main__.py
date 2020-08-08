@@ -99,6 +99,7 @@ def start(bot: Bot, update: Update, args: List[str]):
     if update.effective_chat.type == "private":
         if len(args) >= 1:
             if args[0].lower() == "help":
+                HELP_STRINGS = get_string("main", "HELP_STRINGS", lang.get_lang(update.effective_chat.id))
                 send_help(update.effective_chat.id, HELP_STRINGS)
 
             elif args[0].lower().startswith("stngs_"):
@@ -227,7 +228,7 @@ def get_help(bot: Bot, update: Update):
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
     else:
-        send_help(chat.id, get_string("main", "HELP_STRINGS", lang.get_lang(chat.id)).format(dispatcher.bot.first_name,
+        send_help(chat.id, get_string("main", "HELP_STRINGS", lang.get_lang(update.effective_chat.id)).format(dispatcher.bot.first_name,
                        "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n"))
 
 
