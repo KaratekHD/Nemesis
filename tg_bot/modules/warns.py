@@ -394,19 +394,17 @@ def __chat_settings__(chat_id, user_id):
            "before the user gets *{}*.".format(num_warn_filters, limit, "kicked" if soft_warn else "banned")
 
 
-__help__ = """
- - /warns <userhandle>: get a user's number, and reason, of warnings.
- - /warnlist: list of all current warning filters
-
-*Admin only:*
- - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
- - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
- - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
-be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
- - /nowarn <keyword>: stop a warning filter
- - /warnlimit <num>: set the warning limit
- - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
-"""
+def __help__(update: Update) -> str:
+    return " - /warns <userhandle>: get a user's number, and reason, of warnings.\n" \
+           " - /warnlist: list of all current warning filters\n\n" \
+           "*Admin only:*\n" \
+           " - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.\n" \
+           " - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.\n" \
+           " - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
+            be a sentence, encompass it with quotes, as such: `/addwarn \"very angry\" This is an angry user`. \n" \
+            " - /nowarn <keyword>: stop a warning filter\n" \
+            " - /warnlimit <num>: set the warning limit\n" \
+            " - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick."
 
 __mod_name__ = "Warnings"
 

@@ -47,9 +47,8 @@ def translate(bot: Bot, update: Update):
         update.effective_message.reply_text(curr_string)
 
 
-__help__ = """
- - /t: while replying to a message, will reply with a grammar corrected version
-"""
+def __help__(update: Update) -> str:
+    return "- /t: while replying to a message, will reply with a grammar corrected version (English Only!)"
 
 __mod_name__ = "Translator"
 

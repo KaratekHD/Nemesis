@@ -146,21 +146,17 @@ def __stats__():
 
 __mod_name__ = "Word Blacklists" # MODULE_NAME
 
-__help__ = """
-Blacklists are used to stop certain triggers from being said in a group. Any time the trigger is mentioned, \
-the message will immediately be deleted. A good combo is sometimes to pair this up with warn filters!
-
-*NOTE:* blacklists do not affect group admins.
-
- - /blacklist: View the current blacklisted words.
-
-*Admin only:*
- - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
-lines will allow you to add multiple triggers.
- - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
-multiple triggers at once.
- - /rmblacklist <triggers>: Same as above.
-"""
+def __help__(update: Update) -> str:
+    return "Blacklists are used to stop certain triggers from being said in a group. Any time the trigger is mentioned, \
+            the message will immediately be deleted. A good combo is sometimes to pair this up with warn filters!\n\n" \
+           "*NOTE:* blacklists do not affect group admins.\n\n" \
+           " - /blacklist: View the current blacklisted words.\n\n" \
+           "*Admin only:*\n" \
+           " - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
+           lines will allow you to add multiple triggers.\n" \
+           " - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
+           multiple triggers at once.\n" \
+           " - /rmblacklist <triggers>: Same as above."
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True,
                                               admin_ok=True)

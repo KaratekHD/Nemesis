@@ -451,22 +451,19 @@ def __chat_settings__(chat_id, user_id):
            "It's goodbye preference is `{}`.".format(welcome_pref, goodbye_pref) # SETTINGS_STRING
 
 
-__help__ = """
-{}
-
-*Admin only:*
- - /welcome <on/off>: enable/disable welcome messages.
- - /welcome: shows current welcome settings.
- - /welcome noformat: shows current welcome settings, without the formatting - useful to recycle your welcome messages!
- - /goodbye -> same usage and args as /welcome.
- - /setwelcome <sometext>: set a custom welcome message. If used replying to media, uses that media.
- - /setgoodbye <sometext>: set a custom goodbye message. If used replying to media, uses that media.
- - /resetwelcome: reset to the default welcome message.
- - /resetgoodbye: reset to the default goodbye message.
- - /cleanwelcome <on/off>: On new member, try to delete the previous welcome message to avoid spamming the chat.
-
- - /welcomehelp: view more formatting information for custom welcome/goodbye messages.
-""".format(WELC_HELP_TXT) # HELP
+def __help__(update: Update) -> str:
+    return "{}\n\n" \
+           "*Admin only:*\n" \
+           " - /welcome <on/off>: enable/disable welcome messages.\n" \
+           " - /welcome: shows current welcome settings.\n" \
+           " - /welcome noformat: shows current welcome settings, without the formatting - useful to recycle your welcome messages!\n" \
+           " - /goodbye -> same usage and args as /welcome.\n" \
+           " - /setwelcome <sometext>: set a custom welcome message. If used replying to media, uses that media.\n" \
+           " - /setgoodbye <sometext>: set a custom goodbye message. If used replying to media, uses that media.\n" \
+           " - /resetwelcome: reset to the default welcome message.\n" \
+           " - /resetgoodbye: reset to the default goodbye message.\n" \
+           " - /cleanwelcome <on/off>: On new member, try to delete the previous welcome message to avoid spamming the chat.\n" \
+           " - /welcomehelp: view more formatting information for custom welcome/goodbye messages.".format(WELC_HELP_TXT) # HELP
 
 __mod_name__ = "Welcomes/Goodbyes" # MODULE_NAME
 

@@ -142,17 +142,16 @@ if is_module_loaded(FILENAME):
         return "No log channel is set for this group!" # SETTINGS_CLEAN
 
 
-    __help__ = """
-*Admin only:*
-- /logchannel: get log channel info
-- /setlog: set the log channel.
-- /unsetlog: unset the log channel.
-
-Setting the log channel is done by:
-- adding the bot to the desired channel (as an admin!)
-- sending /setlog in the channel
-- forwarding the /setlog to the group
-""" # HELP
+    def __help__(update: Update) -> str:
+        return "*Admin only:*\n" \
+               " - /logchannel: get log channel info\n" \
+               " - /setlog: set the log channel.\n" \
+               " - /unsetlog: unset the log channel.\n\n" \
+               "Setting the log channel is done by:\n" \
+               " - adding the bot to the desired channel (as an admin!)\n" \
+               " - sending /setlog in the channel\n" \
+               " - forwarding the /setlog to the group"
+# HELP
 
     __mod_name__ = "Log Channels" # MODULE_NAME
 

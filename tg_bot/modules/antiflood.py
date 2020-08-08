@@ -120,12 +120,10 @@ def __chat_settings__(chat_id, user_id):
         return "Antiflood is set to `{}` messages.".format(limit) # CHAT_SETTINGS_ON
 
 
-__help__ = """
- - /flood: Get the current flood control setting
-
-*Admin only:*
- - /setflood <int/'no'/'off'>: enables or disables flood control
-"""
+def __help__(update: Update) -> str:
+    return "- /flood: Get the current flood control setting\n\n" \
+           "*Admin only:*\n" \
+           " - /setflood <int/'no'/'off'>: enables or disables flood control"
 
 __mod_name__ = "AntiFlood"
 

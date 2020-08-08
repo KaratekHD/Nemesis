@@ -223,7 +223,7 @@ def get_help(bot: Bot, update: Update):
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
         text = get_string("main", "HELP_FOR_MODULE_AVAILABLE", lang.get_lang(update.effective_chat.id)).format(HELPABLE[module].__mod_name__) \
-               + HELPABLE[module].__help__ # HELP_FOR_MODULE_AVAILABLE
+               + HELPABLE[module].__help__(update) # HELP_FOR_MODULE_AVAILABLE
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
     else:

@@ -283,14 +283,12 @@ def __chat_settings__(chat_id, user_id):
     return "This chat is enforcing *gbans*: `{}`.".format(sql.does_chat_gban(chat_id)) # CHAT_SETTINGS
 
 
-__help__ = """
-*Admin only:*
- - /gbanstat <on/off/yes/no>: Will disable the effect of global bans on your group, or return your current settings.
-
-Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
-you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
-/gbanstat
-"""
+def __help__(update: Update) -> str:
+    return "*Admin only:*\n" \
+           " - /gbanstat <on/off/yes/no>: Will disable the effect of global bans on your group, or return your current settings.\n\n" \
+           "Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
+           you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
+           /gbanstat"
 
 __mod_name__ = "Global Bans" # MODULE_NAME
 

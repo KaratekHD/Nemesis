@@ -1,7 +1,7 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Message, Chat, Update, Bot, User, update
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
@@ -85,12 +85,11 @@ def del_message(bot: Bot, update: Update) -> str:
     return ""
 
 
-__help__ = """
-*Admin only:*
- - /del: deletes the message you replied to
- - /purge: deletes all messages between this and the replied to message.
- - /purge <integer X>: deletes the replied message, and X messages following it.
-"""
+def __help__(update: Update) -> str:
+    return "*Admin only:*\n" \
+           "- /del: deletes the message you replied to\n" \
+           " - /purge: deletes all messages between this and the replied to message.\n" \
+           " - /purge <integer X>: deletes the replied message, and X messages following it."
 
 __mod_name__ = "Message Deletion"
 

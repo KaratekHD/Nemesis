@@ -148,14 +148,12 @@ if is_module_loaded(FILENAME):
 
     __mod_name__ = "Command disabling"
 
-    __help__ = """
- - /cmds: check the current status of disabled commands
-
-*Admin only:*
- - /enable <cmd name>: enable that command
- - /disable <cmd name>: disable that command
- - /listcmds: list all possible toggleable commands
-    """
+    def __help__(update: Update) -> str:
+        return "- /cmds: check the current status of disabled commands\n\n" \
+               "*Admin only:*\n" \
+               " - /enable <cmd name>: enable that command\n" \
+               " - /disable <cmd name>: disable that command\n" \
+               " - /listcmds: list all possible toggleable commands"
 
     DISABLE_HANDLER = CommandHandler("disable", disable, pass_args=True, filters=Filters.group)
     ENABLE_HANDLER = CommandHandler("enable", enable, pass_args=True, filters=Filters.group)

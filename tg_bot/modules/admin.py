@@ -196,16 +196,15 @@ def __chat_settings__(chat_id, user_id):
         dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator")) # YOU_ADMIN
 
 
-__help__ = """
- - /adminlist: list of admins in the chat
-
-*Admin only:*
- - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
- - /unpin: unpins the currently pinned message
- - /invitelink: gets invitelink
- - /promote: promotes the user replied to
- - /demote: demotes the user replied to
-""" # HELP
+def __help__(update: Update) -> str:
+    return "- /adminlist: list of admins in the chat\n\n" \
+           "*Admin only:*\n" \
+           " - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.\n" \
+           " - /unpin: unpins the currently pinned message\n" \
+           " - /invitelink: gets invitelink\n" \
+           " - /promote: promotes the user replied to\n" \
+           " - /demote: demotes the user replied to"
+# HELP
 
 __mod_name__ = "Admin" # MODULE_NAME
 

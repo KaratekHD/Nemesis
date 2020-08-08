@@ -72,12 +72,11 @@ def __gdpr__(user_id):
     sql.rm_afk(user_id)
 
 
-__help__ = """
- - /afk <reason>: mark yourself as AFK.
- - brb <reason>: same as the afk command - but not a command.
-
-When marked as AFK, any mentions will be replied to with a message to say you're not available!
-""" # HELP
+def __help__(update: Update) -> str:
+    return "- /afk <reason>: mark yourself as AFK.\n" \
+           " - brb <reason>: same as the afk command - but not a command.\n\n" \
+           "When marked as AFK, any mentions will be replied to with a message to say you're not available!"
+        # HELP
 
 __mod_name__ = "AFK" # MODULE_NAME
 
