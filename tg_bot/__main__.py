@@ -166,7 +166,7 @@ def help_button(bot: Bot, update: Update):
             module = mod_match.group(1)
 
             text = HELP_STRINGS.format(HELPABLE[module].__mod_name__) \
-                   + HELPABLE[module].__help__ # HELP_FOR_MODULE
+                   + HELPABLE[module].__help__(update) # HELP_FOR_MODULE
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
