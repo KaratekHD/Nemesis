@@ -452,7 +452,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __help__(update: Update) -> str:
-    return "{}\n\n" \
+    return "\n{}\n\n" \
            "*Admin only:*\n" \
            " - /welcome <on/off>: enable/disable welcome messages.\n" \
            " - /welcome: shows current welcome settings.\n" \

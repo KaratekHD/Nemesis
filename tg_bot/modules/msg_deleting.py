@@ -86,7 +86,7 @@ def del_message(bot: Bot, update: Update) -> str:
 
 
 def __help__(update: Update) -> str:
-    return "*Admin only:*\n" \
+    return "\n*Admin only:*\n" \
            "- /del: deletes the message you replied to\n" \
            " - /purge: deletes all messages between this and the replied to message.\n" \
            " - /purge <integer X>: deletes the replied message, and X messages following it."

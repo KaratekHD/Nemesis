@@ -197,7 +197,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __help__(update: Update) -> str:
-    return "- /adminlist: list of admins in the chat\n\n" \
+    return "\n - /adminlist: list of admins in the chat\n\n" \
            "*Admin only:*\n" \
            " - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.\n" \
            " - /unpin: unpins the currently pinned message\n" \

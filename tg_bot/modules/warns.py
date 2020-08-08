@@ -395,7 +395,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __help__(update: Update) -> str:
-    return " - /warns <userhandle>: get a user's number, and reason, of warnings.\n" \
+    return "\n - /warns <userhandle>: get a user's number, and reason, of warnings.\n" \
            " - /warnlist: list of all current warning filters\n\n" \
            "*Admin only:*\n" \
            " - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.\n" \

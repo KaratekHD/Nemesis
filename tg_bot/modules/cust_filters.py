@@ -210,7 +210,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __help__(update: Update) -> str:
-    return "- /filters: list all active filters in this chat.\n\n" \
+    return "\n - /filters: list all active filters in this chat.\n\n" \
            "*Admin only:*\n - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword'\
             is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
             keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter \"hey there\" How you \

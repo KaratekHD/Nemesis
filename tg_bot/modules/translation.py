@@ -48,7 +48,7 @@ def translate(bot: Bot, update: Update):
 
 
 def __help__(update: Update) -> str:
-    return "- /t: while replying to a message, will reply with a grammar corrected version (English Only!)"
+    return "\n - /t: while replying to a message, will reply with a grammar corrected version (English Only!)"
 
 __mod_name__ = "Translator"
 

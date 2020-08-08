@@ -230,7 +230,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __help__(update: Update) -> str:
-    return "- /get <notename>: get the note with this notename\n" \
+    return "\n - /get <notename>: get the note with this notename\n" \
            " - #<notename>: same as /get\n" \
            " - /notes or /saved: list all saved notes in this chat\n\n" \
            "If you would like to retrieve the contents of a note without any formatting, use `/get <notename> noformat`. This can \

@@ -216,7 +216,7 @@ def rss_set(bot, job):
 
 
 def __help__(update: Update) -> str:
-    return " - /addrss <link>: add an RSS link to the subscriptions.\n" \
+    return "\n - /addrss <link>: add an RSS link to the subscriptions.\n" \
            " - /removerss <link>: removes the RSS link from the subscriptions.\n" \
            " - /rss <link>: shows the link's data and the last entry, for testing purposes.\n" \
            " - /listrss: shows the list of rss feeds that the chat is currently subscribed to.\n\n" \

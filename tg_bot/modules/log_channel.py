@@ -143,7 +143,7 @@ if is_module_loaded(FILENAME):
 
 
     def __help__(update: Update) -> str:
-        return "*Admin only:*\n" \
+        return "\n*Admin only:*\n" \
                " - /logchannel: get log channel info\n" \
                " - /setlog: set the log channel.\n" \
                " - /unsetlog: unset the log channel.\n\n" \

@@ -184,7 +184,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 def __help__(update: Update) -> str:
-    return "*Admin only:*\n" \
+    return "\n*Admin only:*\n" \
            " - /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.\”" \
            " - /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.\n" \
            " - /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user."

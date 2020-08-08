@@ -301,7 +301,7 @@ def stats(bot: Bot, update: Update):
 
 # /ip is for private use
 def __help__(update: Update) -> str:
-    return "- /id: get the current group id. If used by replying to a message, gets that user's id.\n" \
+    return "\n - /id: get the current group id. If used by replying to a message, gets that user's id.\n" \
            " - /runs: reply a random string from an array of replies.\n" \
            " - /slap: slap a user, or get slapped if not a reply.\n" \
            " - /info: get information about a user.\n" \

@@ -73,7 +73,7 @@ def __gdpr__(user_id):
 
 
 def __help__(update: Update) -> str:
-    return "- /afk <reason>: mark yourself as AFK.\n" \
+    return "\n - /afk <reason>: mark yourself as AFK.\n" \
            " - brb <reason>: same as the afk command - but not a command.\n\n" \
            "When marked as AFK, any mentions will be replied to with a message to say you're not available!"
         # HELP

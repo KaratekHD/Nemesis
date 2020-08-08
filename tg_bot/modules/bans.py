@@ -279,7 +279,7 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 def __help__(update: Update) -> str:
-    return "- /kickme: kicks the user who issued the command\n\n" \
+    return "\n - /kickme: kicks the user who issued the command\n\n" \
            "*Admin only:*\n" \
            " - /ban <userhandle>: bans a user. (via handle, or reply)\n" \
            " - /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.\n" \

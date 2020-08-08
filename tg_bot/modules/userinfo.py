@@ -118,7 +118,7 @@ def __gdpr__(user_id):
 
 
 def __help__(update: Update) -> str:
-    return " - /setbio <text>: while replying, will save another user's bio\n" \
+    return "\n - /setbio <text>: while replying, will save another user's bio\n" \
            " - /bio: will get your or another user's bio. This cannot be set by yourself.\n" \
            " - /setme <text>: will set your info\n" \
            " - /me: will get your or another user's info"

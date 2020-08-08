@@ -121,7 +121,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __help__(update: Update) -> str:
-    return "- /flood: Get the current flood control setting\n\n" \
+    return "\n - /flood: Get the current flood control setting\n\n" \
            "*Admin only:*\n" \
            " - /setflood <int/'no'/'off'>: enables or disables flood control"
 

@@ -94,7 +94,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __help__(update: Update) -> str:
-    return " - /rules: get the rules for this chat.\n\n" \
+    return "\n - /rules: get the rules for this chat.\n\n" \
            "*Admin only:*\n" \
            " - /setrules <your rules here>: set the rules for this chat.\n" \
            " - /clearrules: clear the rules for this chat."

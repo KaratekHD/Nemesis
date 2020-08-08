@@ -123,7 +123,7 @@ def __user_settings__(user_id):
 __mod_name__ = "Reporting"
 
 def __help__(update: Update) -> str:
-    return "- /report <reason>: reply to a message to report it to admins.\n" \
+    return "\n - /report <reason>: reply to a message to report it to admins.\n" \
            " - @admin: reply to a message to report it to admins.\n" \
            "NOTE: neither of these will get triggered if used by admins\n\n" \
            "*Admin only:*\n" \

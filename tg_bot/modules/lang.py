@@ -41,7 +41,7 @@ def __user_settings__(user_id):
 
 
 def __help__(update: Update) -> str:
-    return "Test\n\nThis is a test."
+    return "\nTest\n\nThis is a test."
 
 
 LANG_HANDLER = CommandHandler("lang", setlang, pass_args=True)

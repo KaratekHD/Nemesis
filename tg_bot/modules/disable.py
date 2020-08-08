@@ -149,7 +149,7 @@ if is_module_loaded(FILENAME):
     __mod_name__ = "Command disabling"
 
     def __help__(update: Update) -> str:
-        return "- /cmds: check the current status of disabled commands\n\n" \
+        return "\n - /cmds: check the current status of disabled commands\n\n" \
                "*Admin only:*\n" \
                " - /enable <cmd name>: enable that command\n" \
                " - /disable <cmd name>: disable that command\n" \

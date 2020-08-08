@@ -292,7 +292,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __help__(update: Update) -> str:
-    return "- /locktypes: a list of possible locktypes\n\n" \
+    return "\n - /locktypes: a list of possible locktypes\n\n" \
            "*Admin only:*\n" \
            " - /lock <type>: lock items of a certain type (not available in private)\n" \
            " - /unlock <type>: unlock items of a certain type (not available in private)\n" \
