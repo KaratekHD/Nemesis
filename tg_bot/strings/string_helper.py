@@ -14,6 +14,6 @@ def get_string(module: str, name: str, lang: str):
 def get_random_string(module: str, lang: str):
     with open(os.path.dirname(os.path.abspath(__file__)) + "/" + lang + "/" + module + ".json") as f:
         data = json.load(f)
-        i = len(data)
-        r = random.randint(1, i)
-        return data[r]
+    i = len(data)
+    r = random.randint(1, i)
+    return data[r]
