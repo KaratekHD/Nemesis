@@ -7,11 +7,13 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 
 import tg_bot.modules.sql.blacklist_sql as sql
-from tg_bot import dispatcher, LOGGER
+import tg_bot.modules.sql.lang_sql as lang
+from tg_bot import dispatcher, LOGGER, DEFAULT_LANG
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from tg_bot.modules.helper_funcs.extraction import extract_text
 from tg_bot.modules.helper_funcs.misc import split_message
+from tg_bot.strings.string_helper import get_string
 
 BLACKLIST_GROUP = 11
 
@@ -25,7 +27,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
 
     all_blacklisted = sql.get_chat_blacklist(chat.id)
 
-    filter_list = BASE_BLACKLIST_STRING
+    filter_list = get_string("blacklist", "BASE_BLACKLIST_STRING", lang.get_lang(update.effective_chat.id))
 
     if len(args) > 0 and args[0].lower() == 'copy':
         for trigger in all_blacklisted:
@@ -37,7 +39,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
     split_text = split_message(filter_list)
     for text in split_text:
         if text == BASE_BLACKLIST_STRING:
-            msg.reply_text("There are no blacklisted messages here!") # MSG_NO_BLACKLIST
+            msg.reply_text(get_string("blacklist", "MSG_NO_BLACKLIST", lang.get_lang(update.effective_chat.id))) # MSG_NO_BLACKLIST
             return
         msg.reply_text(text, parse_mode=ParseMode.HTML)
 
@@ -55,15 +57,15 @@ def add_blacklist(bot: Bot, update: Update):
             sql.add_to_blacklist(chat.id, trigger.lower())
 
         if len(to_blacklist) == 1:
-            msg.reply_text("Added <code>{}</code> to the blacklist!".format(html.escape(to_blacklist[0])),
+            msg.reply_text(get_string("blacklist", "MSG_BLACKLIST_ADD_SUCCESS", lang.get_lang(update.effective_chat.id)).format(html.escape(to_blacklist[0])),
                            parse_mode=ParseMode.HTML) # MSG_BLACKLIST_ADD_SUCCESS
 
         else:
             msg.reply_text(
-                "Added <code>{}</code> triggers to the blacklist.".format(len(to_blacklist)), parse_mode=ParseMode.HTML) # MSG_BLACKLIST_ADD_SUCCESS_MULTIPLE
+                get_string("blacklist", "MSG_BLACKLIST_ADD_SUCCESS_MULTIPLE", lang.get_lang(update.effective_chat.id)).format(len(to_blacklist)), parse_mode=ParseMode.HTML) # MSG_BLACKLIST_ADD_SUCCESS_MULTIPLE
 
     else:
-        msg.reply_text("Tell me which words you would like to add to the blacklist.") # ERR_BAD_REQUEST
+        msg.reply_text(get_string("blacklist", "ERR_BAD_REQUEST", lang.get_lang(update.effective_chat.id))) # ERR_BAD_REQUEST
 
 
 @run_async
@@ -83,28 +85,27 @@ def unblacklist(bot: Bot, update: Update):
 
         if len(to_unblacklist) == 1:
             if successful:
-                msg.reply_text("Removed <code>{}</code> from the blacklist!".format(html.escape(to_unblacklist[0])),
+                msg.reply_text(get_string("blacklist", "MSG_REMOVED_SUCCESS", lang.get_lang(update.effective_chat.id)).format(html.escape(to_unblacklist[0])),
                                parse_mode=ParseMode.HTML) # MSG_REMOVED_SUCCESS
             else:
-                msg.reply_text("This isn't a blacklisted trigger...!") # ERR_NOT_VALID_TRIGGER
+                msg.reply_text(get_string("blacklist", "ERR_NOT_VALID_TRIGGER", lang.get_lang(update.effective_chat.id))) # ERR_NOT_VALID_TRIGGER
 
         elif successful == len(to_unblacklist):
             msg.reply_text(
-                "Removed <code>{}</code> triggers from the blacklist.".format(
+                get_string("blacklist", "MSG_REMOVED_SUCCESS_MULTIPLE", lang.get_lang(update.effective_chat.id)).format(
                     successful), parse_mode=ParseMode.HTML) # MSG_REMOVED_SUCCESS_MULTIPLE
 
         elif not successful:
             msg.reply_text(
-                "None of these triggers exist, so they weren't removed.".format(
+                get_string("blacklist", "ERR_NOT_VALID_TRIGGER_MULTIPLE", lang.get_lang(update.effective_chat.id)).format(
                     successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML) # ERR_NOT_VALID_TRIGGER_MULTIPLE
 
         else:
             msg.reply_text(
-                "Removed <code>{}</code> triggers from the blacklist. {} did not exist, "
-                "so were not removed.".format(successful, len(to_unblacklist) - successful),
+                get_string("blacklist", "ERR_NOT_ALL_VALID_TRIGGER", lang.get_lang(update.effective_chat.id)).format(successful, len(to_unblacklist) - successful),
                 parse_mode=ParseMode.HTML) # ERR_NOT_ALL_VALID_TRIGGER
     else:
-        msg.reply_text("Tell me which words you would like to remove from the blacklist.") # ERR_REMOVE_BAD_REQUEST
+        msg.reply_text(get_string("blacklist", "ERR_REMOVE_BAD_REQUEST", lang.get_lang(update.effective_chat.id))) # ERR_REMOVE_BAD_REQUEST
 
 
 @run_async
@@ -126,7 +127,7 @@ def del_blacklist(bot: Bot, update: Update):
                 if excp.message == "Message to delete not found":
                     pass
                 else:
-                    LOGGER.exception("Error while deleting blacklist message.") # ERR_CONSOLE_CANT_DELETE_MESSAGE
+                    LOGGER.exception(get_string("blacklist", "ERR_CONSOLE_CANT_DELETE_MESSAGE", DEFAULT_LANG)) # ERR_CONSOLE_CANT_DELETE_MESSAGE
             break
 
 
@@ -136,27 +137,18 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
     blacklisted = sql.num_blacklist_chat_filters(chat_id)
-    return "There are {} blacklisted words.".format(blacklisted) # CHAT_SETTINGS
+    return get_string("blacklist", "CHAT_SETTINGS", lang.get_lang(chat_id)).format(blacklisted) # CHAT_SETTINGS
 
 
 def __stats__():
-    return "{} blacklist triggers, across {} chats.".format(sql.num_blacklist_filters(),
+    return get_string("blacklist", "STATS", DEFAULT_LANG).format(sql.num_blacklist_filters(),
                                                             sql.num_blacklist_filter_chats()) # STATS
 
 
 __mod_name__ = "Word Blacklists" # MODULE_NAME
 
 def __help__(update: Update) -> str:
-    return "\nBlacklists are used to stop certain triggers from being said in a group. Any time the trigger is mentioned, \
-            the message will immediately be deleted. A good combo is sometimes to pair this up with warn filters!\n\n" \
-           "*NOTE:* blacklists do not affect group admins.\n\n" \
-           " - /blacklist: View the current blacklisted words.\n\n" \
-           "*Admin only:*\n" \
-           " - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
-           lines will allow you to add multiple triggers.\n" \
-           " - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
-           multiple triggers at once.\n" \
-           " - /rmblacklist <triggers>: Same as above."
+    return get_string("blacklist", "HELP", lang.get_lang(update.effective_chat.id))
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True,
                                               admin_ok=True)
