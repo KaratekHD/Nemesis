@@ -8,7 +8,7 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, DispatcherHandlerStop, run_async
 from telegram.utils.helpers import escape_markdown
 
-from tg_bot import dispatcher, LOGGER
+from tg_bot import dispatcher, LOGGER, DEFAULT_LANG
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.helper_funcs.extraction import extract_text
@@ -17,8 +17,11 @@ from tg_bot.modules.helper_funcs.misc import build_keyboard
 from tg_bot.modules.helper_funcs.string_handling import split_quotes, button_markdown_parser
 from tg_bot.modules.sql import cust_filters_sql as sql
 
+import tg_bot.modules.sql.lang_sql as lang
+from tg_bot.strings.string_helper import get_string
+
 HANDLER_GROUP = 10
-BASIC_FILTER_STRING = "*Filters in this chat:*\n" # BASIC_FILTER_STRING
+# BASIC_FILTER_STRING = "*Filters in this chat:*\n" # BASIC_FILTER_STRING
 
 
 @run_async
@@ -27,10 +30,10 @@ def list_handlers(bot: Bot, update: Update):
     all_handlers = sql.get_chat_triggers(chat.id)
 
     if not all_handlers:
-        update.effective_message.reply_text("No filters are active here!") # NO_FILTERS_ACTIVE
+        update.effective_message.reply_text(get_string("filters", "NO_FILTERS_ACTIVE", lang.get_lang(update.effective_chat.id))) # NO_FILTERS_ACTIVE
         return
 
-    filter_list = BASIC_FILTER_STRING
+    filter_list = get_string("filters", "BASIC_FILTER_STRING", lang.get_lang(update.effective_chat.id))
     for keyword in all_handlers:
         entry = " - {}\n".format(escape_markdown(keyword))
         if len(entry) + len(filter_list) > telegram.MAX_MESSAGE_LENGTH:
@@ -39,7 +42,7 @@ def list_handlers(bot: Bot, update: Update):
         else:
             filter_list += entry
 
-    if not filter_list == BASIC_FILTER_STRING:
+    if not filter_list == get_string("filters", "BASIC_FILTER_STRING", lang.get_lang(update.effective_chat.id)):
         update.effective_message.reply_text(filter_list, parse_mode=telegram.ParseMode.MARKDOWN)
 
 
@@ -73,7 +76,7 @@ def filters(bot: Bot, update: Update):
         content, buttons = button_markdown_parser(extracted[1], entities=msg.parse_entities(), offset=offset)
         content = content.strip()
         if not content:
-            msg.reply_text("There is no note message - You can't JUST have buttons, you need a message to go with it!") # ERR_NO_MESSAGE
+            msg.reply_text(get_string("filters", "ERR_NO_MESSAGE", lang.get_lang(update.effective_chat.id))) # ERR_NO_MESSAGE
             return
 
     elif msg.reply_to_message and msg.reply_to_message.sticker:
@@ -101,7 +104,7 @@ def filters(bot: Bot, update: Update):
         is_video = True
 
     else:
-        msg.reply_text("You didn't specify what to reply with!") # ERR_NO_ANSWER
+        msg.reply_text(get_string("filters", "ERR_NO_ANSWER", lang.get_lang(update.effective_chat.id))) # ERR_NO_ANSWER
         return
 
     # Add the filter
@@ -113,7 +116,7 @@ def filters(bot: Bot, update: Update):
     sql.add_filter(chat.id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
 
-    msg.reply_text("Handler '{}' added!".format(keyword)) # HANDLER_ADDED
+    msg.reply_text(get_string("filters", "HANDLER_ADDED", lang.get_lang(update.effective_chat.id)).format(keyword)) # HANDLER_ADDED
     raise DispatcherHandlerStop
 
 
@@ -129,16 +132,16 @@ def stop_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_triggers(chat.id)
 
     if not chat_filters:
-        update.effective_message.reply_text("No filters are active here!") # NO_FILTERS_ACTIVE
+        update.effective_message.reply_text(get_string("filters", "NO_FILTERS_ACTIVE", lang.get_lang(update.effective_chat.id))) # NO_FILTERS_ACTIVE
         return
 
     for keyword in chat_filters:
         if keyword == args[1]:
             sql.remove_filter(chat.id, args[1])
-            update.effective_message.reply_text("Yep, I'll stop replying to that.") # HANDLER_REMOVED
+            update.effective_message.reply_text(get_string("filters", "HANDLER_REMOVED", lang.get_lang(update.effective_chat.id))) # HANDLER_REMOVED
             raise DispatcherHandlerStop
 
-    update.effective_message.reply_text("That's not a current filter - run /filters for all active filters.") # ERR_NOT_A_FILTER
+    update.effective_message.reply_text(get_string("filters", "ERR_NOT_A_FILTER", lang.get_lang(update.effective_chat.id))) # ERR_NOT_A_FILTER
 
 
 @run_async
@@ -177,18 +180,15 @@ def reply_filter(bot: Bot, update: Update):
                                        reply_markup=keyboard)
                 except BadRequest as excp:
                     if excp.message == "Unsupported url protocol":
-                        message.reply_text("You seem to be trying to use an unsupported url protocol. Telegram "
-                                           "doesn't support buttons for some protocols, such as tg://. Please try "
-                                           "again, or ask in @MarieSupport for help.") # ERR_BAD_URL
+                        message.reply_text(get_string("filters", "ERR_BAD_URL", lang.get_lang(update.effective_chat.id))) # ERR_BAD_URL
                     elif excp.message == "Reply message not found":
                         bot.send_message(chat.id, filt.reply, parse_mode=ParseMode.MARKDOWN,
                                          disable_web_page_preview=True,
                                          reply_markup=keyboard)
                     else:
-                        message.reply_text("This note could not be sent, as it is incorrectly formatted. Ask in "
-                                           "@MarieSupport if you can't figure out why!") # ERR_NO_REPLY
-                        LOGGER.warning("Message %s could not be parsed", str(filt.reply)) # ERR_COULDNT_PARSE
-                        LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id)) # ERR_COULDNT_PARSE_FILTER
+                        message.reply_text(get_string("filters", "ERR_NO_REPLY", lang.get_lang(update.effective_chat.id))) # ERR_NO_REPLY
+                        LOGGER.warning(get_string("filters", "ERR_COULDNT_PARSE", DEFAULT_LANG), str(filt.reply)) # ERR_COULDNT_PARSE
+                        LOGGER.exception(get_string("filters", "ERR_COULDNT_PARSE_FILTER", DEFAULT_LANG), str(filt.keyword), str(chat.id)) # ERR_COULDNT_PARSE_FILTER
 
             else:
                 # LEGACY - all new filters will have has_markdown set to True.
@@ -197,7 +197,7 @@ def reply_filter(bot: Bot, update: Update):
 
 
 def __stats__():
-    return "{} filters, across {} chats.".format(sql.num_filters(), sql.num_chats()) # STATS
+    return get_string("filters", "STATS", DEFAULT_LANG).format(sql.num_filters(), sql.num_chats()) # STATS
 
 
 def __migrate__(old_chat_id, new_chat_id):
@@ -206,16 +206,11 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
     cust_filters = sql.get_chat_triggers(chat_id)
-    return "There are `{}` custom filters here.".format(len(cust_filters)) # CHAT_SETTINGS
+    return get_string("filters", "CHAT_SETTINGS", lang.get_lang(chat_id)).format(len(cust_filters)) # CHAT_SETTINGS
 
 
 def __help__(update: Update) -> str:
-    return "\n - /filters: list all active filters in this chat.\n\n" \
-           "*Admin only:*\n - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword'\
-            is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
-            keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter \"hey there\" How you \
-            doin?\n" \
-           " - /stop <filter keyword>: stop that filter."
+    return get_string("filters", "HELP", lang.get_lang(update.effective_chat.id))
 
 __mod_name__ = "Filters"
 
