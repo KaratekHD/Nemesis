@@ -1,4 +1,5 @@
 import re
+import html
 from typing import Optional
 
 import telegram
@@ -35,7 +36,7 @@ def list_handlers(bot: Bot, update: Update):
 
     filter_list = get_string("filters", "BASIC_FILTER_STRING", lang.get_lang(update.effective_chat.id))
     for keyword in all_handlers:
-        entry = " - <code>{}</code>\n".format(escape_markdown(keyword))
+        entry = " - <code>{}</code>\n".format(html.escape(keyword))
         if len(entry) + len(filter_list) > telegram.MAX_MESSAGE_LENGTH:
             update.effective_message.reply_text(filter_list, parse_mode=telegram.ParseMode.HTML)
             filter_list = entry
