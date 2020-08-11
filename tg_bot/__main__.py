@@ -377,6 +377,41 @@ def migrate_chats(bot: Bot, update: Update):
     raise DispatcherHandlerStop
 
 
+@run_async
+def about(bot: Bot, update: Update, args: List[str]):
+    update.effective_message.reply_text("Nemesis\n"
+                                        "Copyright (C) 2017 - 2019 Paul Larsen\n"
+                                        "Copyright (C) 2019 - 2020 KaratekHD\n\n"
+                                        "This program is free software: you can redistribute it and/or modify "
+                                        "it under the terms of the GNU General Public License as published by "
+                                        "the Free Software Foundation, either version 3 of the License, or"
+                                        "(at your option) any later version.\n\n"
+                                        "Constirbutors: \n"
+                                        "*Development:*\n"
+                                        " - [KaratekHD](https://github.com/KaratekHD)\n"
+                                        " - [PaulSonOfLars](https://github.com/PaulSonOfLars)\n"
+                                        " - [Juliano Dorneles dos Santos](https://github.com/jvlianodorneles)\n"
+                                        " - [TermoZour](https://github.com/TermoZour)\n"
+                                        " - [Spherical Flying Kat](https://github.com/ATechnoHazard)\n"
+                                        " - [Rhyse Simpson](https://github.com/skittles9823)\n"
+                                        " - [Harsh Shandilya](https://github.com/msfjarvis)\n"
+                                        " - [Alif Fathur](https://github.com/herobuxx)\n"
+                                        " - [anirudhgupta109](https://github.com/anirudhgupta109)\n"
+                                        " - [Shrimadhav U K](https://github.com/SpEcHiDe)\n"
+                                        " - [Rohan](https://github.com/Rohk25)\n"
+                                        " - [Lenin AGC](Lenin AGC)\n"
+                                        " - [Maverick](https://github.com/1maverick1)\n\n"
+                                        "*Translation*\n"
+                                        " - [Luna Loony](https://t.me/Luna_loony)  - Quality Control\n"
+                                        " - [Nyx](https://t.me/HerrscherinNyx) - Translation\n"
+                                        " - [MeiFel10](https://crowdin.com/profile/MeiFel10) - Translation}n"
+                                        " - [KaratekHD](https://github.com/KaratekHD) - Manager\n\n"
+                                        "*Production*\n"
+                                        " - [KaratekHD](https://github.com/KaratekHD) - Owner\n"
+                                        " - [Severus Snape](https://t.me/GenosseSeverus) - Co-Owner\n"
+                                        " - [Luna Loony](https://t.me/Luna_loony)  - Admin", parse_mode=ParseMode.MARKDOWN)
+
+
 def main():
     test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start, pass_args=True)
@@ -385,6 +420,7 @@ def main():
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
 
     settings_handler = CommandHandler("settings", get_settings)
+    about_handler = CommandHandler("about", about)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
@@ -396,6 +432,7 @@ def main():
     dispatcher.add_handler(help_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
+    dispatcher.add_handler(about_handler)
 
     # dispatcher.add_error_handler(error_callback)
 
