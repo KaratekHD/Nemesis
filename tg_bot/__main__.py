@@ -420,7 +420,7 @@ def main():
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
 
     settings_handler = CommandHandler("settings", get_settings)
-    about_handler = CommandHandler("about", about)
+    about_handler = CommandHandler("about", about, pass_args=True)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
