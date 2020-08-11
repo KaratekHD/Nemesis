@@ -409,7 +409,7 @@ def about(bot: Bot, update: Update, args: List[str]):
                                         "*Production*\n"
                                         " - [KaratekHD](https://github.com/KaratekHD) - Owner\n"
                                         " - [Severus Snape](https://t.me/GenosseSeverus) - Co-Owner\n"
-                                        " - [Luna Loony](https://t.me/Luna_loony) - Admin\n", parse_mode=ParseMode.MARKDOWN)
+                                        "", parse_mode=ParseMode.MARKDOWN)
 
 
 def main():
