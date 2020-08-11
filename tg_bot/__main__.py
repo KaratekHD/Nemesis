@@ -402,7 +402,7 @@ def about(bot: Bot, update: Update, args: List[str]):
                                         " - [Lenin AGC](https://github.com/IGUNUBLUE)\n"
                                         " - [Maverick](https://github.com/1maverick1)\n\n"
                                         "*Translation*\n"
-                                        " - [Luna Loony](https://t.me/Luna_loony)  - Quality Control\n"
+                                        " - [Luna Loony](https://t.me/Luna_loony) - Quality Control\n"
                                         " - [Nyx](https://t.me/HerrscherinNyx) - Translation\n"
                                         " - [MeiFel10](https://crowdin.com/profile/MeiFel10) - Translation\n"
                                         " - [KaratekHD](https://github.com/KaratekHD) - Manager\n\n"
