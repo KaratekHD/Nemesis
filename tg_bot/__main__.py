@@ -386,7 +386,7 @@ def about(bot: Bot, update: Update, args: List[str]):
                                         "it under the terms of the GNU General Public License as published by "
                                         "the Free Software Foundation, either version 3 of the License, or"
                                         "(at your option) any later version.\n\n"
-                                        "*Contributors:\n\n"
+                                        "*Contributors:*\n\n"
                                         "*Development:*\n"
                                         " - [KaratekHD](https://github.com/KaratekHD)\n"
                                         " - [PaulSonOfLars](https://github.com/PaulSonOfLars)\n"
@@ -409,7 +409,7 @@ def about(bot: Bot, update: Update, args: List[str]):
                                         "*Production*\n"
                                         " - [KaratekHD](https://github.com/KaratekHD) - Owner\n"
                                         " - [Severus Snape](https://t.me/GenosseSeverus) - Co-Owner\n"
-                                        "", parse_mode=ParseMode.MARKDOWN)
+                                        " - [Luna Loony](https://t.me/Luna_loony) - Admin\n", parse_mode=ParseMode.MARKDOWN)
 
 
 def main():
