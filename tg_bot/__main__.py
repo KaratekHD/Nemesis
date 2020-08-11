@@ -379,13 +379,15 @@ def migrate_chats(bot: Bot, update: Update):
 
 @run_async
 def about(bot: Bot, update: Update, args: List[str]):
-    update.effective_message.reply_text("Nemesis\n"
+    update.effective_message.reply_text("*Nemesis - Powerful open-source group manager*\n"
                                         "Copyright (C) 2017 - 2019 Paul Larsen\n"
                                         "Copyright (C) 2019 - 2020 KaratekHD\n\n"
                                         "This program is free software: you can redistribute it and/or modify "
                                         "it under the terms of the GNU General Public License as published by "
                                         "the Free Software Foundation, either version 3 of the License, or"
                                         "(at your option) any later version.\n\n"
+                                        "*Huge thank you to the one person who made me be happy again. I'm pretty sure the "
+                                        "person knows she's meant, so, thank you for being part of my life!*\n\n"
                                         "*Contributors:*\n\n"
                                         "*Development:*\n"
                                         " - [KaratekHD](https://github.com/KaratekHD)\n"
