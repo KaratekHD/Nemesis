@@ -65,7 +65,7 @@ def import_data(bot: Bot, update):
                     # Add the filter
                     # Note: perhaps handlers can be removed somehow using sql.get_chat_filters
                     for handler in dispatcher.handlers.get(HANDLER_GROUP, []):
-                        if handler.filters == (keyword, chat.id):
+                        if handler.filters == (i["name"], chat.id):
                             dispatcher.remove_handler(handler, HANDLER_GROUP)
 
                     custom_filters.add_filter(chat.id, i["name"], i["text"])
