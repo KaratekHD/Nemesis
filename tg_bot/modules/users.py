@@ -141,7 +141,7 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Users"
 
-BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=Filters.user(OWNER_ID))
+BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=CustomFilters.admin_filter)
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
 CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=CustomFilters.sudo_filter)
 
