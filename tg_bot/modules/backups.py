@@ -70,7 +70,7 @@ def import_data(bot: Bot, update):
 
                     keyword = i["name"]
                     text = i["text"]
-                    LOGGER.info(keyword + " : " + text)
+                    # LOGGER.info(keyword + " : " + text)
                     custom_filters.add_filter(chat.id, keyword, text)
                     raise DispatcherHandlerStop
 
