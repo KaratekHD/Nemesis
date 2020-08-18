@@ -53,6 +53,7 @@ def import_data(bot: Bot, update):
         # from tg_bot.modules.sql.antiflood_sql import set_flood
 
         if (data["data"]["filters"]["filters"] is not None):
+            LOGGER.info("Importing filters...")
             chat_filters = custom_filters.get_chat_triggers(chat.id)
             filters = data["data"]["filters"]["filters"]
             for i in filters:
@@ -60,6 +61,7 @@ def import_data(bot: Bot, update):
                     for keyword in chat_filters:
                         if keyword == i["name"]:
                             custom_filters.remove_filter(chat.id, i["name"])
+                            LOGGER.info("Removed.")
                             raise DispatcherHandlerStop
                     HANDLER_GROUP = 10
                     # Add the filter
@@ -70,7 +72,7 @@ def import_data(bot: Bot, update):
 
                     keyword = i["name"]
                     text = i["text"]
-                    # LOGGER.info(keyword + " : " + text)
+                    LOGGER.info(keyword + " : " + text)
                     custom_filters.add_filter(chat.id, keyword, text)
                     raise DispatcherHandlerStop
 
