@@ -25,12 +25,12 @@ from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.__main__ import DATA_IMPORT
-from tg_bot.modules.helper_funcs.chat_status import user_admin
+from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
 import tg_bot.modules.sql.cust_filters_sql as custom_filters
 
 
 @user_admin
-
+@bot_admin
 # NOTE: This file won't be translated (for now), since this feature is gonna get rewritten completely.
 def import_data(bot: Bot, update):
     msg = update.effective_message  # type: Optional[Message]
