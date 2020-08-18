@@ -26,7 +26,8 @@ from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop
 from tg_bot import dispatcher, LOGGER
 from tg_bot.__main__ import DATA_IMPORT
 from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
-import tg_bot.modules.sql.cust_filters_sql as custom_filters
+import tg_bot.modules.helper_funcs.backups as helper
+
 
 
 @user_admin
@@ -50,32 +51,13 @@ def import_data(bot: Bot, update):
             file.seek(0)
             data = json.load(file)
 
-        # from tg_bot.modules.sql.antiflood_sql import set_flood
-
         if (data["data"]["filters"]["filters"] is not None):
             LOGGER.info("Importing filters...")
-            chat_filters = custom_filters.get_chat_triggers(chat.id)
             filters = data["data"]["filters"]["filters"]
             for i in filters:
-                if (i["type"] != "0"):
-                    for keyword in chat_filters:
-                        if keyword == i["name"]:
-                            custom_filters.remove_filter(chat.id, i["name"])
-                            LOGGER.info("Removed.")
-                            raise DispatcherHandlerStop
-                    HANDLER_GROUP = 10
-                    # Add the filter
-                    # Note: perhaps handlers can be removed somehow using sql.get_chat_filters
-                    for handler in dispatcher.handlers.get(HANDLER_GROUP, []):
-                        if handler.filters == (i["name"], chat.id):
-                            dispatcher.remove_handler(handler, HANDLER_GROUP)
-
-                    keyword = i["name"]
-                    text = i["text"]
-                    LOGGER.info(keyword + " : " + text)
-                    custom_filters.add_filter(chat.id, keyword, text)
-                    raise DispatcherHandlerStop
-
+                keyword = i["name"]
+                text = i["text"]
+                helper.import_filter(chat.id, keyword, text)
         # TODO: some of that link logic
         # NOTE: consider default permissions stuff?
         msg.reply_text("Backup fully imported. Welcome back! :D")
