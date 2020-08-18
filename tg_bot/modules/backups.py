@@ -68,7 +68,10 @@ def import_data(bot: Bot, update):
                         if handler.filters == (i["name"], chat.id):
                             dispatcher.remove_handler(handler, HANDLER_GROUP)
 
-                    custom_filters.add_filter(chat.id, i["name"], i["text"])
+                    keyword = i["name"]
+                    text = i["text"]
+                    LOGGER.info(keyword + " : " + text)
+                    custom_filters.add_filter(chat.id, keyword, text)
                     raise DispatcherHandlerStop
 
         # TODO: some of that link logic
