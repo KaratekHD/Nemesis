@@ -21,11 +21,12 @@ from typing import Optional
 
 from telegram import Message, Chat, Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async
+from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.__main__ import DATA_IMPORT
 from tg_bot.modules.helper_funcs.chat_status import user_admin
+import tg_bot.modules.sql.cust_filters_sql as custom_filters
 
 
 @run_async
@@ -51,28 +52,26 @@ def import_data(bot: Bot, update):
             file.seek(0)
             data = json.load(file)
 
-        # only import one group
-        if len(data) > 1 and str(chat.id) not in data:
-            msg.reply_text("Theres more than one group here in this file, and none have the same chat id as this group "
-                           "- how do I choose what to import?")
-            return
+        # from tg_bot.modules.sql.antiflood_sql import set_flood
 
-        # Select data source
-        if str(chat.id) in data:
-            data = data[str(chat.id)]['hashes']
-        else:
-            data = data[list(data.keys())[0]]['hashes']
+        if (data["data"]["filters"]["filters"] is not None):
+            chat_filters = custom_filters.get_chat_triggers(chat.id)
+            filters = data["data"]["filters"]["filters"]
+            for i in filters:
+                if (i["type"] != "0"):
+                    for keyword in chat_filters:
+                        if keyword == i["name"]:
+                            custom_filters.remove_filter(chat.id, i["name"])
+                            raise DispatcherHandlerStop
+                    HANDLER_GROUP = 10
+                    # Add the filter
+                    # Note: perhaps handlers can be removed somehow using sql.get_chat_filters
+                    for handler in dispatcher.handlers.get(HANDLER_GROUP, []):
+                        if handler.filters == (keyword, chat.id):
+                            dispatcher.remove_handler(handler, HANDLER_GROUP)
 
-        try:
-            for mod in DATA_IMPORT:
-                mod.__import_data__(str(chat.id), data)
-        except Exception:
-            msg.reply_text("An exception occured while restoring your data. The process may not be complete. If "
-                           "you're having issues with this, message @MarieSupport with your backup file so the "
-                           "issue can be debugged. My owners would be happy to help, and every bug "
-                           "reported makes me better! Thanks! :)")
-            LOGGER.exception("Import for chatid %s with name %s failed.", str(chat.id), str(chat.title))
-            return
+                    custom_filters.add_filter(chat.id, i["name"], i["text"])
+
 
         # TODO: some of that link logic
         # NOTE: consider default permissions stuff?
