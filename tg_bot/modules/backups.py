@@ -75,8 +75,11 @@ def import_data(bot: Bot, update):
 @run_async
 @user_admin
 def export_data(bot: Bot, update: Update):
-    msg = update.effective_message  # type: Optional[Message]
-    msg.reply_text("")
+    with BytesIO(str.encode(helper.export_data(update.effective_chat, bot))) as output:
+        output.name = "gbanlist.txt"
+        update.effective_message.reply_document(document=output, filename="gbanlist.txt",
+                                                caption="Here you go.") # EXPORT_SUCCESS
+
 
 
 __mod_name__ = "Backups"
@@ -91,4 +94,4 @@ IMPORT_HANDLER = CommandHandler("import", import_data)
 EXPORT_HANDLER = CommandHandler("export", export_data)
 
 dispatcher.add_handler(IMPORT_HANDLER)
-# dispatcher.add_handler(EXPORT_HANDLER)
+dispatcher.add_handler(EXPORT_HANDLER)
