@@ -44,5 +44,6 @@ def export_data(chat : Chat, bot: Bot) -> dict:
               "languages": {"lang": lang_sql.get_lang(chat.id)}, "rules": {"text": rules_sql.get_rules(chat.id)},
               "filters": {None}}
     data = export["filters"]
-    LOGGER.info(type(filters.get_chat_triggers(chat.id)))
+    for i in data:
+        export["filters"] = export["filters"] + {i : filters.get_filter(chat.id, i)}
     return export
