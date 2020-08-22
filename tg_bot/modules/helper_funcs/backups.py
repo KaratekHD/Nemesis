@@ -1,3 +1,4 @@
+import toml
 from telegram import update, Bot, Chat
 from telegram.ext import DispatcherHandlerStop
 
@@ -34,7 +35,7 @@ def import_rules(chatid, rules):
 def import_note(chatid, name, text):
     notes_sql.import_note_to_db(chatid, name, text)
 
-def export_data(chat : Chat, bot: Bot) -> dict:
+def export_data(chat : Chat, bot: Bot) -> str:
     export = {"bot": {"id": bot.id, "name": bot.first_name, "username": bot.username},
               "chat": {"id": chat.id, "title": chat.title, "members": chat.get_members_count()},
               "welcomes": {"welcome": welcome_sql.get_custom_welcome(chat.id),
@@ -45,4 +46,4 @@ def export_data(chat : Chat, bot: Bot) -> dict:
     LOGGER.info(type(export))
     for i in filters.get_chat_triggers(chat.id):
         export["filters"][i] = filters.get_filter(chat.id, i)
-    return export
+    return toml.dumps(export)

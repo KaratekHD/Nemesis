@@ -76,7 +76,7 @@ def import_data(bot: Bot, update):
 @run_async
 @user_admin
 def export_data(bot: Bot, update: Update):
-    with BytesIO(str.encode(toml.dumps(helper.export_data(update.effective_chat, bot)))) as output:
+    with BytesIO(str.encode(helper.export_data(update.effective_chat, bot))) as output:
         output.name = str(update.effective_chat.id) + ".toml"
         update.effective_message.reply_document(document=output, filename=str(update.effective_chat.id) + ".toml",
                                                 caption="Here you go.") # EXPORT_SUCCESS
