@@ -34,15 +34,12 @@ def import_note(chatid, name, text):
     notes_sql.import_note_to_db(chatid, name, text)
 
 def export_data(chat : Chat, bot: Bot) -> dict:
-    export = {
-        "bot" : {"id" : bot.id, "name" : bot.first_name, "username" : bot.username},
-        "chat" : {"id" : chat.id, "title" : chat.title, "members" : chat.get_members_count()},
-        "welcomes" : {"welcome" : welcome_sql.get_custom_welcome(chat.id), "goodbye" : welcome_sql.get_custom_gdbye(chat.id)},
-        "antiflood" : {"limit" : antiflood_sql.get_flood_limit(chat.id)},
-        "gbans" : {"enabled" : global_bans_sql.does_chat_gban(chat.id)},
-        "languages" : {"lang" : lang_sql.get_lang(chat.id)},
-        "rules" : {"text" : rules_sql.get_rules(chat.id)},
-        "filters" : "null"
-    }
-    export["filters"] = filters.get_chat_triggers()
+    export = {"bot": {"id": bot.id, "name": bot.first_name, "username": bot.username},
+              "chat": {"id": chat.id, "title": chat.title, "members": chat.get_members_count()},
+              "welcomes": {"welcome": welcome_sql.get_custom_welcome(chat.id),
+                           "goodbye": welcome_sql.get_custom_gdbye(chat.id)},
+              "antiflood": {"limit": antiflood_sql.get_flood_limit(chat.id)},
+              "gbans": {"enabled": global_bans_sql.does_chat_gban(chat.id)},
+              "languages": {"lang": lang_sql.get_lang(chat.id)}, "rules": {"text": rules_sql.get_rules(chat.id)},
+              "filters": filters.get_chat_triggers()}
     return export
