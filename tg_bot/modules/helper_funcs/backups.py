@@ -21,5 +21,3 @@ def import_filter(chatid, trigger, reply):
 
     sql.add_filter(chatid, trigger, reply, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
-
-    raise DispatcherHandlerStop
