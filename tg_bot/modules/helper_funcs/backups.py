@@ -8,6 +8,7 @@ from tg_bot import dispatcher
 from tg_bot.modules.cust_filters import HANDLER_GROUP
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser
 from tg_bot.modules.sql import welcome_sql, antiflood_sql, global_bans_sql, lang_sql
+from tg_bot import LOGGER
 
 
 def import_filter(chatid, trigger, reply):
@@ -42,5 +43,6 @@ def export_data(chat : Chat, bot: Bot) -> dict:
               "gbans": {"enabled": global_bans_sql.does_chat_gban(chat.id)},
               "languages": {"lang": lang_sql.get_lang(chat.id)}, "rules": {"text": rules_sql.get_rules(chat.id)},
               "filters": {None}}
-
+    data = export["filters"]
+    LOGGER.info(type(filters.get_chat_triggers(chat.id)))
     return export
