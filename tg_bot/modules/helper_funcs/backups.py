@@ -42,8 +42,7 @@ def export_data(chat : Chat, bot: Bot) -> dict:
               "antiflood": {"limit": antiflood_sql.get_flood_limit(chat.id)},
               "gbans": {"enabled": global_bans_sql.does_chat_gban(chat.id)},
               "languages": {"lang": lang_sql.get_lang(chat.id)}, "rules": {"text": rules_sql.get_rules(chat.id)}}
-    data = export["filters"]
     LOGGER.info(type(export))
-    for i in data:
+    for i in export["filters"]:
         export["filters"][i] = filters.get_filter(chat.id, i)
     return export
