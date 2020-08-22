@@ -1,7 +1,8 @@
 from telegram import update
 from telegram.ext import DispatcherHandlerStop
 
-import tg_bot.modules.sql.cust_filters_sql as sql
+import tg_bot.modules.sql.cust_filters_sql as filters
+import tg_bot.modules.sql.rules_sql as rules_sql
 from tg_bot import dispatcher
 from tg_bot.modules.cust_filters import HANDLER_GROUP
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser
@@ -20,9 +21,9 @@ def import_filter(chatid, trigger, reply):
         if handler.filters == (trigger, chatid):
             dispatcher.remove_handler(handler, HANDLER_GROUP)
 
-    sql.add_filter(chatid, trigger, reply, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
+    filters.add_filter(chatid, trigger, reply, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
 
 def import_rules(chatid, rules):
     markdown_rules = markdown_parser(rules)
-    sql.set_rules(chatid, markdown_rules)
+    rules_sql.set_rules(chatid, markdown_rules)
