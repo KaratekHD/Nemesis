@@ -45,5 +45,5 @@ def export_data(chat : Chat, bot: Bot) -> dict:
               "filters": {None}}
     data = export["filters"]
     for i in data:
-        export["filters"] = export["filters"] + {i : filters.get_filter(chat.id, i)}
+        export["filters"][i] = filters.get_filter(chat.id, i)
     return export
