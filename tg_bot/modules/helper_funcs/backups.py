@@ -4,6 +4,7 @@ from telegram.ext import DispatcherHandlerStop
 import tg_bot.modules.sql.cust_filters_sql as sql
 from tg_bot import dispatcher
 from tg_bot.modules.cust_filters import HANDLER_GROUP
+from tg_bot.modules.helper_funcs.string_handling import markdown_parser
 
 
 def import_filter(chatid, trigger, reply):
@@ -21,3 +22,7 @@ def import_filter(chatid, trigger, reply):
 
     sql.add_filter(chatid, trigger, reply, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
+
+def import_rules(chatid, rules):
+    markdown_rules = markdown_parser(rules, entities=rules.parse_entities())
+    sql.set_rules(chatid, markdown_rules)

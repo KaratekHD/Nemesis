@@ -60,6 +60,9 @@ def import_data(bot: Bot, update):
                 helper.import_filter(chat.id, keyword, text)
         # TODO: some of that link logic
         # NOTE: consider default permissions stuff?
+        data = data["data"]
+        rules = data["rules"]
+        helper.import_rules(rules["content"])
         msg.reply_text("Backup fully imported. Welcome back! :D")
 
 
