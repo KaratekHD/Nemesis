@@ -42,6 +42,7 @@ def export_data(chat : Chat, bot: Bot) -> dict:
         "gbans" : {"enabled" : global_bans_sql.does_chat_gban(chat.id)},
         "languages" : {"lang" : lang_sql.get_lang(chat.id)},
         "rules" : {"text" : rules_sql.get_rules(chat.id)},
-        "filters" : None
+        "filters" : "null"
     }
+    export["filters"] = filters.get_chat_triggers()
     return export
