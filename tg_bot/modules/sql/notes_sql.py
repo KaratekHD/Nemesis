@@ -68,7 +68,7 @@ Buttons.__table__.create(checkfirst=True)
 NOTES_INSERTION_LOCK = threading.RLock()
 BUTTONS_INSERTION_LOCK = threading.RLock()
 
-def import_note_to_db(chat_id, note_name, note_data, msgtype, buttons=None, file=None):
+def import_note_to_db(chat_id, note_name, note_data, buttons=None, file=None):
     if not buttons:
         buttons = []
 
@@ -81,7 +81,7 @@ def import_note_to_db(chat_id, note_name, note_data, msgtype, buttons=None, file
                 for btn in prev_buttons:
                     SESSION.delete(btn)
             SESSION.delete(prev)
-        note = Notes(str(chat_id), note_name, note_data or "", msgtype=msgtype, file=file)
+        note = Notes(str(chat_id), note_name, note_data or "", msgtype=0, file=file)
         SESSION.add(note)
         SESSION.commit()
 
