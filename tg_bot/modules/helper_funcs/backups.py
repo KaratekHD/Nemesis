@@ -7,7 +7,7 @@ import tg_bot.modules.sql.notes_sql as notes_sql
 from tg_bot import dispatcher
 from tg_bot.modules.cust_filters import HANDLER_GROUP
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser
-from tg_bot.modules.sql import welcome_sql, antiflood_sql, global_bans_sql
+from tg_bot.modules.sql import welcome_sql, antiflood_sql, global_bans_sql, lang_sql
 
 
 def import_filter(chatid, trigger, reply):
@@ -39,6 +39,8 @@ def export_data(chat : Chat, bot: Bot) -> dict:
         "chat" : {"id" : chat.id, "title" : chat.title, "members" : chat.get_members_count()},
         "welcomes" : {"welcome" : welcome_sql.get_custom_welcome(chat.id), "goodbye" : welcome_sql.get_custom_gdbye(chat.id)},
         "antiflood" : {"limit" : antiflood_sql.get_flood_limit(chat.id)},
-        "gbans" : {"enabled" : global_bans_sql.does_chat_gban(chat.id)}
+        "gbans" : {"enabled" : global_bans_sql.does_chat_gban(chat.id)},
+        "languages" : {"lang" : lang_sql.get_lang(chat.id)},
+        "rules" : {"text" : rules_sql.get_rules(chat.id)}
     }
     return export
