@@ -62,6 +62,13 @@ def import_data(bot: Bot, update):
         data = data["data"]
         rules = data["rules"]
         helper.import_rules(chat.id, rules["content"])
+        notes = data["notes"]
+        if (notes["notes"] is not None):
+            notes = notes["notes"]
+            for i in notes:
+                if i["type"] is 0:
+                    helper.import_note(chat.id, i["name"], i["text"])
+
         msg.reply_text("Backup fully imported. Welcome back! :D")
 
 
