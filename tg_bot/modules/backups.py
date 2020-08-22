@@ -52,7 +52,6 @@ def import_data(bot: Bot, update):
             data = json.load(file)
 
         if (data["data"]["filters"]["filters"] is not None):
-            LOGGER.info("Importing filters...")
             filters = data["data"]["filters"]["filters"]
             for i in filters:
                 keyword = i["name"]
@@ -62,7 +61,7 @@ def import_data(bot: Bot, update):
         # NOTE: consider default permissions stuff?
         data = data["data"]
         rules = data["rules"]
-        helper.import_rules(rules["content"])
+        helper.import_rules(chat.id, rules["content"])
         msg.reply_text("Backup fully imported. Welcome back! :D")
 
 
