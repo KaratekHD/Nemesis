@@ -19,6 +19,7 @@ import json
 from io import BytesIO
 from typing import Optional
 
+import toml
 from telegram import Message, Chat, Update, Bot
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop
@@ -75,8 +76,8 @@ def import_data(bot: Bot, update):
 @run_async
 @user_admin
 def export_data(bot: Bot, update: Update):
-    with BytesIO(str.encode(helper.export_data(update.effective_chat, bot))) as output:
-        output.name = "gbanlist.txt"
+    with BytesIO(str.encode(toml.dumps(helper.export_data(update.effective_chat, bot)))) as output:
+        output.name = update.effective_chat.id + ".toml"
         update.effective_message.reply_document(document=output, filename="gbanlist.txt",
                                                 caption="Here you go.") # EXPORT_SUCCESS
 
