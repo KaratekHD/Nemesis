@@ -24,5 +24,5 @@ def import_filter(chatid, trigger, reply):
                    buttons)
 
 def import_rules(chatid, rules):
-    markdown_rules = markdown_parser(rules, entities=rules.parse_entities())
+    markdown_rules = markdown_parser(rules)
     sql.set_rules(chatid, markdown_rules)
