@@ -30,4 +30,4 @@ def import_rules(chatid, rules):
     rules_sql.set_rules(chatid, markdown_rules)
 
 def import_note(chatid, name, text):
-    notes_sql.add_note_to_db(chatid, name, text, 0)
+    notes_sql.import_note_to_db(chatid, name, text)

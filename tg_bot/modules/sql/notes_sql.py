@@ -68,6 +68,25 @@ Buttons.__table__.create(checkfirst=True)
 NOTES_INSERTION_LOCK = threading.RLock()
 BUTTONS_INSERTION_LOCK = threading.RLock()
 
+def import_note_to_db(chat_id, note_name, note_data, msgtype, buttons=None, file=None):
+    if not buttons:
+        buttons = []
+
+    with NOTES_INSERTION_LOCK:
+        prev = SESSION.query(Notes).get((str(chat_id), note_name))
+        if prev:
+            with BUTTONS_INSERTION_LOCK:
+                prev_buttons = SESSION.query(Buttons).filter(Buttons.chat_id == str(chat_id),
+                                                             Buttons.note_name == note_name).all()
+                for btn in prev_buttons:
+                    SESSION.delete(btn)
+            SESSION.delete(prev)
+        note = Notes(str(chat_id), note_name, note_data or "", msgtype=msgtype, file=file)
+        SESSION.add(note)
+        SESSION.commit()
+
+    for b_name, url, same_line in buttons:
+        add_note_button_to_db(chat_id, note_name, b_name, url, same_line)
 
 def add_note_to_db(chat_id, note_name, note_data, msgtype, buttons=None, file=None):
     if not buttons:
