@@ -43,9 +43,5 @@ def export_data(chat : Chat, bot: Bot) -> str:
               "antiflood": {"limit": antiflood_sql.get_flood_limit(chat.id)},
               "gbans": {"enabled": global_bans_sql.does_chat_gban(chat.id)},
               "languages": {"lang": lang_sql.get_lang(chat.id)}, "rules": {"text": rules_sql.get_rules(chat.id)}}
-    LOGGER.info(type(export))
-    f = dict
-    for i in filters.get_chat_triggers(chat.id):
-        f[i] = filters.get_filter(chat.id, i)
-    export["filters"] = f
+
     return toml.dumps(export)
