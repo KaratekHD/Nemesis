@@ -36,8 +36,8 @@ def import_note(chatid, name, text):
 def export_data(chat : Chat, bot: Bot) -> dict:
     export = {
         "name" : "KaratekBot chat export",
-        "id" : chat.id,
-        "welcome/goodbye" : {"welcome" : welcome_sql.get_custom_welcome(chat.id), "goodbye" : welcome_sql.get_custom_gdbye(chat.id)},
+        "chat" : {"id" : chat.id, "title" : chat.title, "members" : chat.get_members_count()},
+        "welcomes" : {"welcome" : welcome_sql.get_custom_welcome(chat.id), "goodbye" : welcome_sql.get_custom_gdbye(chat.id)},
         "antiflood" : {"limit" : antiflood_sql.get_flood_limit(chat.id)},
         "gbans" : {"enabled" : global_bans_sql.does_chat_gban(chat.id)}
     }
