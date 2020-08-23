@@ -162,7 +162,7 @@ def info(bot: Bot, update: Update, args: List[str]):
         if user.id == CO_OWNER_ID:
             text += get_string("misc", "MSG_USER_INFO_CO_OWNER", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_CO_OWNER
         elif user.id == 1048402045:
-            text += "This person is a good friend of my owner, so you can trust her without a doubt."
+            text += "\n\nThis person is a good friend of my owner, so you can trust her without a doubt."
         else:
             if user.id in SUDO_USERS:
                 text += get_string("misc", "MSG_USER_INFO_SUDO", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_SUDO
