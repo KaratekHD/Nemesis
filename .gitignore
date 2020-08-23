@@ -6,3 +6,4 @@
 .vscode
 /tg_bot/config.py
 /tempscript.sh
+/tg_bot/config.toml

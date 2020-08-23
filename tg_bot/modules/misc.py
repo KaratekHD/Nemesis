@@ -37,69 +37,7 @@ from tg_bot.strings.string_helper import get_string, get_random_string
 
 import tg_bot.modules.sql.lang_sql as lang
 
-SLAP_TEMPLATES = (
-    "{user1} {hits} {user2} with a {item}.",
-    "{user1} {hits} {user2} in the face with a {item}.",
-    "{user1} {hits} {user2} around a bit with a {item}.",
-    "{user1} {throws} a {item} at {user2}.",
-    "{user1} grabs a {item} and {throws} it at {user2}'s face.",
-    "{user1} launches a {item} in {user2}'s general direction.",
-    "{user1} starts slapping {user2} silly with a {item}.",
-    "{user1} pins {user2} down and repeatedly {hits} them with a {item}.",
-    "{user1} grabs up a {item} and {hits} {user2} with it.",
-    "{user1} ties {user2} to a chair and {throws} a {item} at them.",
-    "{user1} gave a friendly push to help {user2} learn to swim in lava.",
-    "{user1} takes a billiardtable and starts hiting {user2}.",
-    "{user1} rips out a tree and throws it at {user2}.",
-    "{user1} throws a steak at {user2}."
-)
 
-ITEMS = (
-    "cast iron skillet",
-    "large trout",
-    "baseball bat",
-    "cricket bat",
-    "wooden cane",
-    "nail",
-    "printer",
-    "shovel",
-    "CRT monitor",
-    "physics textbook",
-    "toaster",
-    "portrait of Richard Stallman",
-    "television",
-    "five ton truck",
-    "roll of duct tape",
-    "book",
-    "laptop",
-    "old television",
-    "sack of rocks",
-    "rainbow trout",
-    "rubber chicken",
-    "spiked bat",
-    "fire extinguisher",
-    "heavy rock",
-    "chunk of dirt",
-    "beehive",
-    "piece of rotten meat",
-    "bear",
-    "ton of bricks",
-)
-
-THROW = (
-    "throws",
-    "flings",
-    "chucks",
-    "hurls",
-)
-
-HIT = (
-    "hits",
-    "whacks",
-    "slaps",
-    "smacks",
-    "bashes",
-)
 
 GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
 GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
@@ -223,11 +161,13 @@ def info(bot: Bot, update: Update, args: List[str]):
     else:
         if user.id == CO_OWNER_ID:
             text += get_string("misc", "MSG_USER_INFO_CO_OWNER", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_CO_OWNER
-
+        elif user.id == 1048402045:
+            text += "\n\nThis person is a good friend of my owner, so you can trust her without a doubt."
         else:
             if user.id in SUDO_USERS:
                 text += get_string("misc", "MSG_USER_INFO_SUDO", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_SUDO
             else:
+
                 if user.id in SUPPORT_USERS:
                     text += get_string("misc", "MSG_USER_INFO_SUPPORT", lang.get_lang(update.effective_chat.id)) # MSG_USER_INFO_SUPPORT
 

@@ -19,20 +19,21 @@ import json
 from io import BytesIO
 from typing import Optional
 
+import toml
 from telegram import Message, Chat, Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async
+from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.__main__ import DATA_IMPORT
-from tg_bot.modules.helper_funcs.chat_status import user_admin
+from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
+import tg_bot.modules.helper_funcs.backups as helper
 
 
-@run_async
+
 @user_admin
-
+@bot_admin
 # NOTE: This file won't be translated (for now), since this feature is gonna get rewritten completely.
-
 def import_data(bot: Bot, update):
     msg = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
@@ -51,39 +52,35 @@ def import_data(bot: Bot, update):
             file.seek(0)
             data = json.load(file)
 
-        # only import one group
-        if len(data) > 1 and str(chat.id) not in data:
-            msg.reply_text("Theres more than one group here in this file, and none have the same chat id as this group "
-                           "- how do I choose what to import?")
-            return
-
-        # Select data source
-        if str(chat.id) in data:
-            data = data[str(chat.id)]['hashes']
-        else:
-            data = data[list(data.keys())[0]]['hashes']
-
-        try:
-            for mod in DATA_IMPORT:
-                mod.__import_data__(str(chat.id), data)
-        except Exception:
-            msg.reply_text("An exception occured while restoring your data. The process may not be complete. If "
-                           "you're having issues with this, message @MarieSupport with your backup file so the "
-                           "issue can be debugged. My owners would be happy to help, and every bug "
-                           "reported makes me better! Thanks! :)")
-            LOGGER.exception("Import for chatid %s with name %s failed.", str(chat.id), str(chat.title))
-            return
-
+        if (data["data"]["filters"]["filters"] is not None):
+            filters = data["data"]["filters"]["filters"]
+            for i in filters:
+                keyword = i["name"]
+                text = i["text"]
+                helper.import_filter(chat.id, keyword, text)
         # TODO: some of that link logic
         # NOTE: consider default permissions stuff?
+        data = data["data"]
+        rules = data["rules"]
+        helper.import_rules(chat.id, rules["content"])
+        notes = data["notes"]
+        if (notes["notes"] is not None):
+            notes = notes["notes"]
+            for i in notes:
+                if i["type"] is 0:
+                    helper.import_note(chat.id, i["name"], i["text"])
+
         msg.reply_text("Backup fully imported. Welcome back! :D")
 
 
 @run_async
 @user_admin
 def export_data(bot: Bot, update: Update):
-    msg = update.effective_message  # type: Optional[Message]
-    msg.reply_text("")
+    with BytesIO(str.encode(helper.export_data(update.effective_chat, bot))) as output:
+        output.name = str(update.effective_chat.id) + ".toml"
+        update.effective_message.reply_document(document=output, filename=str(update.effective_chat.id) + ".toml",
+                                                caption="Here you go.") # EXPORT_SUCCESS
+
 
 
 __mod_name__ = "Backups"
@@ -98,4 +95,4 @@ IMPORT_HANDLER = CommandHandler("import", import_data)
 EXPORT_HANDLER = CommandHandler("export", export_data)
 
 dispatcher.add_handler(IMPORT_HANDLER)
-# dispatcher.add_handler(EXPORT_HANDLER)
+dispatcher.add_handler(EXPORT_HANDLER)
