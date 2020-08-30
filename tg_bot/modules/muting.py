@@ -16,9 +16,9 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import html
-from typing import List
+from typing import Optional, List
 
-from telegram import Chat, Update, Bot, User
+from telegram import Message, Chat, Update, Bot, User
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters
 from telegram.ext.dispatcher import run_async

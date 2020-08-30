@@ -16,8 +16,9 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from functools import wraps
+from typing import Optional
 
-from telegram import Chat, ChatMember, Update, Bot
+from telegram import User, Chat, ChatMember, Update, Bot
 
 from tg_bot import DEL_CMDS, SUDO_USERS, WHITELIST_USERS
 
