@@ -76,10 +76,10 @@ def slap(bot: Bot, update: Update, args: List[str]):
         user1 = "[{}](tg://user?id={})".format(bot.first_name, bot.id)
         user2 = curr_user
 
-    temp = get_random_string("slap", lang.get_lang(update.effective_chat.id))
-    item = get_random_string("items", lang.get_lang(update.effective_chat.id))
-    hit = get_random_string("hit", lang.get_lang(update.effective_chat.id))
-    throw = get_random_string("throws", lang.get_lang(update.effective_chat.id))
+    temp = get_random_string("slap", "en")
+    item = get_random_string("items", "en")
+    hit = get_random_string("hit", "en")
+    throw = get_random_string("throws", "en")
 
     repl = temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw)
 
