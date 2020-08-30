@@ -17,17 +17,16 @@
 
 import html
 import json
-import random
 from datetime import datetime
-from typing import Optional, List
+from typing import List
 
 import requests
-from telegram import Message, Chat, Update, Bot, MessageEntity
+from telegram import Chat, Update, Bot, MessageEntity
 from telegram import ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, CO_OWNER_ID, LOGGER
+from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, CO_OWNER_ID
 from tg_bot.__main__ import GDPR
 from tg_bot.__main__ import STATS, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler

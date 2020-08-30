@@ -16,7 +16,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from functools import wraps
-from typing import Optional
 
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
 

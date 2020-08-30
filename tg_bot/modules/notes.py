@@ -17,10 +17,10 @@
 
 import re
 from io import BytesIO
-from typing import Optional, List
+from typing import List
 
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
-from telegram import Message, Update, Bot
+from telegram import Update, Bot
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, RegexHandler
 from telegram.ext.dispatcher import run_async

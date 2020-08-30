@@ -16,8 +16,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import toml
-from telegram import update, Bot, Chat
-from telegram.ext import DispatcherHandlerStop
+from telegram import Bot, Chat
 
 import tg_bot.modules.sql.cust_filters_sql as filters
 import tg_bot.modules.sql.rules_sql as rules_sql
@@ -26,7 +25,6 @@ from tg_bot import dispatcher
 from tg_bot.modules.cust_filters import HANDLER_GROUP
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser
 from tg_bot.modules.sql import welcome_sql, antiflood_sql, global_bans_sql, lang_sql
-from tg_bot import LOGGER
 
 
 def import_filter(chatid, trigger, reply):

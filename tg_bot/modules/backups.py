@@ -17,15 +17,12 @@
 
 import json
 from io import BytesIO
-from typing import Optional
 
-import toml
-from telegram import Message, Chat, Update, Bot
+from telegram import Chat, Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop
+from telegram.ext import CommandHandler, run_async
 
-from tg_bot import dispatcher, LOGGER
-from tg_bot.__main__ import DATA_IMPORT
+from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
 import tg_bot.modules.helper_funcs.backups as helper
 

@@ -16,10 +16,9 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
-from typing import Optional
 
 import telegram
-from telegram import ParseMode, InlineKeyboardMarkup, Message, Chat
+from telegram import InlineKeyboardMarkup, Message
 from telegram import Update, Bot
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, DispatcherHandlerStop, run_async

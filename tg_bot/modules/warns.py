@@ -17,11 +17,11 @@
 
 import html
 import re
-from typing import Optional, List
+from typing import List
 
 import telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User, CallbackQuery
-from telegram import Message, Chat, Update, Bot
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User
+from telegram import Chat, Update, Bot
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, MessageHandler, Filters, CallbackQueryHandler
 from telegram.utils.helpers import mention_html
