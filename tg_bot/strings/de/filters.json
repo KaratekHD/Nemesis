@@ -8,10 +8,10 @@
   "ERR_NOT_A_FILTER": "Das ist kein aktueller Filter - führ /filters für alle aktiven Filter aus.",
   "ERR_BAD_URL": "Du scheinst zu versuchen, ein nicht unterstütztes url-Protokoll zu verwenden. Telegram unterstützt keine Schaltflächen für einige Protokolle, wie zum Beispiel tg://. Bitte versuch es erneut, oder frag in @MarieSupport nach Hilfe.",
   "ERR_NO_REPLY": "deine Nachricht konnte nicht gesendet werden, da sie falsch formatiert ist. Frag in @MarieSupport nach, wenn du nicht herausfinden kannst, warum!",
-  "ERR_COULDNT_PARSE": "Nachricht %s konnte nicht geparst werden",
+  "ERR_COULDNT_PARSE": "Nachricht %s konnte nicht analysiert werden.",
   "ERR_COULDNT_PARSE_FILTER": "Could not parse filter %s in chat %s",
   "STATS": "{} Filter, über {} Chats.",
   "CHAT_SETTINGS": "Es gibt hier `{}` benutzerdefinierte Filter.",
-  "HELP": " - /filters: listet alle aktiven Filter in diesem Chat auf.\n\n*nur Admins:*\n - /filter <keyword> <reply message>: diesem Chat einen Filter hinzufügen. Der Bot antwortet nun auf diese Nachricht immer dann, wenn 'Schlüsselwörter' erwähnt werden. Wenn du auf einen Sticker mit einem Schlüsselwort antwortest, wird der Bot mit diesem Sticker antworten. HINWEIS: Alle Filter-Schlüsselwörter sind klein geschrieben. Wenn du möchtest, dass dein Schlüsselwort ein Satz ist, verwende Anführungszeichen. zum Beispiel: /filter \"hey there\" Wie geht es dir?\n - /stop <filter keyword>: diesen Filter stoppen.",
+  "HELP": " - /filters: listet alle aktiven Filter in diesem Chat auf.\n\n*nur Admins:*\n - /filter <keyword> <reply message>: diesem Chat einen Filter hinzufügen. Der Bot antwortet nun auf diese Nachricht immer dann, wenn 'Schlüsselwörter' erwähnt werden. Wenn du auf einen Sticker mit einem Schlüsselwort antwortest, wird der Bot mit diesem Sticker antworten. HINWEIS: Alle Filter-Schlüsselwörter sind klein geschrieben. Wenn du möchtest, dass dein Schlüsselwort ein Satz ist, verwende Anführungszeichen. zum Beispiel: /filter \"guten tag\" Wie geht es dir?\n - /stop <filter keyword>: diesen Filter stoppen.",
   "MODULE_NAME": "Filter"
 }
