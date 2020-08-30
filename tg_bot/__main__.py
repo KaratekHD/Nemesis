@@ -416,7 +416,7 @@ def about(bot: Bot, update: Update, args: List[str]):
 
 
 def main():
-    test_handler = CommandHandler("test", test)
+    # test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start, pass_args=True)
 
     help_handler = CommandHandler("help", get_help)
