@@ -1,5 +1,5 @@
 {
-  "LINK": "\n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">click here</a>",
+  "LINK": "\n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">Klicke hier</a>",
   "ERR_MISSING_RETURN_STATE": "%s was set as loggable, but had no return statement.",
   "ERR_LOG_CHANNEL_DELETED": "This log channel has been deleted - unsetting.",
   "ERR_IN_FORMATING": "\n\nFormatting has been disabled due to an unexpected error.",
