@@ -1,9 +1,9 @@
 {
   "ERR_NO_TARGET": "Du beziehst dich auf keinen Benutzer.",
   "ERR_SUDO_USER": "Ich spioniere, mit meinem kleinen Auge... ein sudo-Benutzer-krieg! Warum wendet ihr euch gegeneinander?",
-  "ERR_SUPPORT_USER": "OOOH someone's trying to gban a support user! *grabs popcorn*",
-  "ERR_IS_ITSELF": "-_- So funny, lets gban myself why don't I? Nice try.",
-  "ERR_NO_USER": "That's not a user!",
+  "ERR_SUPPORT_USER": "OOOH jemand versucht, einen Support-Benutzer zu gbannen! *greift nach Popcorn*",
+  "ERR_IS_ITSELF": "-_- So lustig, dass ich mich selbst verbannen darf, warum tue ich es nicht? Netter Versuch.",
+  "ERR_NO_USER": "Das ist kein Benutzer!",
   "ERR_GBANNED_NO_REASON": "This user is already gbanned; I'd change the reason, but you haven't given me one...",
   "ALREADY_BANNED": "This user is already gbanned, for the following reason:\n<code>{}</code>\nI've gone and updated it with your new reason!",
   "ALREADY_BANNED_WITHOUT_REASON": "This user is already gbanned, but had no reason set; I've gone and updated it!",
