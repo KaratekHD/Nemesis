@@ -32,5 +32,12 @@
   "ERR_TELEGRAM": "Ein Telegram Fehler passierte beim Verarbeiten des Updates",
   "ERR_ERRHANDLER": "Fehlerbehandlung stoppt weitere Handlungen",
   "ERR_UPDATE_UNKNOWN": "Ein unerwarteter Fehler trat auf beim Verarbeiten des Updates",
-  "MODULES_LOADED": "Folgende Module wurden erfolgreich geladen: "
+  "MODULES_LOADED": "Folgende Module wurden erfolgreich geladen: ",
+  "ABOUT_TITLE": "Nemesis - Powerful open-source group manager*\n",
+  "ABOUT_GPL": "This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or(at your option) any later version.\n\n",
+  "ABOUT_GF": "*Huge thank you to the one person who just stands by me and makes me enjoy life more. I'm pretty sure the person knows she's meant, so, thank you for being part of my life!*\n\n",
+  "ABOUT_CONSTRIBUTORS": "*Contributors:*\n\n",
+  "ABOUT_DEV": "*Development:*\n",
+  "ABOUT_TRANSLATION": "*Translation*\n",
+  "ABOUT_PRODUCTION": "*Production*\n"
 }
