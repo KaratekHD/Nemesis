@@ -32,5 +32,12 @@
   "ERR_TELEGRAM" : "A TelegramError was raised while processing the Update",
   "ERR_ERRHANDLER" : "Error handler stopped further handlers",
   "ERR_UPDATE_UNKNOWN" : "An uncaught error was raised while processing the update",
-  "MODULES_LOADED" : "Successfully loaded modules: "
+  "MODULES_LOADED" : "Successfully loaded modules: ",
+  "ABOUT_TITLE" : "Nemesis - Powerful open-source group manager*\n",
+  "ABOUT_GPL": "This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or(at your option) any later version.\n\n",
+  "ABOUT_GF" : "*Huge thank you to the one person who just stands by me and makes me enjoy life more. I'm pretty sure the person knows she's meant, so, thank you for being part of my life!*\n\n",
+  "ABOUT_CONSTRIBUTORS" : "*Contributors:*\n\n",
+  "ABOUT_DEV" : "*Development:*\n",
+  "ABOUT_TRANSLATION" : "*Translation*\n",
+  "ABOUT_PRODUCTION" : "*Production*\n"
 }
