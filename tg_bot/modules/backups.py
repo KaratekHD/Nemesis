@@ -42,7 +42,7 @@ def import_data(bot: Bot, update):
             file_info = bot.get_file(msg.reply_to_message.document.file_id)
         except BadRequest:
             msg.reply_text("Try downloading and reuploading the file as yourself before importing - this one seems "
-                           "to be iffy!")
+                           "to be iffy!") # MSG_REUPLOAD
             return
 
         with BytesIO() as file:
@@ -68,7 +68,7 @@ def import_data(bot: Bot, update):
                 if i["type"] is 0:
                     helper.import_note(chat.id, i["name"], i["text"])
 
-        msg.reply_text("Backup fully imported. Welcome back! :D")
+        msg.reply_text("Backup fully imported. Welcome back! :D") # MSG_IMPORT_SUCCESS
 
 
 @run_async
@@ -77,7 +77,7 @@ def export_data(bot: Bot, update: Update):
     with BytesIO(str.encode(helper.export_data(update.effective_chat, bot))) as output:
         output.name = str(update.effective_chat.id) + ".toml"
         update.effective_message.reply_document(document=output, filename=str(update.effective_chat.id) + ".toml",
-                                                caption="Here you go.") # EXPORT_SUCCESS
+                                                caption="Here you go.") # MSG_EXPORT_SUCCESS
 
 
 
@@ -87,7 +87,7 @@ def __help__(update: Update) -> str:
     return "\n*Admin only:*\n" \
            " - /import: reply to a group butler backup file to import as much as possible, making the transfer super simple! Note \
            that files/photos can't be imported due to telegram restrictions.\n" \
-           " - /export: !!! This isn't a command yet, but should be coming soon!"
+           " - /export: !!! This isn't a command yet, but should be coming soon!" # HELP
 
 IMPORT_HANDLER = CommandHandler("import", import_data)
 EXPORT_HANDLER = CommandHandler("export", export_data)

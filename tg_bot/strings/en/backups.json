@@ -1,0 +1,6 @@
+{
+  "MSG_REUPLOAD" : "Try downloading and reuploading the file as yourself before importing - this one seems to be iffy!",
+  "MSG_IMPORT_SUCCESS" : "Backup fully imported. Welcome back! :D",
+  "MSG_EXPORT_SUCCESS" : "Here you go.",
+  "HELP" : "\n*Admin only:*\n - /import: reply to a group butler backup file to import as much as possible, making the transfer super simple! Note that files/photos can't be imported due to telegram restrictions.\n - /export: !!! This isn't a command yet, but should be coming soon!"
+}
