@@ -383,7 +383,7 @@ def about(bot: Bot, update: Update, args: List[str]):
                                         " - [PaulSonOfLars](https://github.com/PaulSonOfLars)\n" \
                                         " - [Juliano Dorneles dos Santos](https://github.com/jvlianodorneles)\n" \
                                         " - [TermoZour](https://github.com/TermoZour)\n" \
-                                        " - [Spherical Flying Kat](https://github.com/ATechnoHazard)\n" \ 
+                                        " - [Spherical Flying Kat](https://github.com/ATechnoHazard)\n" \
                                         " - [Rhyse Simpson](https://github.com/skittles9823)\n" \
                                         " - [Harsh Shandilya](https://github.com/msfjarvis)\n" \
                                         " - [Alif Fathur](https://github.com/herobuxx)\n" \
