@@ -27,6 +27,9 @@ class CustomCommandHandler(tg.CommandHandler):
             del kwargs["admin_ok"]
         super().__init__(command, callback, **kwargs)
 
+    def collect_additional_context(self, context, update, dispatcher, check_result):
+        pass
+
     def check_update(self, update):
         if (isinstance(update, Update)
                 and (update.message or update.edited_message and self.allow_edited)):
