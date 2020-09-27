@@ -25,7 +25,7 @@ from typing import Optional, List
 from telegram import Message, Chat, Update, Bot, User
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import Unauthorized, BadRequest, TimedOut, NetworkError, ChatMigrated, TelegramError
-from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
+from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler, CallbackContext
 from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 from telegram.utils.helpers import escape_markdown
 
@@ -112,8 +112,9 @@ def test(bot: Bot, update: Update):
 
 
 @run_async
-def start(bot: Bot, update: Update, args: List[str]):
+def start(update: Update, context: CallbackContext):
     if update.effective_chat.type == "private":
+        args = context.args
         if len(args) >= 1:
             if args[0].lower() == "help":
                 HELP_STRINGS = get_string("main", "HELP_STRINGS", lang.get_lang(update.effective_chat.id))
@@ -383,7 +384,7 @@ def about(bot: Bot, update: Update, args: List[str]):
                                         " - [PaulSonOfLars](https://github.com/PaulSonOfLars)\n" \
                                         " - [Juliano Dorneles dos Santos](https://github.com/jvlianodorneles)\n" \
                                         " - [TermoZour](https://github.com/TermoZour)\n" \
-                                        " - [Spherical Flying Kat](https://github.com/ATechnoHazard)\n" \ 
+                                        " - [Spherical Flying Kat](https://github.com/ATechnoHazard)\n" \
                                         " - [Rhyse Simpson](https://github.com/skittles9823)\n" \
                                         " - [Harsh Shandilya](https://github.com/msfjarvis)\n" \
                                         " - [Alif Fathur](https://github.com/herobuxx)\n" \
@@ -481,6 +482,7 @@ def process_update(self, update):
         return
 
     now = datetime.datetime.utcnow()
+
     cnt = CHATS_CNT.get(update.effective_chat.id, 0)
 
     t = CHATS_TIME.get(update.effective_chat.id, datetime.datetime(1970, 1, 1))
@@ -494,6 +496,8 @@ def process_update(self, update):
         return
 
     CHATS_CNT[update.effective_chat.id] = cnt
+
+
     for group in self.groups:
         try:
             for handler in (x for x in self.handlers[group] if x.check_update(update)):

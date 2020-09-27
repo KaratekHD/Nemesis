@@ -10,8 +10,6 @@ bots aiming to provide simple plugin expansion via a simple drag and drop.
 
 Can be found on telegram as [Nemesis](https://t.me/karatekbot).
 
-Note to maintainers that all schema changes will be found in the commit messages, and its their responsibility to read any new commits.
-
 ## Starting the bot.
 
 Once you've setup your database and your configuration (see below) is complete, simply run:
