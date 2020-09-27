@@ -144,7 +144,7 @@ SUDO_USERS.add(CO_OWNER_ID)
 LOGGER.info("Owner: %s", OWNER_ID )
 LOGGER.info("Co-Owner: %s", CO_OWNER_ID )
 
-updater = tg.Updater(TOKEN, workers=WORKERS)
+updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 
 dispatcher = updater.dispatcher
 

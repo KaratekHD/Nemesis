@@ -135,7 +135,7 @@ def start(update: Update, context: CallbackContext):
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_text(
-                get_string("main", "PM_START_TEXT", lang.get_lang(update.effective_chat.id)).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
+                get_string("main", "PM_START_TEXT", lang.get_lang(update.effective_chat.id)).format(escape_markdown(first_name), escape_markdown(context.bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN)
     else:
         update.effective_message.reply_text(get_string("main", "START_IN_GROUP", lang.get_lang(update.effective_chat.id))) # START_IN_GROUP
@@ -424,7 +424,7 @@ def about(bot: Bot, update: Update, args: List[str]):
 
 def main():
     # test_handler = CommandHandler("test", test)
-    start_handler = CommandHandler("start", start, pass_args=True)
+    start_handler = CommandHandler("start", start)
 
     help_handler = CommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
@@ -446,8 +446,8 @@ def main():
 
     # dispatcher.add_error_handler(error_callback)
 
-    # add antiflood processor
-    Dispatcher.process_update = process_update
+    # add antiflood processor - Causes problems with the new API, so disableing - for now
+    #Dispatcher.process_update = process_update
 
     if WEBHOOK:
         LOGGER.info(get_string("main", "WEBHOOKS", DEFAULT_LANG)) # WEBHOOKS
@@ -501,7 +501,7 @@ def process_update(self, update):
     for group in self.groups:
         try:
             for handler in (x for x in self.handlers[group] if x.check_update(update)):
-                handler.handle_update()
+                handler.handle_update(update, self, handler.check_update(update))
                 break
 
         # Stop processing with any other handler.
