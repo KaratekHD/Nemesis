@@ -21,7 +21,7 @@ from typing import Optional, List
 from telegram import Message, Chat, Update, Bot, User
 from telegram import ParseMode
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown, mention_html
 
@@ -38,7 +38,9 @@ import tg_bot.modules.sql.lang_sql as lang
 @can_promote
 @user_admin
 @loggable
-def promote(bot: Bot, update: Update, args: List[str]) -> str:
+def promote(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat_id = update.effective_chat.id
     message = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
@@ -82,7 +84,9 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 @can_promote
 @user_admin
 @loggable
-def demote(bot: Bot, update: Update, args: List[str]) -> str:
+def demote(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
     user = update.effective_user  # type: Optional[User]
@@ -130,7 +134,9 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 @can_pin
 @user_admin
 @loggable
-def pin(bot: Bot, update: Update, args: List[str]) -> str:
+def pin(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     user = update.effective_user  # type: Optional[User]
     chat = update.effective_chat  # type: Optional[Chat]
 
@@ -160,7 +166,9 @@ def pin(bot: Bot, update: Update, args: List[str]) -> str:
 @can_pin
 @user_admin
 @loggable
-def unpin(bot: Bot, update: Update) -> str:
+def unpin(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat
     user = update.effective_user  # type: Optional[User]
 
@@ -179,7 +187,9 @@ def unpin(bot: Bot, update: Update) -> str:
 @run_async
 @bot_admin
 @user_admin
-def invite(bot: Bot, update: Update):
+def invite(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     if chat.username:
         update.effective_message.reply_text(chat.username)
@@ -195,7 +205,9 @@ def invite(bot: Bot, update: Update):
 
 
 @run_async
-def adminlist(bot: Bot, update: Update):
+def adminlist(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     administrators = update.effective_chat.get_administrators()
     text = get_string("admin", "ADMINS_IN", lang.get_lang(update.effective_chat.id)).format(update.effective_chat.title or get_string("admin", "THIS_CHAT", lang.get_lang(update.effective_chat.id))) # ADMINS_IN and THIS_CHAT
     for admin in administrators:

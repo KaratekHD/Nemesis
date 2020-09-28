@@ -171,7 +171,8 @@ def error_callback(bot, update, error):
 
 
 @run_async
-def help_button(bot: Bot, update: Update):
+def help_button(update: Update, context: CallbackContext):
+    bot = context.bot
     query = update.callback_query
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
     prev_match = re.match(r"help_prev\((.+?)\)", query.data)
@@ -225,7 +226,7 @@ def help_button(bot: Bot, update: Update):
 
 
 @run_async
-def get_help(bot: Bot, update: Update):
+def get_help(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     args = update.effective_message.text.split(None, 1)
 
@@ -276,7 +277,8 @@ def send_settings(chat_id, user_id, user=False):
 
 
 @run_async
-def settings_button(bot: Bot, update: Update):
+def settings_button(update: Update, context: CallbackContext):
+    bot = context.bot
     query = update.callback_query
     user = update.effective_user
     mod_match = re.match(r"stngs_module\((.+?),(.+?)\)", query.data)
@@ -338,7 +340,7 @@ def settings_button(bot: Bot, update: Update):
             LOGGER.exception(get_string("main", "ERR_EXCP_SETTINGS_BUTTONS", DEFAULT_LANG), str(query.data)) # ERR_EXCP_SETTINGS_BUTTONS
 
 @run_async
-def get_settings(bot: Bot, update: Update):
+def get_settings(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
@@ -359,7 +361,7 @@ def get_settings(bot: Bot, update: Update):
     else:
         send_settings(chat.id, user.id, True)
 
-def migrate_chats(bot: Bot, update: Update):
+def migrate_chats(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
     if msg.migrate_to_chat_id:
         old_chat = update.effective_chat.id
@@ -379,7 +381,7 @@ def migrate_chats(bot: Bot, update: Update):
 
 
 @run_async
-def about(bot: Bot, update: Update, args: List[str]):
+def about(update: Update, context: CallbackContext):
     DEVELOPMENT = " - [KaratekHD](https://github.com/KaratekHD)\n" \
                                         " - [PaulSonOfLars](https://github.com/PaulSonOfLars)\n" \
                                         " - [Juliano Dorneles dos Santos](https://github.com/jvlianodorneles)\n" \

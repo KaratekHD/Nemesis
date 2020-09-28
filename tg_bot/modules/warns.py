@@ -23,7 +23,8 @@ import telegram
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User, CallbackQuery
 from telegram import Message, Chat, Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, MessageHandler, Filters, CallbackQueryHandler
+from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, MessageHandler, Filters, \
+    CallbackQueryHandler, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, BAN_STICKER
@@ -303,7 +304,8 @@ def list_warn_filters(bot: Bot, update: Update):
 
 @run_async
 @loggable
-def reply_filter(bot: Bot, update: Update) -> str:
+def reply_filter(update: Update, context: CallbackContext) -> str:
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
 

@@ -22,7 +22,7 @@ from typing import Optional
 from telegram import TelegramError, Chat, Message
 from telegram import Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import MessageHandler, Filters, CommandHandler
+from telegram.ext import MessageHandler, Filters, CommandHandler, CallbackContext
 from telegram.ext.dispatcher import run_async
 
 import tg_bot.modules.sql.users_sql as sql
@@ -83,7 +83,7 @@ def broadcast(bot: Bot, update: Update):
 
 
 @run_async
-def log_user(bot: Bot, update: Update):
+def log_user(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
 
