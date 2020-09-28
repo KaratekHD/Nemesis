@@ -96,7 +96,7 @@ def can_promote(func):
     def promote_rights(update: Update, context: CallbackContext, *args, **kwargs):
         bot = context.bot
         if update.effective_chat.get_member(bot.id).can_promote_members:
-            return func(bot, update, *args, **kwargs)
+            return func(update, context, *args, **kwargs)
         else:
             update.effective_message.reply_text("I can't promote/demote people here! "
                                                 "Make sure I'm admin and can appoint new admins.")
@@ -131,7 +131,6 @@ def bot_admin(func):
 def user_admin(func):
     @wraps(func)
     def is_admin(update: Update, context: CallbackContext, *args, **kwargs):
-        bot = context.bot
         user = update.effective_user  # type: Optional[User]
         if user and is_user_admin(update.effective_chat, user.id):
             return func(update, context, *args, **kwargs)

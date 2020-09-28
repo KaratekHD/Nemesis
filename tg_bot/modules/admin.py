@@ -206,8 +206,6 @@ def invite(update: Update, context: CallbackContext):
 
 @run_async
 def adminlist(update: Update, context: CallbackContext):
-    args = context.args
-    bot = context.bot
     administrators = update.effective_chat.get_administrators()
     text = get_string("admin", "ADMINS_IN", lang.get_lang(update.effective_chat.id)).format(update.effective_chat.title or get_string("admin", "THIS_CHAT", lang.get_lang(update.effective_chat.id))) # ADMINS_IN and THIS_CHAT
     for admin in administrators:
