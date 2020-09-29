@@ -25,7 +25,7 @@ from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher
+from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin
 from tg_bot.modules.helper_funcs.extraction import extract_user
@@ -214,7 +214,7 @@ def adminlist(update: Update, context: CallbackContext):
         if user.username:
             name = escape_markdown("@" + user.username)
         text += "\n - {}".format(name)
-
+    # TODO Maybe add some logic for titles and different roles?
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
@@ -238,7 +238,7 @@ INVITE_HANDLER = CommandHandler("invitelink", invite, filters=Filters.group)
 PROMOTE_HANDLER = CommandHandler("promote", promote, pass_args=True, filters=Filters.group)
 DEMOTE_HANDLER = CommandHandler("demote", demote, pass_args=True, filters=Filters.group)
 
-ADMINLIST_HANDLER = DisableAbleCommandHandler("adminlist", adminlist, filters=Filters.group)
+ADMINLIST_HANDLER = CommandHandler("adminlist", adminlist, filters=Filters.group)
 
 dispatcher.add_handler(PIN_HANDLER)
 dispatcher.add_handler(UNPIN_HANDLER)
