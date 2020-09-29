@@ -28,7 +28,7 @@ module = "init"
 # enable logging
 logging.basicConfig(
     format="[%(asctime)s | %(levelname)s] %(message)s",
-    level=logging.INFO)
+    level=logging.DEBUG)  # For development purpose only
 
 LOGGER = logging.getLogger(__name__)
 
