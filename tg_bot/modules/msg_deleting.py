@@ -18,9 +18,9 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User, update
+from telegram import Message, Chat, Update, Bot, User, update, ParseMode
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
@@ -32,7 +32,9 @@ from tg_bot.modules.log_channel import loggable
 @run_async
 @user_admin
 @loggable
-def purge(bot: Bot, update: Update, args: List[str]) -> str:
+def purge(update: Update, context: CallbackContext) -> str:
+    bot = context.bot
+    args = context.args
     msg = update.effective_message  # type: Optional[Message]
     if msg.reply_to_message:
         user = update.effective_user  # type: Optional[User]
@@ -84,7 +86,8 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
 @run_async
 @user_admin
 @loggable
-def del_message(bot: Bot, update: Update) -> str:
+def del_message(update: Update, context: CallbackContext) -> str:
+    bot = context.bot
     if update.effective_message.reply_to_message:
         user = update.effective_user  # type: Optional[User]
         chat = update.effective_chat  # type: Optional[Chat]
@@ -102,11 +105,13 @@ def del_message(bot: Bot, update: Update) -> str:
     return ""
 
 
+
 def __help__(update: Update) -> str:
     return "\n*Admin only:*\n" \
            "- /del: deletes the message you replied to\n" \
            " - /purge: deletes all messages between this and the replied to message.\n" \
            " - /purge <integer X>: deletes the replied message, and X messages following it."
+
 
 __mod_name__ = "Message Deletion"
 
@@ -114,8 +119,6 @@ DELETE_HANDLER = CommandHandler("del", del_message, filters=Filters.group)
 PURGE_HANDLER = CommandHandler("purge", purge, filters=Filters.group, pass_args=True)
 PURGE2_HANDLER = CommandHandler("p", purge, filters=Filters.group, pass_args=True)
 
-
 dispatcher.add_handler(DELETE_HANDLER)
 dispatcher.add_handler(PURGE_HANDLER)
 dispatcher.add_handler(PURGE2_HANDLER)
-

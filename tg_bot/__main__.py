@@ -237,7 +237,7 @@ def get_help(update: Update, context: CallbackContext):
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text=get_string("main", "PM_FOR_HELP_BUTTON", lang.get_lang(chat.id)),
                                                                        url="t.me/{}?start=help".format(
-                                                                           bot.username))]])) # PM_FOR_HELP and PM_FOR_HELP_BUTTON
+                                                                           context.bot.username))]])) # PM_FOR_HELP and PM_FOR_HELP_BUTTON
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
