@@ -1,5 +1,5 @@
 {
-  "LOCKS": "Locks: ",
+  "LOCKS": "Sperren: ",
   "LOCK_SUCCESS": "Locked {} messages for all non-admins!",
   "LOCK_SUCCESS_HTML": "<b>{}:</b>\n#LOCK\n<b>Admin:</b> {}\nLocked <code>{}</code>.",
   "LOCK_SUCCESS_2": "Locked {} for all non-admins!",
