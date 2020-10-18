@@ -25,3 +25,8 @@ del - Delete a message
 purge - Delete a bunch of messages
 export - Exports your current chat settings to a .toml file
 import - Import a .json file from Rose's export feature
+ban - Bans an user
+kickme - Try it out!
+kick - Kicks an user
+tempban - Bans an user for a specific period of time
+unban - Reverts the ban of an user
