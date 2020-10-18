@@ -26,6 +26,7 @@ from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown, mention_html
 
 from tg_bot import dispatcher, LOGGER
+from tg_bot.modules.helper_funcs.chat_action import typing_action
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.log_channel import loggable
@@ -33,6 +34,7 @@ from tg_bot.strings.string_helper import get_string
 import tg_bot.modules.sql.lang_sql as lang
 
 @run_async
+@typing_action
 @bot_admin
 @can_promote
 @user_admin
@@ -82,6 +84,7 @@ def promote(update: Update, context: CallbackContext) -> str:
 @bot_admin
 @can_promote
 @user_admin
+@typing_action
 @loggable
 def demote(update: Update, context: CallbackContext) -> str:
     args = context.args
@@ -186,6 +189,7 @@ def unpin(update: Update, context: CallbackContext) -> str:
 @run_async
 @bot_admin
 @user_admin
+@typing_action
 def invite(update: Update, context: CallbackContext):
     args = context.args
     bot = context.bot
@@ -204,6 +208,7 @@ def invite(update: Update, context: CallbackContext):
 
 
 @run_async
+@typing_action
 def adminlist(update: Update, context: CallbackContext):
     administrators = update.effective_chat.get_administrators()
     text = get_string("admin", "ADMINS_IN", lang.get_lang(update.effective_chat.id)).format(update.effective_chat.title or get_string("admin", "THIS_CHAT", lang.get_lang(update.effective_chat.id))) # ADMINS_IN and THIS_CHAT
