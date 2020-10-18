@@ -17,7 +17,7 @@
 
 import threading
 
-from sqlalchemy import Column, UnicodeText, Boolean, Integer, String
+from sqlalchemy import Column, UnicodeText, Boolean, Integer
 
 from tg_bot.modules.sql import BASE, SESSION
 
@@ -28,13 +28,11 @@ class AFK(BASE):
     user_id = Column(Integer, primary_key=True)
     is_afk = Column(Boolean)
     reason = Column(UnicodeText)
-    chat_id = Column(String(14))
 
     def __init__(self, user_id, reason="", is_afk=True):
         self.user_id = user_id
         self.reason = reason
         self.is_afk = is_afk
-
 
     def __repr__(self):
         return "afk_status for {}".format(self.user_id)
@@ -56,7 +54,7 @@ def check_afk_status(user_id):
     return False, ""
 
 
-def set_afk(chat_id, user_id, reason=""):
+def set_afk(user_id, reason=""):
     with INSERTION_LOCK:
         curr = SESSION.query(AFK).get(user_id)
         if not curr:
@@ -64,7 +62,6 @@ def set_afk(chat_id, user_id, reason=""):
         else:
             curr.is_afk = True
             curr.reason = reason
-            curr.chat_id = chat_id
 
         AFK_USERS[user_id] = reason
 
