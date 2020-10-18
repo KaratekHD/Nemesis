@@ -24,7 +24,7 @@ from typing import Optional, List
 import requests
 from telegram import Message, Chat, Update, Bot, MessageEntity
 from telegram import ParseMode
-from telegram.ext import CommandHandler, run_async, Filters
+from telegram.ext import CommandHandler, run_async, Filters, CallbackContext
 from telegram.utils.helpers import escape_markdown, mention_html
 
 from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, CO_OWNER_ID, LOGGER
@@ -44,12 +44,14 @@ GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
 
 
 @run_async
-def runs(bot: Bot, update: Update):
+def runs(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_random_string("runs", lang.get_lang(update.effective_chat.id)))
 
 
 @run_async
-def slap(bot: Bot, update: Update, args: List[str]):
+def slap(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     msg = update.effective_message  # type: Optional[Message]
 
     # reply to correct message
@@ -87,7 +89,7 @@ def slap(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def get_bot_ip(bot: Bot, update: Update):
+def get_bot_ip(update: Update, context: CallbackContext):
     """ Sends the bot's IP address, so as to be able to ssh in if necessary.
         OWNER ONLY.
     """
@@ -96,7 +98,9 @@ def get_bot_ip(bot: Bot, update: Update):
 
 
 @run_async
-def get_id(bot: Bot, update: Update, args: List[str]):
+def get_id(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     user_id = extract_user(update.effective_message, args)
     if user_id:
         if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
@@ -125,7 +129,9 @@ def get_id(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def info(bot: Bot, update: Update, args: List[str]):
+def info(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     msg = update.effective_message  # type: Optional[Message]
     user_id = extract_user(update.effective_message, args)
 
@@ -183,7 +189,10 @@ def info(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def get_time(bot: Bot, update: Update, args: List[str]):
+def get_time(update: Update, context: CallbackContext):
+    # This does not work
+    args = context.args
+    bot = context.bot
     location = " ".join(args)
     if location.lower() == bot.first_name.lower():
         update.effective_message.reply_text(get_string("misc", "MSG_BANHAMMER_TIME", lang.get_lang(update.effective_chat.id))) # MSG_BANHAMMER_TIME
@@ -225,7 +234,7 @@ def get_time(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def echo(bot: Bot, update: Update):
+def echo(update: Update, context: CallbackContext):
     args = update.effective_message.text.split(None, 1)
     message = update.effective_message
     if message.reply_to_message:
@@ -236,7 +245,7 @@ def echo(bot: Bot, update: Update):
 
 
 @run_async
-def gdpr(bot: Bot, update: Update):
+def gdpr(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_string("misc", "MSG_DELETING_DATA", lang.get_lang(update.effective_chat.id))) # MSG_DELETING_DATA
     for mod in GDPR:
         mod.__gdpr__(update.effective_user.id)
@@ -245,14 +254,14 @@ def gdpr(bot: Bot, update: Update):
 
 
 @run_async
-def markdown_help(bot: Bot, update: Update):
+def markdown_help(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP", lang.get_lang(update.effective_chat.id)), parse_mode=ParseMode.HTML)
     update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP_FORWARD", lang.get_lang(update.effective_chat.id))) # MARKDOWN_HELP_FORWARD
     update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP_FORWARD_MSG", lang.get_lang(update.effective_chat.id))) # MARKDOWN_HELP_FORWARD_MSG
 
 
 @run_async
-def stats(bot: Bot, update: Update):
+def stats(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_string("misc", "CURRENT_STATS", lang.get_lang(update.effective_chat.id)) + "\n".join([mod.__stats__() for mod in STATS]))
 
 
@@ -267,14 +276,14 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Misc"
 
-ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
+ID_HANDLER = CommandHandler("id", get_id)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=CustomFilters.admin_filter)
 
-TIME_HANDLER = CommandHandler("time", get_time, pass_args=True)
+TIME_HANDLER = CommandHandler("time", get_time)
 
-RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
-SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
-INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True)
+RUNS_HANDLER = CommandHandler("runs", runs)
+SLAP_HANDLER = CommandHandler("slap", slap)
+INFO_HANDLER = CommandHandler("info", info)
 
 ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.admin_filter)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
