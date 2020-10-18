@@ -168,7 +168,7 @@ __mod_name__ = "Word Blacklists" # MODULE_NAME
 def __help__(update: Update) -> str:
     return get_string("blacklist", "HELP", lang.get_lang(update.effective_chat.id))
 
-BLACKLIST_HANDLER = CommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True)
+BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True)
 ADD_BLACKLIST_HANDLER = CommandHandler("addblacklist", add_blacklist, filters=Filters.group)
 UNBLACKLIST_HANDLER = CommandHandler(["unblacklist", "rmblacklist"], unblacklist, filters=Filters.group)
 BLACKLIST_DEL_HANDLER = MessageHandler(
