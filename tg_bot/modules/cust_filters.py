@@ -247,7 +247,7 @@ __mod_name__ = "Filters"
 
 FILTER_HANDLER = CommandHandler("filter", filters)
 STOP_HANDLER = CommandHandler("stop", stop_filter)
-LIST_HANDLER = CommandHandler("filters", list_handlers)
+LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers)
 CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter)
 
 

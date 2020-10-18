@@ -276,14 +276,14 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Misc"
 
-ID_HANDLER = CommandHandler("id", get_id)
+ID_HANDLER = DisableAbleCommandHandler("id", get_id)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=CustomFilters.admin_filter)
 
 TIME_HANDLER = CommandHandler("time", get_time)
 
-RUNS_HANDLER = CommandHandler("runs", runs)
-SLAP_HANDLER = CommandHandler("slap", slap)
-INFO_HANDLER = CommandHandler("info", info)
+RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
+SLAP_HANDLER = DisableAbleCommandHandler("slap", slap)
+INFO_HANDLER = DisableAbleCommandHandler("info", info)
 
 ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.admin_filter)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
