@@ -250,6 +250,7 @@ STOP_HANDLER = CommandHandler("stop", stop_filter)
 LIST_HANDLER = CommandHandler("filters", list_handlers)
 CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter)
 
+
 dispatcher.add_handler(FILTER_HANDLER)
 dispatcher.add_handler(STOP_HANDLER)
 dispatcher.add_handler(LIST_HANDLER)
