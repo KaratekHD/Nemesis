@@ -304,7 +304,7 @@ BAN_HANDLER = CommandHandler("ban", ban, filters=Filters.group)
 TEMPBAN_HANDLER = CommandHandler(["tban", "tempban"], temp_ban,filters=Filters.group)
 KICK_HANDLER = CommandHandler("kick", kick, filters=Filters.group)
 UNBAN_HANDLER = CommandHandler("unban", unban, filters=Filters.group)
-KICKME_HANDLER = CommandHandler("kickme", kickme, filters=Filters.group)
+KICKME_HANDLER = DisableAbleCommandHandler("kickme", kickme, filters=Filters.group)
 
 dispatcher.add_handler(BAN_HANDLER)
 dispatcher.add_handler(TEMPBAN_HANDLER)
