@@ -23,3 +23,5 @@ adminlist - Display a list containing all admins in a chat
 afk - Mark yourself as away from keyboard (AFK)
 del - Delete a message
 purge - Delete a bunch of messages
+export - Exports your current chat settings to a .toml file
+import - Import a .json file from Rose's export feature

@@ -21,7 +21,7 @@ from typing import Optional
 
 from telegram import Message, Chat, Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop
+from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, CallbackContext
 
 from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
@@ -32,7 +32,7 @@ import tg_bot.modules.helper_funcs.backups as helper
 @user_admin
 @bot_admin
 # NOTE: This file won't be translated (for now), since this feature is gonna get rewritten completely.
-def import_data(bot: Bot, update):
+def import_data(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
     # TODO: allow uploading doc with command, not just as reply
@@ -73,7 +73,8 @@ def import_data(bot: Bot, update):
 
 @run_async
 @user_admin
-def export_data(bot: Bot, update: Update):
+def export_data(update: Update, context: CallbackContext):
+    bot = context.bot
     with BytesIO(str.encode(helper.export_data(update.effective_chat, bot))) as output:
         output.name = str(update.effective_chat.id) + ".toml"
         update.effective_message.reply_document(document=output, filename=str(update.effective_chat.id) + ".toml",
