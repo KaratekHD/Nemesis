@@ -24,6 +24,7 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, CallbackContext
 
 from tg_bot import dispatcher
+from tg_bot.modules.helper_funcs.chat_action import typing_action
 from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
 import tg_bot.modules.helper_funcs.backups as helper
 
@@ -74,6 +75,7 @@ def import_data(update: Update, context: CallbackContext):
 
 @run_async
 @user_admin
+@typing_action
 def export_data(update: Update, context: CallbackContext):
     bot = context.bot
     with BytesIO(str.encode(helper.export_data(update.effective_chat, bot))) as output:
