@@ -34,6 +34,7 @@ import tg_bot.modules.helper_funcs.backups as helper
 # NOTE: This file won't be translated (for now), since this feature is gonna get rewritten completely.
 def import_data(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     # TODO: allow uploading doc with command, not just as reply
     # only work with a doc
