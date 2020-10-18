@@ -30,3 +30,6 @@ kickme - Try it out!
 kick - Kicks an user
 tempban - Bans an user for a specific period of time
 unban - Reverts the ban of an user
+filter - Add a new filter
+filters - List all filters in the current group
+stop - Delete a filter

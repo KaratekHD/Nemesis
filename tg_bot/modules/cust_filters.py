@@ -55,7 +55,7 @@ HANDLER_GROUP = 10
 
 
 @run_async
-def list_handlers(bot: Bot, update: Update):
+def list_handlers(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     all_handlers = sql.get_chat_triggers(chat.id)
 
@@ -78,7 +78,7 @@ def list_handlers(bot: Bot, update: Update):
 
 # NOT ASYNC BECAUSE DISPATCHER HANDLER RAISED
 @user_admin
-def filters(bot: Bot, update: Update):
+def filters(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
     args = msg.text.split(None, 1)  # use python's maxsplit to separate Cmd, keyword, and reply_text
@@ -152,7 +152,7 @@ def filters(bot: Bot, update: Update):
 
 # NOT ASYNC BECAUSE DISPATCHER HANDLER RAISED
 @user_admin
-def stop_filter(bot: Bot, update: Update):
+def stop_filter(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     args = update.effective_message.text.split(None, 1)
 
@@ -247,7 +247,7 @@ __mod_name__ = "Filters"
 
 FILTER_HANDLER = CommandHandler("filter", filters)
 STOP_HANDLER = CommandHandler("stop", stop_filter)
-LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers, admin_ok=True)
+LIST_HANDLER = CommandHandler("filters", list_handlers)
 CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter)
 
 dispatcher.add_handler(FILTER_HANDLER)
