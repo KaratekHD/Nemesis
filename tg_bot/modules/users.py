@@ -65,7 +65,8 @@ def get_user_id(username):
 
 
 @run_async
-def broadcast(bot: Bot, update: Update):
+def broadcast(update: Update, context: CallbackContext):
+    bot = context.bot
     to_send = update.effective_message.text.split(None, 1)
     if len(to_send) >= 2:
         chats = sql.get_all_chats() or []
@@ -104,7 +105,7 @@ def log_user(update: Update, context: CallbackContext):
 
 
 @run_async
-def chats(bot: Bot, update: Update):
+def chats(update: Update, context: CallbackContext):
     all_chats = sql.get_all_chats() or []
     chatfile = 'List of chats.\n'
     for chat in all_chats:
