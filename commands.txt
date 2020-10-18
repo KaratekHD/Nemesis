@@ -1,0 +1,25 @@
+start - Starts the bot
+help - Get a list of commands
+settings - Manage this chats settings, as well as yours
+about - Display version information, credits and licenses
+rules - Get this chat's rules
+setrules - Set this chat's rules
+clearrules - Clear this chat's rules
+runs - Check whether the bot is running
+slap - 'Slaps' another user
+ip - Get the bot's ip (Staff only!)
+id - Get a user's or group's Telegram ID
+info - Display information about a user
+echo - Make the Bot say something (Staff only!)
+gdpr - Delete your personal information from the bot's database
+markdownhelp - Send some help for markdown's syntax
+stats - Display some statistics about the bot's usage (Staff only!)
+promote - Promote an user
+demote - Demote an user
+pin - Pin a message to the top of the group
+unpin - remove the pinned message
+invite - Get the group's invitelink
+adminlist - Display a list containing all admins in a chat
+afk - Mark yourself as away from keyboard (AFK)
+del - Delete a message
+purge - Delete a bunch of messages
