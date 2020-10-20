@@ -43,3 +43,6 @@ gban - Globally ban a user (Staff only!)
 ungban - Globally unban a user (Staff only!)
 gbanlist - Get a list of all globally banned users (Staff only!)
 gbanstat - Toggle whether global bans should effect your group
+blacklist - Get all words on the current blacklist
+addblacklist - Blacklist a word
+unblacklist - Remove a word from the blacklist
