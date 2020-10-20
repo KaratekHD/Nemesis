@@ -46,3 +46,4 @@ gbanstat - Toggle whether global bans should effect your group
 blacklist - Get all words on the current blacklist
 addblacklist - Blacklist a word
 unblacklist - Remove a word from the blacklist
+globalmute - Mutes the entire chat, so all messages not sent by admins will get instantly deleted

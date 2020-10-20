@@ -21,17 +21,43 @@ from typing import Optional, List
 from telegram import Message, Chat, Update, Bot, User
 from telegram import ParseMode
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters, CallbackContext
+from telegram.ext import CommandHandler, Filters, CallbackContext, MessageHandler
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown, mention_html
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.helper_funcs.chat_action import typing_action
-from tg_bot.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin
+from tg_bot.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin, user_not_admin
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.log_channel import loggable
 from tg_bot.strings.string_helper import get_string
 import tg_bot.modules.sql.lang_sql as lang
+import tg_bot.modules.sql.mute as mute_sql
+
+@run_async
+@bot_admin
+@user_admin
+@loggable
+def toggle_mute(update: Update, context: CallbackContext) -> str:
+    msg = update.effective_message
+    chat = update.effective_chat
+    is_muted = mute_sql.get_muted(chat.id)
+    if is_muted:
+        mute_sql.set_muted(chat.id, False)
+        msg.reply_text("This chat is now unmuted, everyone may write now!")
+        return f"{update.effective_user.first_name} unmuted the chat!"
+    if not is_muted:
+        mute_sql.set_muted(chat.id, True)
+        msg.reply_text("This chat is now muted, only administrators may write now!")
+        return f"{update.effective_user.first_name} muted the chat!"
+
+@run_async
+@user_not_admin
+def on_message(update: Update, context: CallbackContext):
+    if mute_sql.get_muted(update.effective_chat.id):
+        message = update.effective_message  # type: Optional[Message]
+        message.delete()
+
 
 @run_async
 @typing_action
@@ -244,6 +270,11 @@ DEMOTE_HANDLER = CommandHandler("demote", demote, pass_args=True, filters=Filter
 
 ADMINLIST_HANDLER = CommandHandler("adminlist", adminlist, filters=Filters.group)
 
+MUTE_HANDLER = CommandHandler("globalmute", toggle_mute, filters=Filters.group)
+DELETE_HANDLER = MessageHandler(Filters.group, on_message)
+
+dispatcher.add_handler(MUTE_HANDLER)
+dispatcher.add_handler(DELETE_HANDLER)
 dispatcher.add_handler(PIN_HANDLER)
 dispatcher.add_handler(UNPIN_HANDLER)
 dispatcher.add_handler(INVITE_HANDLER)
