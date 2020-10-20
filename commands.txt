@@ -37,3 +37,5 @@ broadcast - Broadcast a message to all chats the bot is in (Staff only!)
 chatlist - Get a file containing all chats the bot is in (Staff only!)
 lang - Set this chat's language
 t - Correct grammar in replied message (english only)
+setflood - Set the antiflood setting for the current chat
+flood - get the current antiflood settings

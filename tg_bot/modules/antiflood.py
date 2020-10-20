@@ -69,7 +69,8 @@ def check_flood(update: Update, context: CallbackContext) -> str:
 @user_admin
 @can_restrict
 @loggable
-def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
+def set_flood(update: Update, context: CallbackContext) -> str:
+    args = context.args
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
@@ -104,7 +105,7 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 @run_async
-def flood(bot: Bot, update: Update):
+def flood(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
 
     limit = sql.get_flood_limit(chat.id)
