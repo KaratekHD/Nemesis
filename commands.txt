@@ -39,3 +39,7 @@ lang - Set this chat's language
 t - Correct grammar in replied message (english only)
 setflood - Set the antiflood setting for the current chat
 flood - get the current antiflood settings
+gban - Globally ban a user (Staff only!)
+ungban - Globally unban a user (Staff only!)
+gbanlist - Get a list of all globally banned users (Staff only!)
+gbanstat - Toggle whether global bans should effect your group

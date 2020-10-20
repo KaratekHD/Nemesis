@@ -14,19 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
-#  This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 import html
 from io import BytesIO
@@ -34,7 +22,7 @@ from typing import Optional, List
 
 from telegram import Message, Update, Bot, User, Chat, ParseMode
 from telegram.error import BadRequest, TelegramError
-from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
+from telegram.ext import run_async, CommandHandler, MessageHandler, Filters, CallbackContext
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.global_bans_sql as sql
@@ -78,7 +66,9 @@ UNGBAN_ERRORS = {
 
 
 @run_async
-def gban(bot: Bot, update: Update, args: List[str]):
+def gban(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     message = update.effective_message  # type: Optional[Message]
 
     user_id, reason = extract_user_and_text(message, args)
@@ -159,7 +149,9 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def ungban(bot: Bot, update: Update, args: List[str]):
+def ungban(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     message = update.effective_message  # type: Optional[Message]
 
     user_id = extract_user(message, args)
@@ -218,7 +210,8 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def gbanlist(bot: Bot, update: Update):
+def gbanlist(update: Update, context: CallbackContext):
+
     banned_users = sql.get_gban_list()
 
     if not banned_users:
@@ -245,7 +238,9 @@ def check_and_ban(update, user_id, should_message=True):
 
 
 @run_async
-def enforce_gban(bot: Bot, update: Update):
+def enforce_gban(update: Update, context: CallbackContext):
+    bot = context.bot
+    args = context.args
     # Not using @restrict handler to avoid spamming - just ignore if cant gban.
     if sql.does_chat_gban(update.effective_chat.id) and update.effective_chat.get_member(bot.id).can_restrict_members:
         user = update.effective_user  # type: Optional[User]
@@ -268,7 +263,8 @@ def enforce_gban(bot: Bot, update: Update):
 
 @run_async
 @user_admin
-def gbanstat(bot: Bot, update: Update, args: List[str]):
+def gbanstat(update: Update, context: CallbackContext):
+    args = context.args
     if len(args) > 0:
         if args[0].lower() in ["on", "yes"]:
             sql.enable_gbans(update.effective_chat.id)
