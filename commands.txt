@@ -18,7 +18,7 @@ promote - Promote an user
 demote - Demote an user
 pin - Pin a message to the top of the group
 unpin - remove the pinned message
-invite - Get the group's invitelink
+invitelink - Get the group's invitelink
 adminlist - Display a list containing all admins in a chat
 afk - Mark yourself as away from keyboard (AFK)
 del - Delete a message
@@ -51,3 +51,10 @@ kang - Save a sticker in your own stickerpack
 stickerid - Get the ID of a sticker
 getsticker - download a sticker as png
 translate - Translate a message using google translate
+welcome - Send the current welcome message
+goodbye - Send the current goodbye message
+setwelcome - Set the welcome message
+setgoodbye - Set the goodbye message
+resetwelcome - Reset the welcome message to the default value
+resetgoodbye - Reset the goodbye message to the default value
+cleanwelcome - Toggle whether the bot should delete old welcome messages

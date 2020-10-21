@@ -21,7 +21,7 @@ from typing import Optional, List
 from telegram import Message, Chat, Update, Bot, User
 from telegram import ParseMode, InlineKeyboardMarkup
 from telegram.error import BadRequest
-from telegram.ext import MessageHandler, Filters, CommandHandler, run_async
+from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, CallbackContext
 from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
 
 import tg_bot.modules.sql.welcome_sql as sql
@@ -94,7 +94,8 @@ def send(update, message, keyboard, backup_message):
 
 
 @run_async
-def new_member(bot: Bot, update: Update):
+def new_member(update: Update, context: CallbackContext):
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
 
     should_welc, cust_welcome, welc_type = sql.get_welc_pref(chat.id)
@@ -159,7 +160,8 @@ def new_member(bot: Bot, update: Update):
 
 
 @run_async
-def left_member(bot: Bot, update: Update):
+def left_member(update: Update, context: CallbackContext):
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     should_goodbye, cust_goodbye, goodbye_type = sql.get_gdbye_pref(chat.id)
     if should_goodbye:
@@ -211,7 +213,9 @@ def left_member(bot: Bot, update: Update):
 
 @run_async
 @user_admin
-def welcome(bot: Bot, update: Update, args: List[str]):
+def welcome(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     # if no args, show current replies.
     if len(args) == 0 or args[0].lower() == "noformat":
@@ -257,7 +261,8 @@ def welcome(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 @user_admin
-def goodbye(bot: Bot, update: Update, args: List[str]):
+def goodbye(update: Update, context: CallbackContext):
+    args = context.args
     chat = update.effective_chat  # type: Optional[Chat]
 
     if len(args) == 0 or args[0] == "noformat":
@@ -304,7 +309,7 @@ def goodbye(bot: Bot, update: Update, args: List[str]):
 @run_async
 @user_admin
 @loggable
-def set_welcome(bot: Bot, update: Update) -> str:
+def set_welcome(update: Update, context: CallbackContext) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
@@ -328,7 +333,7 @@ def set_welcome(bot: Bot, update: Update) -> str:
 @run_async
 @user_admin
 @loggable
-def reset_welcome(bot: Bot, update: Update) -> str:
+def reset_welcome(update: Update, context: CallbackContext) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     sql.set_custom_welcome(chat.id, sql.DEFAULT_WELCOME, sql.Types.TEXT)
@@ -343,7 +348,7 @@ def reset_welcome(bot: Bot, update: Update) -> str:
 @run_async
 @user_admin
 @loggable
-def set_goodbye(bot: Bot, update: Update) -> str:
+def set_goodbye(update: Update, context: CallbackContext) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
@@ -365,7 +370,7 @@ def set_goodbye(bot: Bot, update: Update) -> str:
 @run_async
 @user_admin
 @loggable
-def reset_goodbye(bot: Bot, update: Update) -> str:
+def reset_goodbye(update: Update, context: CallbackContext) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     sql.set_custom_gdbye(chat.id, sql.DEFAULT_GOODBYE, sql.Types.TEXT)
@@ -380,7 +385,8 @@ def reset_goodbye(bot: Bot, update: Update) -> str:
 @run_async
 @user_admin
 @loggable
-def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
+def clean_welcome(update: Update, context: CallbackContext) -> str:
+    args = context.args
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
 
@@ -441,7 +447,7 @@ WELC_HELP_TXT = "Your group's welcome/goodbye messages can be personalised in mu
 
 @run_async
 @user_admin
-def welcome_help(bot: Bot, update: Update):
+def welcome_help(update: Update, context: CallbackContext):
     update.effective_message.reply_text(WELC_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
 
 
