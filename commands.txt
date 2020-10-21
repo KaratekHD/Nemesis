@@ -47,3 +47,7 @@ blacklist - Get all words on the current blacklist
 addblacklist - Blacklist a word
 unblacklist - Remove a word from the blacklist
 globalmute - Mutes the entire chat, so all messages not sent by admins will get instantly deleted
+kang - Save a sticker in your own stickerpack
+stickerid - Get the ID of a sticker
+getsticker - download a sticker as png
+translate - Translate a message using google translate
