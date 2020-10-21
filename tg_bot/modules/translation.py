@@ -69,7 +69,7 @@ def translate(update: Update, context: CallbackContext):
 def __help__(update: Update) -> str:
     return "\n - /t: while replying to a message, will reply with a grammar corrected version (English Only!)"
 
-__mod_name__ = "Translator"
+__mod_name__ = "Grammar"
 
 
 TRANSLATE_HANDLER = DisableAbleCommandHandler('t', translate)
