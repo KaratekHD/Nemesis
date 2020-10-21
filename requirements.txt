@@ -6,3 +6,4 @@ python-telegram-bot
 psycopg2-binary
 feedparser
 toml
+googletrans
