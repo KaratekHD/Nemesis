@@ -58,3 +58,14 @@ setgoodbye - Set the goodbye message
 resetwelcome - Reset the welcome message to the default value
 resetgoodbye - Reset the goodbye message to the default value
 cleanwelcome - Toggle whether the bot should delete old welcome messages
+warn - Warn an user
+resetwarn - Reset warns of an user to 0
+resetwarns - Reset warns of an user to 0
+warns - List all warns of an user
+addwarn - Add a warn filter
+nowarn - Remove a warn filter
+stopwarn - Remove a warn filter
+warnlist - List all warn filters
+warnfilters - List all warn filters
+warnlimit - Set the maximum number of warns an user can have before it gets punished
+strongwarn - Toggle whether reaching the warnlimit should ban or just kick the user

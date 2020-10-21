@@ -27,7 +27,7 @@ from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, Messa
     CallbackQueryHandler, CallbackContext
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, BAN_STICKER
+from tg_bot import dispatcher, BAN_STICKER, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin, bot_admin, user_admin_no_reply, user_admin, \
     can_restrict
@@ -114,7 +114,7 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
 @user_admin_no_reply
 @bot_admin
 @loggable
-def button(bot: Bot, update: Update) -> str:
+def button(update: Update, context: CallbackContext) -> str:
     query = update.callback_query  # type: Optional[CallbackQuery]
     user = update.effective_user  # type: Optional[User]
     match = re.match(r"rm_warn\((.+?)\)", query.data)
@@ -146,7 +146,8 @@ def button(bot: Bot, update: Update) -> str:
 @user_admin
 @can_restrict
 @loggable
-def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
+def warn_user(update: Update, context: CallbackContext) -> str:
+    args = context.args
     message = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
     warner = update.effective_user  # type: Optional[User]
@@ -167,7 +168,9 @@ def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
 @user_admin
 @bot_admin
 @loggable
-def reset_warns(bot: Bot, update: Update, args: List[str]) -> str:
+def reset_warns(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     message = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -191,7 +194,8 @@ def reset_warns(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 @run_async
-def warns(bot: Bot, update: Update, args: List[str]):
+def warns(update: Update, context: CallbackContext):
+    args = context.args
     message = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
     user_id = extract_user(message, args) or update.effective_user.id
@@ -218,7 +222,8 @@ def warns(bot: Bot, update: Update, args: List[str]):
 
 # Dispatcher handler stop - do not async
 @user_admin
-def add_warn_filter(bot: Bot, update: Update):
+def add_warn_filter(update: Update, context: CallbackContext):
+    LOGGER.debug("WTH")
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
 
@@ -249,7 +254,8 @@ def add_warn_filter(bot: Bot, update: Update):
 
 
 @user_admin
-def remove_warn_filter(bot: Bot, update: Update):
+def remove_warn_filter(update: Update, context: CallbackContext):
+    args = context.args
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
 
@@ -281,7 +287,7 @@ def remove_warn_filter(bot: Bot, update: Update):
 
 
 @run_async
-def list_warn_filters(bot: Bot, update: Update):
+def list_warn_filters(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     all_handlers = sql.get_chat_warn_triggers(chat.id)
 
@@ -326,7 +332,8 @@ def reply_filter(update: Update, context: CallbackContext) -> str:
 @run_async
 @user_admin
 @loggable
-def set_warn_limit(bot: Bot, update: Update, args: List[str]) -> str:
+def set_warn_limit(update: Update, context: CallbackContext) -> str:
+    args = context.args
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
@@ -354,7 +361,8 @@ def set_warn_limit(bot: Bot, update: Update, args: List[str]) -> str:
 
 @run_async
 @user_admin
-def set_warn_strength(bot: Bot, update: Update, args: List[str]):
+def set_warn_strength(update: Update, context: CallbackContext):
+    args = context.args
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
@@ -448,3 +456,4 @@ dispatcher.add_handler(LIST_WARN_HANDLER)
 dispatcher.add_handler(WARN_LIMIT_HANDLER)
 dispatcher.add_handler(WARN_STRENGTH_HANDLER)
 dispatcher.add_handler(WARN_FILTER_HANDLER, WARN_HANDLER_GROUP)
+
