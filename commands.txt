@@ -72,3 +72,4 @@ strongwarn - Toggle whether reaching the warnlimit should ban or just kick the u
 mute - Mute an user
 unmute - Unmute an user
 tempmute - Mute an user temporary
+report - Report a message

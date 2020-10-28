@@ -20,7 +20,7 @@ from typing import Optional, List
 
 from telegram import Message, Chat, Update, Bot, User, ParseMode
 from telegram.error import BadRequest, Unauthorized
-from telegram.ext import CommandHandler, RegexHandler, run_async, Filters
+from telegram.ext import CommandHandler, RegexHandler, run_async, Filters, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, LOGGER
@@ -33,7 +33,8 @@ REPORT_GROUP = 5
 
 @run_async
 @user_admin
-def report_setting(bot: Bot, update: Update, args: List[str]):
+def report_setting(update: Update, context: CallbackContext):
+    args = context.args
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
 
@@ -68,7 +69,9 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
 @run_async
 @user_not_admin
 @loggable
-def report(bot: Bot, update: Update) -> str:
+def report(update: Update, context: CallbackContext) -> str:
+    bot = context.bot
+    args = context.args
     message = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
