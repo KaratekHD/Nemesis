@@ -69,3 +69,6 @@ warnlist - List all warn filters
 warnfilters - List all warn filters
 warnlimit - Set the maximum number of warns an user can have before it gets punished
 strongwarn - Toggle whether reaching the warnlimit should ban or just kick the user
+mute - Mute an user
+unmute - Unmute an user
+tempmute - Mute an user temporary

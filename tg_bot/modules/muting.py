@@ -18,9 +18,9 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Message, Chat, Update, Bot, User, ChatPermissions
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
@@ -35,7 +35,9 @@ from tg_bot.modules.log_channel import loggable
 @bot_admin
 @user_admin
 @loggable
-def mute(bot: Bot, update: Update, args: List[str]) -> str:
+def mute(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
@@ -56,7 +58,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
             message.reply_text("Afraid I can't stop an admin from talking!")
 
         elif member.can_send_messages is None or member.can_send_messages:
-            bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
+            bot.restrict_chat_member(chat.id, user_id, permissions=ChatPermissions(can_send_messages=False))
             message.reply_text("Muted!")
             return "<b>{}:</b>" \
                    "\n#MUTE" \
@@ -77,7 +79,9 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @user_admin
 @loggable
-def unmute(bot: Bot, update: Update, args: List[str]) -> str:
+def unmute(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
@@ -101,10 +105,13 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                 return ""
             else:
                 bot.restrict_chat_member(chat.id, int(user_id),
-                                         can_send_messages=True,
-                                         can_send_media_messages=True,
-                                         can_send_other_messages=True,
-                                         can_add_web_page_previews=True)
+                                         permissions=ChatPermissions(
+                                             can_send_messages=True,
+                                             can_send_media_messages=True,
+                                             can_send_other_messages=True,
+                                             can_add_web_page_previews=True
+                                            )
+                                         )
                 message.reply_text("Unmuted!")
                 return "<b>{}:</b>" \
                        "\n#UNMUTE" \
@@ -124,7 +131,9 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
 @can_restrict
 @user_admin
 @loggable
-def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
+def temp_mute(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
@@ -180,7 +189,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     try:
         if member.can_send_messages is None or member.can_send_messages:
-            bot.restrict_chat_member(chat.id, user_id, until_date=mutetime, can_send_messages=False)
+            bot.restrict_chat_member(chat.id, user_id, until_date=mutetime, permissions=ChatPermissions(can_send_messages=False))
             message.reply_text("Muted for {}!".format(time_val))
             return log
         else:
