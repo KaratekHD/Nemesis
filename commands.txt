@@ -73,3 +73,6 @@ mute - Mute an user
 unmute - Unmute an user
 tempmute - Mute an user temporary
 report - Report a message
+get - Get a note
+save - Save a note
+clear - Delete a note

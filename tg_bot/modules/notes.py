@@ -22,7 +22,7 @@ from typing import Optional, List
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
 from telegram import Message, Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, RegexHandler
+from telegram.ext import CommandHandler, RegexHandler, CallbackContext
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown
 
@@ -127,7 +127,9 @@ def get(bot, update, notename, show_none=True, no_format=False):
 
 
 @run_async
-def cmd_get(bot: Bot, update: Update, args: List[str]):
+def cmd_get(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     if len(args) >= 2 and args[1].lower() == "noformat":
         get(bot, update, args[0], show_none=True, no_format=True)
     elif len(args) >= 1:
@@ -137,7 +139,8 @@ def cmd_get(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def hash_get(bot: Bot, update: Update):
+def hash_get(update: Update, context: CallbackContext):
+    bot = context.bot
     message = update.effective_message.text
     fst_word = message.split()[0]
     no_hash = fst_word[1:]
@@ -146,7 +149,7 @@ def hash_get(bot: Bot, update: Update):
 
 @run_async
 @user_admin
-def save(bot: Bot, update: Update):
+def save(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     msg = update.effective_message  # type: Optional[Message]
 
@@ -180,7 +183,8 @@ def save(bot: Bot, update: Update):
 
 @run_async
 @user_admin
-def clear(bot: Bot, update: Update, args: List[str]):
+def clear(update: Update, context: CallbackContext):
+    args = context.args
     chat_id = update.effective_chat.id
     if len(args) >= 1:
         notename = args[0]
@@ -192,7 +196,7 @@ def clear(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def list_notes(bot: Bot, update: Update):
+def list_notes(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     note_list = sql.get_all_chat_notes(chat_id)
 
