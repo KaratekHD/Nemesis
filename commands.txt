@@ -84,3 +84,7 @@ me  - will get your or another user's info
 setme - will set your info
 bio - will get your or another user's bio. This cannot be set by yourself.
 setbio - while replying, will save another user's bio
+locktypes - a list of possible locktypes
+lock - lock items of a certain type (not available in private)
+unlock - unlock items of a certain type (not available in private)
+locks - the current list of locks in this chat.
