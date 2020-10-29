@@ -23,12 +23,14 @@ from telegram import ParseMode, constants, Update
 from telegram.ext import CommandHandler, CallbackContext
 
 from tg_bot import dispatcher, updater
+from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.sql import rss_sql as sql
 
 
 def show_url(update: Update, context: CallbackContext):
     args = context.args
+    bot = context.bot
     tg_chat_id = str(update.effective_chat.id)
 
     if len(args) >= 1:
@@ -256,10 +258,10 @@ job_rss_update = job.run_repeating(rss_update, interval=60, first=60)
 job_rss_set.enabled = True
 job_rss_update.enabled = True
 
-SHOW_URL_HANDLER = CommandHandler("rss", show_url, pass_args=True)
+SHOW_URL_HANDLER = DisableAbleCommandHandler("rss", show_url, pass_args=True)
 ADD_URL_HANDLER = CommandHandler("addrss", add_url)
 REMOVE_URL_HANDLER = CommandHandler("removerss", remove_url, pass_args=True)
-LIST_URLS_HANDLER = CommandHandler("listrss", list_urls)
+LIST_URLS_HANDLER = DisableAbleCommandHandler("listrss", list_urls)
 
 dispatcher.add_handler(SHOW_URL_HANDLER)
 dispatcher.add_handler(ADD_URL_HANDLER)
