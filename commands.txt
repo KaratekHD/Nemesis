@@ -80,3 +80,7 @@ rss -  shows the link's data and the last entry, for testing purposes.
 addrss - add an RSS link to the subscriptions.
 listrss - shows the list of rss feeds that the chat is currently subscribed to.
 removerss - removes the RSS link from the subscriptions.
+me  - will get your or another user's info
+setme - will set your info
+bio - will get your or another user's bio. This cannot be set by yourself.
+setbio - while replying, will save another user's bio
