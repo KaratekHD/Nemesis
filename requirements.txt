@@ -2,10 +2,14 @@ future
 emoji
 requests
 sqlalchemy
-python-telegram-bot
+python-telegram-bot==12.8
 psycopg2-binary
 feedparser
 toml
 googletrans
 pillow
 alphabet-detector
+flask
+flask-restplus
+Werkzeug==0.16.1
+flask-httpauth

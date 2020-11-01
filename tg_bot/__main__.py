@@ -39,6 +39,10 @@ from tg_bot.strings.string_helper import  get_string
 from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
+from tg_bot.modules.helper_funcs.misc import is_module_loaded
+
+import asyncio
+from tg_bot.restapi import app
 
 
 IMPORTED = {}
@@ -91,6 +95,8 @@ for module_name in ALL_MODULES:
 
     if hasattr(imported_module, "__user_settings__"):
         USER_SETTINGS[imported_module.__mod_name__.lower()] = imported_module
+
+
 
 
 @run_async
@@ -339,6 +345,7 @@ def settings_button(update: Update, context: CallbackContext):
         else:
             LOGGER.exception(get_string("main", "ERR_EXCP_SETTINGS_BUTTONS", DEFAULT_LANG), str(query.data)) # ERR_EXCP_SETTINGS_BUTTONS
 
+
 @run_async
 def get_settings(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
@@ -424,6 +431,14 @@ def about(update: Update, context: CallbackContext):
                                         "{}".format(DEVELOPMENT, TRANSLATION, PRODUCTION), parse_mode=ParseMode.MARKDOWN)
 
 
+def load_api(app):
+        if is_module_loaded("rest"):
+            LOGGER.debug("Loading API...")
+            app.run(debug=True)
+        else:
+            LOGGER.debug("Not loading API")
+
+
 def main():
     # test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start)
@@ -466,7 +481,7 @@ def main():
     else:
         LOGGER.info(get_string("main", "LONG_POLLING", DEFAULT_LANG)) # LONG_POLLING
         updater.start_polling(timeout=15, read_latency=4)
-
+    load_api(app)
     updater.idle()
 
 
@@ -526,6 +541,8 @@ def process_update(self, update):
         # Errors should not stop the thread.
         except Exception:
             self.logger.exception(get_string("main", "ERR_UPDATE_UNKNOWN", DEFAULT_LANG)) # ERR_UPDATE_UNKNOWN
+
+
 
 
 if __name__ == '__main__':
