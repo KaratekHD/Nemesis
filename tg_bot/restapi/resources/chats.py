@@ -14,14 +14,30 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from http import HTTPStatus
 
-from flask import Flask
-from flask_restplus import Api
-from tg_bot.restapi.resources.basic import basic_api
-from tg_bot.restapi.resources.chats import chats_api
+from flask_httpauth import HTTPBasicAuth
+from flask_restplus import Namespace, Resource
+import tg_bot.modules.sql.api_sql as sql
 
-app = Flask("Nemesis Telegram Bot")
-api = Api(app, version="2.0 Development Preview 1", title="Nemesis Telegram Bot")
+auth = HTTPBasicAuth()
 
-api.add_namespace(basic_api)
-api.add_namespace(chats_api)
+
+@auth.verify_password
+def authenticate(username, password):
+    if username and password:
+        if username is "jens":
+            return username
+    else:
+        return False
+
+
+chats_api = Namespace("chats", description="Gather information about chats you have access to.")
+
+
+@chats_api.route("")
+class List(Resource):
+    @auth.login_required
+    def get(self):
+        '''Get All chats you have access to.'''
+        return "Nemesis Telegram Bot v2.0 Development Preview 1", HTTPStatus.OK

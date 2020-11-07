@@ -40,9 +40,8 @@ from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
-
-import asyncio
-from tg_bot.restapi import app
+import tg_bot.restapi as restapi
+from multiprocessing import Process
 
 
 IMPORTED = {}
@@ -431,10 +430,12 @@ def about(update: Update, context: CallbackContext):
                                         "{}".format(DEVELOPMENT, TRANSLATION, PRODUCTION), parse_mode=ParseMode.MARKDOWN)
 
 
-def load_api(app):
+def load_api():
         if is_module_loaded("rest"):
             LOGGER.debug("Loading API...")
-            app.run(debug=True)
+            p = Process(target=restapi.app.run())
+            p.start()
+            p.join()
         else:
             LOGGER.debug("Not loading API")
 
@@ -463,8 +464,6 @@ def main():
 
     # dispatcher.add_error_handler(error_callback)
 
-    # add antiflood processor - Causes problems with the new API, so disableing - for now
-    #Dispatcher.process_update = process_update
 
     if WEBHOOK:
         LOGGER.info(get_string("main", "WEBHOOKS", DEFAULT_LANG)) # WEBHOOKS
@@ -481,7 +480,7 @@ def main():
     else:
         LOGGER.info(get_string("main", "LONG_POLLING", DEFAULT_LANG)) # LONG_POLLING
         updater.start_polling(timeout=15, read_latency=4)
-    load_api(app)
+    load_api()
     updater.idle()
 
 

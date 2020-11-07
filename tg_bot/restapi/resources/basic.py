@@ -14,14 +14,17 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from http import HTTPStatus
 
-from flask import Flask
-from flask_restplus import Api
-from tg_bot.restapi.resources.basic import basic_api
-from tg_bot.restapi.resources.chats import chats_api
+from flask_restplus import Namespace, Resource
 
-app = Flask("Nemesis Telegram Bot")
-api = Api(app, version="2.0 Development Preview 1", title="Nemesis Telegram Bot")
+basic_api = Namespace("basic", description="Basic tasks that do not require an authorisation.")
 
-api.add_namespace(basic_api)
-api.add_namespace(chats_api)
+
+@basic_api.route("")
+class Version(Resource):
+    def get(self):
+        '''Get API Version'''
+        return "Nemesis Telegram Bot v2.0 Development Preview 1", HTTPStatus.OK
+
+

@@ -14,14 +14,32 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from functools import wraps
 
-from flask import Flask
-from flask_restplus import Api
-from tg_bot.restapi.resources.basic import basic_api
-from tg_bot.restapi.resources.chats import chats_api
+from flask import request, abort
 
-app = Flask("Nemesis Telegram Bot")
-api = Api(app, version="2.0 Development Preview 1", title="Nemesis Telegram Bot")
+import tg_bot.modules.sql.api_sql as sql
 
-api.add_namespace(basic_api)
-api.add_namespace(chats_api)
+
+def token_required(view_function):
+    @wraps(view_function)
+    # the new, post-decoration function. Note *args and **kwargs here.
+    def decorated_function(*args, **kwargs):
+        if request.args.get('key') and request.args.get('key') == "test":
+            return view_function(*args, **kwargs)
+        else:
+            abort(401)
+    return decorated_function
+
+def authenticate(username, password):
+    if username and password:
+        key = sql.get_key(username)
+        if key != "null":
+            if password is key:
+                return True
+            else:
+                return False
+        else:
+            return False
+    else:
+        return False
