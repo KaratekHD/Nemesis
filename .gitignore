@@ -8,3 +8,4 @@
 /tempscript.sh
 /tg_bot/config.toml
 /tg_bot/modules/mail.py
+/tg_bot/misc/

@@ -17,6 +17,7 @@
 
 import html
 import json
+import os
 import random
 from datetime import datetime
 from typing import Optional, List
@@ -50,7 +51,29 @@ def runs(update: Update, context: CallbackContext):
 
 @run_async
 def nice(update: Update, context: CallbackContext):
-    update.effective_message.reply_text()
+    dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    dir = f"{dir}/misc"
+    if not os.path.isdir(dir):
+        os.mkdir(dir)
+    dir = f"{dir}/nice"
+    if not os.path.isdir(dir):
+            os.mkdir(dir)
+    user = update.effective_user
+    if not os.path.isfile(f"{dir}/{user.id}.json"):
+        update.effective_message.reply_text(get_random_string("nice", lang.get_lang(update.effective_chat.id)))
+    else:
+        use = bool(random.choice([True, False]))
+        print(use)
+        if use:
+            path = f"{dir}/{user.id}.json"
+            with open(path) as f:
+                data = json.load(f)
+            i = len(data)
+            r = str(random.randint(1, i))
+            update.effective_message.reply_text(data[r])
+        else:
+            update.effective_message.reply_text(get_random_string("nice", lang.get_lang(update.effective_chat.id)))
+
 
 @run_async
 def slap(update: Update, context: CallbackContext):
@@ -288,6 +311,7 @@ TIME_HANDLER = CommandHandler("time", get_time)
 RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
 SLAP_HANDLER = DisableAbleCommandHandler("slap", slap)
 INFO_HANDLER = DisableAbleCommandHandler("info", info)
+NICE_HANDLER = DisableAbleCommandHandler("nice", nice)
 
 ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.admin_filter)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
@@ -298,6 +322,7 @@ GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)
 # dispatcher.add_handler(TIME_HANDLER)
+dispatcher.add_handler(NICE_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
 dispatcher.add_handler(INFO_HANDLER)
