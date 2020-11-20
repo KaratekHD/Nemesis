@@ -34,7 +34,7 @@ def increase(update: Update, context: CallbackContext):
         if user1.id is not user2.id:
             LOGGER.debug(f"{user2.id} : {sql.get_reputation(chat.id, user2.id)}")
             sql.increase_reputation(chat.id, user2.id)
-            new_msg = msg.reply_text(f"<b>{user1.first_name}</b>({sql.get_reputation(chat.id, user1.id)}) has increased reputation of <b>{user2.first_name}</b>({sql.get_reputation(chat.id, user2.id)})", parse_mode=ParseMode.HTML).message_id
+            new_msg = msg.reply_text(f"<b>{user1.first_name}</b> ({sql.get_reputation(chat.id, user1.id)}) has increased reputation of <b>{user2.first_name}</b> ({sql.get_reputation(chat.id, user2.id)})", parse_mode=ParseMode.HTML).message_id
             try:
                 context.bot.delete_message(chat.id, sql.get_latest_rep_message(chat.id))
             except BadRequest as err:
@@ -53,7 +53,7 @@ def decrease(update: Update, context: CallbackContext):
             LOGGER.debug(f"{user2.id} : {sql.get_reputation(chat.id, user2.id)}")
             sql.decrease_reputation(chat.id, user2.id)
             new_msg = msg.reply_text(
-                f"<b>{user1.first_name}</b>({sql.get_reputation(chat.id, user1.id)}) has decreased reputation of <b>{user2.first_name}</b>({sql.get_reputation(chat.id, user2.id)})",
+                f"<b>{user1.first_name}</b> ({sql.get_reputation(chat.id, user1.id)}) has decreased reputation of <b>{user2.first_name}</b> ({sql.get_reputation(chat.id, user2.id)})",
                 parse_mode=ParseMode.HTML).message_id
             try:
                 context.bot.delete_message(chat.id, sql.get_latest_rep_message(chat.id))

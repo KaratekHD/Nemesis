@@ -49,6 +49,10 @@ def runs(update: Update, context: CallbackContext):
 
 
 @run_async
+def nice(update: Update, context: CallbackContext):
+    update.effective_message.reply_text()
+
+@run_async
 def slap(update: Update, context: CallbackContext):
     args = context.args
     bot = context.bot

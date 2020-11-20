@@ -109,3 +109,11 @@ def get_reputation(user_id, chat_id):
         return num
     finally:
         SESSION.close()
+
+
+def migrate_chat(old_chat_id, new_chat_id):
+    with INSERTION_LOCK:
+        chat = SESSION.query(Reputation).get(str(old_chat_id))
+        if chat:
+            chat.chat_id = str(new_chat_id)
+        SESSION.commit()
