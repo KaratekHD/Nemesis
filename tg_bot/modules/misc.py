@@ -62,6 +62,8 @@ def nice(update: Update, context: CallbackContext):
     if not os.path.isfile(f"{dir}/{user.id}.json"):
         update.effective_message.reply_text(get_random_string("nice", lang.get_lang(update.effective_chat.id)))
     else:
+        # This is gonna check for a file for the sender, and if it exists, it is gonna decide randomly whether it should
+        # be used or not. If it is used, it is gonna send with a line from that file instead of the normal ones.
         use = bool(random.choice([True, False]))
         print(use)
         if use:
