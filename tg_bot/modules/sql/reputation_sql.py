@@ -16,8 +16,9 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, Integer
+from sqlalchemy import Column, String, UnicodeText, Integer, BigInteger
 
+from tg_bot import LOGGER
 from tg_bot.modules.sql import BASE, SESSION
 
 
@@ -65,32 +66,46 @@ def get_latest_rep_message(chat_id):
 
 class Reputation(BASE):
     __tablename__ = "reputations"
-    chat_id = Column(String, primary_key=True)
-    user_id = Column(UnicodeText, primary_key=True)
+
+    user_id = Column(BigInteger, primary_key=True)
+    chat_id = Column(String(14), primary_key=True)
     reputation = Column(Integer, default=0)
 
-    def __init__(self, chat_id, user_id, reputation):
+    def __init__(self, user_id, chat_id):
+        self.user_id = user_id
         self.chat_id = str(chat_id)
-        self.user_id = str(user_id)
-        self.reputation = reputation
+        self.reputation = 0
 
 
 Reputation.__table__.create(checkfirst=True)
 
 
-def set_reputation(chat_id, user_id, reputation):
-    s = SESSION.query(Reputation).get((str(chat_id), str(user_id)))
-    if s:
-        SESSION.delete(s)
-    filt = Reputation(str(chat_id), str(user_id), int(reputation))
-    SESSION.add(filt)
-    SESSION.commit()
+def increase_reputation(user_id, chat_id):
+    with INSERTION_LOCK:
+        user = SESSION.query(Reputation).get((user_id, str(chat_id)))
+        if not user:
+            user = Reputation(user_id, str(chat_id))
+        user.reputation += 1
+        SESSION.add(user)
+        SESSION.commit()
 
 
-def get_reputation(chat_id, user_id):
-    s = SESSION.query(Reputation).get((str(chat_id), str(user_id)))
-    return s
-    ret = 0
-    if s:
-        ret = s
-    return ret
+def decrease_reputation(user_id, chat_id):
+    with INSERTION_LOCK:
+        user = SESSION.query(Reputation).get((user_id, str(chat_id)))
+        if not user:
+            user = Reputation(user_id, str(chat_id))
+        user.reputation -= 1
+        SESSION.add(user)
+        SESSION.commit()
+
+
+def get_reputation(user_id, chat_id):
+    try:
+        user = SESSION.query(Reputation).get((user_id, str(chat_id)))
+        if not user:
+            return 0
+        num = user.reputation
+        return num
+    finally:
+        SESSION.close()

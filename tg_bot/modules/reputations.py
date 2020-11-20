@@ -32,14 +32,14 @@ def increase(update: Update, context: CallbackContext):
     if msg.reply_to_message:
         user2 = msg.reply_to_message.from_user
         if user1.id is not user2.id:
-            new_msg = msg.reply_text(f"<b>{user1.first_name}</b> has increased reputation of <b>{user2.first_name}</b>", parse_mode=ParseMode.HTML).message_id
+            LOGGER.debug(f"{user2.id} : {sql.get_reputation(chat.id, user2.id)}")
+            sql.increase_reputation(chat.id, user2.id)
+            new_msg = msg.reply_text(f"<b>{user1.first_name}</b>({sql.get_reputation(chat.id, user1.id)}) has increased reputation of <b>{user2.first_name}</b>({sql.get_reputation(chat.id, user2.id)})", parse_mode=ParseMode.HTML).message_id
             try:
                 context.bot.delete_message(chat.id, sql.get_latest_rep_message(chat.id))
             except BadRequest as err:
                 LOGGER.debug("Could not delete that message.")
             sql.set_latest_rep_message(chat.id, new_msg)
-            LOGGER.debug(f"{user1.id} : {sql.get_reputation(chat.id, user1.id)}")
-            sql.set_reputation(chat.id, user2.id, 1)
 
 
 @run_async
@@ -50,7 +50,16 @@ def decrease(update: Update, context: CallbackContext):
     if msg.reply_to_message:
         user2 = msg.reply_to_message.from_user
         if user1.id is not user2.id:
-            msg.reply_text(f"<b>{user1.first_name}</b> has decreased reputation of <b>{user2.first_name}</b>", parse_mode=ParseMode.HTML)
+            LOGGER.debug(f"{user2.id} : {sql.get_reputation(chat.id, user2.id)}")
+            sql.decrease_reputation(chat.id, user2.id)
+            new_msg = msg.reply_text(
+                f"<b>{user1.first_name}</b>({sql.get_reputation(chat.id, user1.id)}) has decreased reputation of <b>{user2.first_name}</b>({sql.get_reputation(chat.id, user2.id)})",
+                parse_mode=ParseMode.HTML).message_id
+            try:
+                context.bot.delete_message(chat.id, sql.get_latest_rep_message(chat.id))
+            except BadRequest as err:
+                LOGGER.debug("Could not delete that message.")
+            sql.set_latest_rep_message(chat.id, new_msg)
 
 
 def __help__(update: Update) -> str:
