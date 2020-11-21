@@ -61,10 +61,43 @@ def add_whisper(sender_id, receiver_id, message, id):
 
 def get_message(whisper_id):
     try:
-        w = SESSION.query(Whispers).filter(Whispers.whisper_id == whisper_id)
+        w = SESSION.query(Whispers).get(str(whisper_id))
         if not w:
             return "null"
         result = whisper_message(w.sender_id, w.receiver_id, w.message)
         return result
     finally:
         SESSION.close()
+
+class Number(BASE):
+    __tablename__ = "whisperids"
+
+    bot_id = Column(BigInteger, primary_key=True)
+    id = Column(Integer, default=0)
+
+    def __init__(self, bot_id):
+        self.bot_id = bot_id
+        self.id = 0
+
+
+Number.__table__.create(checkfirst=True)
+
+
+def get_whispers(bot_id):
+    r = SESSION.query(Number).get(bot_id)
+    ret = 0
+    if r:
+        ret = r.id
+
+    SESSION.close()
+    return ret
+
+
+def increase_whisper_ids(bot_id):
+    r = SESSION.query(Number).get(bot_id)
+    if not r:
+        r = Number(bot_id)
+    r.id += 1
+    SESSION.add(r)
+    SESSION.commit()
+

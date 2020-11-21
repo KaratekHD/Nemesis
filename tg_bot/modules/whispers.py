@@ -18,7 +18,6 @@
 __mod_name__ = "Whisper Messages"
 
 from datetime import datetime
-from multiprocessing.context import Process
 from uuid import uuid4
 
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, ParseMode, InlineKeyboardButton, \
@@ -26,10 +25,8 @@ from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, 
 from telegram.error import BadRequest
 from telegram.ext import run_async, CallbackContext, InlineQueryHandler, MessageHandler, Filters, CallbackQueryHandler, \
     ChosenInlineResultHandler
-from telegram.utils.helpers import escape_markdown
 
 from tg_bot import LOGGER, dispatcher
-from tg_bot.modules.sql.users_sql import get_chat_members
 from tg_bot.modules.users import get_user_id
 import tg_bot.modules.sql.whisper_sql as sql
 
@@ -45,16 +42,41 @@ class Whisper():
         return str(self.receiver.id) + str(self.message)
 
 
+LIST = []
+
+
 @run_async
 def chosen_inline_button(update: Update, context: CallbackContext):
-    LOGGER.debug("HIIII!")
+    result = update.chosen_inline_result
+    query = result.query
+    q = query.split(" ")
+    username = q[-1]
+    receiver_id = get_user_id(username)
+    sender_id = update.effective_user.id
+    text = ""
+    for element in q:
+        if element is not username:
+            text = text + " " + element
+    LOGGER.debug("Text: " + text)
+    LOGGER.debug("Sender: " + str(sender_id))
+    LOGGER.debug("Receiver: " + str(receiver_id))
     LOGGER.debug(update.chosen_inline_result)
-    #sql.add_whisper(update.effective_user.id,)
+    sql.add_whisper(sender_id, receiver_id, text, sql.get_whispers(context.bot.id))
+    sql.increase_whisper_ids(context.bot.id)
 
 
 @run_async
 def button(update: Update, context: CallbackContext):
-    context.bot.answer_callback_query(update.callback_query.id, "Test", show_alert=True)
+    query = update.callback_query
+    whisper_message = sql.get_message(int(query.data))
+    sender = whisper_message.sender_id
+    receiver = whisper_message.receiver_id
+    message = whisper_message.message
+    if update.effective_user.id != sender and update.effective_user.id != receiver:
+        context.bot.answer_callback_query(update.callback_query.id, "You are not permitted to read this message.", show_alert=False)
+        return
+    else:
+        context.bot.answer_callback_query(update.callback_query.id, message, show_alert=True)
 
 
 @run_async
@@ -72,10 +94,8 @@ def process_inline_query(update: Update, context: CallbackContext):
             input_message_content=InputTextMessageContent("Write targets @username at the end of your message in order to send a message.", ParseMode.MARKDOWN)
         ))
     else:
-        text = ""
         for element in q:
             if element is not username:
-                text = text + element
                 try:
                     current_time = datetime.now()
                     receiver = context.bot.get_chat(get_user_id(username))
@@ -86,10 +106,10 @@ def process_inline_query(update: Update, context: CallbackContext):
                         id=uuid4(),
                         title=title,
                         description="Only they can open it.",
-                        input_message_content=InputTextMessageContent(f"🔒 A whisper message to {name}, Only they can open it."),
+                        input_message_content=InputTextMessageContent(f"🔒 A whisper message to @{receiver.username}, Only they can open it."),
                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
                             text="show message",
-                            callback_data=str(receiver.id + current_time.year + current_time.month + current_time.day + current_time.hour + current_time.minute + current_time.second + current_time.microsecond))
+                            callback_data=str(sql.get_whispers(context.bot.id)))
                         ]])
                     ))
 
