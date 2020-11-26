@@ -21,7 +21,7 @@ from datetime import datetime
 from uuid import uuid4
 
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, ParseMode, InlineKeyboardButton, \
-    InlineKeyboardMarkup
+    InlineKeyboardMarkup, chat
 from telegram.error import BadRequest
 from telegram.ext import run_async, CallbackContext, InlineQueryHandler, MessageHandler, Filters, CallbackQueryHandler, \
     ChosenInlineResultHandler
@@ -57,10 +57,6 @@ def chosen_inline_button(update: Update, context: CallbackContext):
     for element in q:
         if element is not username:
             text = text + " " + element
-    LOGGER.debug("Text: " + text)
-    LOGGER.debug("Sender: " + str(sender_id))
-    LOGGER.debug("Receiver: " + str(receiver_id))
-    LOGGER.debug(update.chosen_inline_result)
     sql.add_whisper(sender_id, receiver_id, text, sql.get_whispers(context.bot.id))
     sql.increase_whisper_ids(context.bot.id)
 
@@ -68,15 +64,22 @@ def chosen_inline_button(update: Update, context: CallbackContext):
 @run_async
 def button(update: Update, context: CallbackContext):
     query = update.callback_query
-    whisper_message = sql.get_message(int(query.data))
+    print(query)
+    id = query.data.replace("whisper_", "")
+    whisper_message = sql.get_message(int(id))
     sender = whisper_message.sender_id
     receiver = whisper_message.receiver_id
     message = whisper_message.message
     if update.effective_user.id != sender and update.effective_user.id != receiver:
-        context.bot.answer_callback_query(update.callback_query.id, "You are not permitted to read this message.", show_alert=False)
+        context.bot.answer_callback_query(update.callback_query.id,
+                                          "You are not permitted to read this message.",
+                                          show_alert=False)
         return
     else:
         context.bot.answer_callback_query(update.callback_query.id, message, show_alert=True)
+
+
+
 
 
 @run_async
@@ -109,7 +112,7 @@ def process_inline_query(update: Update, context: CallbackContext):
                         input_message_content=InputTextMessageContent(f"🔒 A whisper message to @{receiver.username}, Only they can open it."),
                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
                             text="show message",
-                            callback_data=str(sql.get_whispers(context.bot.id)))
+                            callback_data="whisper_" + str(sql.get_whispers(context.bot.id)))
                         ]])
                     ))
 
@@ -123,7 +126,7 @@ def process_inline_query(update: Update, context: CallbackContext):
 
 
 QUERY_HANDLER = InlineQueryHandler(process_inline_query)
-BUTTON_HANDLER = CallbackQueryHandler(button)
+BUTTON_HANDLER = CallbackQueryHandler(button, pattern=r"whisper")
 INLINE_RESULT_HANDLER = ChosenInlineResultHandler(chosen_inline_button)
 
 dispatcher.add_handler(QUERY_HANDLER)
