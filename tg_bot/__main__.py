@@ -433,6 +433,9 @@ def about(update: Update, context: CallbackContext):
 def load_api():
         if is_module_loaded("rest"):
             LOGGER.debug("Loading API...")
+            LOGGER.warning("BE CAREFULLY!")
+            LOGGER.warning("Rest API is still in early development and considered unstable. Only enable it if you "
+                           "really know what you're doing. You have been warned.")
             p = Process(target=restapi.app.run())
             p.start()
             p.join()

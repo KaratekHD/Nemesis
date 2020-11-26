@@ -38,7 +38,8 @@ class Config(object):
     LOAD = []
     # sed has been disabled after the discovery that certain long-running sed commands maxed out cpu usage
     # and killed the bot. Be careful re-enabling it!
-    NO_LOAD = ['translation', 'rss', 'sed']
+    # rest is still in  development ans should remain disabled unless you really know what you're doing.
+    NO_LOAD = ['translation', 'rest']
     WEBHOOK = False
     URL = None
     DEFAULT_LANG = "en"
