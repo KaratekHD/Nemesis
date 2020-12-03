@@ -34,7 +34,6 @@ import tg_bot.modules.sql.lang_sql as lang
 from tg_bot.strings.string_helper import get_string
 
 
-@run_async
 @bot_admin
 @can_restrict
 @user_admin
@@ -96,7 +95,6 @@ def ban(update: Update, context: CallbackContext) -> str:
     return ""
 
 
-@run_async
 @bot_admin
 @can_restrict
 @user_admin
@@ -176,7 +174,6 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
     return ""
 
 
-@run_async
 @bot_admin
 @can_restrict
 @user_admin
@@ -229,7 +226,6 @@ def kick(update: Update, context: CallbackContext) -> str:
     return ""
 
 
-@run_async
 @bot_admin
 @can_restrict
 def kickme(update: Update, context: CallbackContext):
@@ -247,7 +243,6 @@ def kickme(update: Update, context: CallbackContext):
         update.effective_message.reply_text(get_string("bans", "ERR_KICKME_GENERAL", lang.get_lang(update.effective_chat.id)))
 
 
-@run_async
 @bot_admin
 @can_restrict
 @user_admin
@@ -300,11 +295,11 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Bans"
 
-BAN_HANDLER = CommandHandler("ban", ban, filters=Filters.group)
-TEMPBAN_HANDLER = CommandHandler(["tban", "tempban"], temp_ban,filters=Filters.group)
-KICK_HANDLER = CommandHandler("kick", kick, filters=Filters.group)
-UNBAN_HANDLER = CommandHandler("unban", unban, filters=Filters.group)
-KICKME_HANDLER = DisableAbleCommandHandler("kickme", kickme, filters=Filters.group)
+BAN_HANDLER = CommandHandler("ban", ban, filters=Filters.group, run_async=True)
+TEMPBAN_HANDLER = CommandHandler(["tban", "tempban"], temp_ban,filters=Filters.group, run_async=True)
+KICK_HANDLER = CommandHandler("kick", kick, filters=Filters.group, run_async=True)
+UNBAN_HANDLER = CommandHandler("unban", unban, filters=Filters.group, run_async=True)
+KICKME_HANDLER = DisableAbleCommandHandler("kickme", kickme, filters=Filters.group, run_async=True)
 
 dispatcher.add_handler(BAN_HANDLER)
 dispatcher.add_handler(TEMPBAN_HANDLER)

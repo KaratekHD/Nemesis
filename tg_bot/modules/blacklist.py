@@ -37,7 +37,6 @@ BLACKLIST_GROUP = 11
 BASE_BLACKLIST_STRING = "Current <b>blacklisted</b> words:\n"
 
 
-@run_async
 def blacklist(update: Update, context: CallbackContext):
     args = context.args
     msg = update.effective_message  # type: Optional[Message]
@@ -62,7 +61,6 @@ def blacklist(update: Update, context: CallbackContext):
         msg.reply_text(text, parse_mode=ParseMode.HTML)
 
 
-@run_async
 @user_admin
 def add_blacklist(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
@@ -86,7 +84,6 @@ def add_blacklist(update: Update, context: CallbackContext):
         msg.reply_text(get_string("blacklist", "ERR_BAD_REQUEST", lang.get_lang(update.effective_chat.id))) # ERR_BAD_REQUEST
 
 
-@run_async
 @user_admin
 def unblacklist(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
@@ -126,7 +123,6 @@ def unblacklist(update: Update, context: CallbackContext):
         msg.reply_text(get_string("blacklist", "ERR_REMOVE_BAD_REQUEST", lang.get_lang(update.effective_chat.id))) # ERR_REMOVE_BAD_REQUEST
 
 
-@run_async
 @user_not_admin
 def del_blacklist(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
@@ -168,11 +164,14 @@ __mod_name__ = "Word Blacklists" # MODULE_NAME
 def __help__(update: Update) -> str:
     return get_string("blacklist", "HELP", lang.get_lang(update.effective_chat.id))
 
-BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True)
-ADD_BLACKLIST_HANDLER = CommandHandler("addblacklist", add_blacklist, filters=Filters.group)
-UNBLACKLIST_HANDLER = CommandHandler(["unblacklist", "rmblacklist"], unblacklist, filters=Filters.group)
+
+BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True,
+                                              run_async=True)
+ADD_BLACKLIST_HANDLER = CommandHandler("addblacklist", add_blacklist, filters=Filters.group, run_async=True)
+UNBLACKLIST_HANDLER = CommandHandler(["unblacklist", "rmblacklist"], unblacklist, filters=Filters.group, run_async=True)
 BLACKLIST_DEL_HANDLER = MessageHandler(
-    (Filters.text | Filters.command | Filters.sticker | Filters.photo) & Filters.group, del_blacklist, edited_updates=True)
+    (Filters.text | Filters.command | Filters.sticker | Filters.photo) & Filters.group, del_blacklist,
+    edited_updates=True, run_async=True)
 
 dispatcher.add_handler(BLACKLIST_HANDLER)
 dispatcher.add_handler(ADD_BLACKLIST_HANDLER)

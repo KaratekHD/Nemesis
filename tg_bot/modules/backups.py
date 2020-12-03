@@ -29,7 +29,6 @@ from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
 import tg_bot.modules.helper_funcs.backups as helper
 
 
-
 @user_admin
 @bot_admin
 # NOTE: This file won't be translated (for now), since this feature is gonna get rewritten completely.
@@ -73,7 +72,6 @@ def import_data(update: Update, context: CallbackContext):
         msg.reply_text("Backup fully imported. Welcome back! :D") # MSG_IMPORT_SUCCESS
 
 
-@run_async
 @user_admin
 @typing_action
 def export_data(update: Update, context: CallbackContext):
@@ -93,8 +91,9 @@ def __help__(update: Update) -> str:
            that files/photos can't be imported due to telegram restrictions.\n" \
            " - /export: !!! This isn't a command yet, but should be coming soon!" # HELP
 
+
 IMPORT_HANDLER = CommandHandler("import", import_data)
-EXPORT_HANDLER = CommandHandler("export", export_data)
+EXPORT_HANDLER = CommandHandler("export", export_data, run_async=True)
 
 dispatcher.add_handler(IMPORT_HANDLER)
 dispatcher.add_handler(EXPORT_HANDLER)

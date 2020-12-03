@@ -45,7 +45,6 @@ class Whisper():
 LIST = []
 
 
-@run_async
 def chosen_inline_button(update: Update, context: CallbackContext):
     result = update.chosen_inline_result
     query = result.query
@@ -61,7 +60,6 @@ def chosen_inline_button(update: Update, context: CallbackContext):
     sql.increase_whisper_ids(context.bot.id)
 
 
-@run_async
 def button(update: Update, context: CallbackContext):
     query = update.callback_query
     print(query)
@@ -79,10 +77,6 @@ def button(update: Update, context: CallbackContext):
         context.bot.answer_callback_query(update.callback_query.id, message, show_alert=True)
 
 
-
-
-
-@run_async
 def process_inline_query(update: Update, context: CallbackContext):
     user = update.effective_user
     query = update.inline_query.query
@@ -125,9 +119,9 @@ def process_inline_query(update: Update, context: CallbackContext):
     update.inline_query.answer(results)
 
 
-QUERY_HANDLER = InlineQueryHandler(process_inline_query)
-BUTTON_HANDLER = CallbackQueryHandler(button, pattern=r"whisper")
-INLINE_RESULT_HANDLER = ChosenInlineResultHandler(chosen_inline_button)
+QUERY_HANDLER = InlineQueryHandler(process_inline_query, run_async=True)
+BUTTON_HANDLER = CallbackQueryHandler(button, pattern=r"whisper", run_async=True)
+INLINE_RESULT_HANDLER = ChosenInlineResultHandler(chosen_inline_button, run_async=True)
 
 dispatcher.add_handler(QUERY_HANDLER)
 dispatcher.add_handler(BUTTON_HANDLER)

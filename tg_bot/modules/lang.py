@@ -25,7 +25,6 @@ from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
 import tg_bot.modules.sql.lang_sql as sql
 
 
-@run_async
 @bot_admin
 @user_admin
 def setlang(update: Update, context: CallbackContext):
@@ -61,6 +60,6 @@ def __help__(update: Update) -> str:
     return "\nTest\n\nThis is a test."
 
 
-LANG_HANDLER = CommandHandler("lang", setlang, pass_args=True)
+LANG_HANDLER = CommandHandler("lang", setlang, pass_args=True, run_async=True)
 
 dispatcher.add_handler(LANG_HANDLER)

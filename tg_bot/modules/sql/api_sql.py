@@ -48,16 +48,13 @@ def set_key(user_id, key):
     SESSION.commit()
 
 
-def verify_key(user_id, key) -> bool:
-    hash = SESSION.query(Api).get(str(user_id))
+def verify_key(key):
+    hash = SESSION.query(Api).get(Api.key == str(key))
     ret = "null"
     if hash:
-        ret = hash.key
+        ret = hash.user_id
     SESSION.close()
-    if ret is not "null":
-        return check_password_hash(ret, key)
-    else:
-        return False
+    return ret
 
 
 def get_key(user_id):

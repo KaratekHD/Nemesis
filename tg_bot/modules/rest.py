@@ -23,10 +23,8 @@ from telegram.ext import run_async, CallbackContext, CommandHandler
 from tg_bot import dispatcher
 import tg_bot.modules.sql.api_sql as sql
 from telegram import Update, ParseMode
-from werkzeug.security import generate_password_hash, check_password_hash
 
 
-@run_async
 def get_api_key(update: Update, context: CallbackContext):
     if update.effective_chat.type == "private":
         generated_key = secrets.token_urlsafe(30)
@@ -36,6 +34,7 @@ def get_api_key(update: Update, context: CallbackContext):
                                             f"`{generated_key}`\n"
                                             f"This key can be used to execute tasks as your user, so keep it secret!", parse_mode=ParseMode.MARKDOWN)
 
+
 __mod_name__ = "REST Api"
 
 
@@ -43,6 +42,6 @@ def __help__(update: Update) -> str:
     return "Access the bots features using the brand new REST Api!"
 
 
-KEY_HANDLER = CommandHandler("apikey", get_api_key)
+KEY_HANDLER = CommandHandler("apikey", get_api_key, run_async=True)
 
 dispatcher.add_handler(KEY_HANDLER)

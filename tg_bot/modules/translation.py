@@ -72,6 +72,6 @@ def __help__(update: Update) -> str:
 __mod_name__ = "Grammar"
 
 
-TRANSLATE_HANDLER = DisableAbleCommandHandler('t', translate)
+TRANSLATE_HANDLER = DisableAbleCommandHandler('t', translate, run_async=True)
 
 dispatcher.add_handler(TRANSLATE_HANDLER)

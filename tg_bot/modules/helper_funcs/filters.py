@@ -16,31 +16,31 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from telegram import Message
-from telegram.ext import BaseFilter
+from telegram.ext import MessageFilter
 
 from tg_bot import SUPPORT_USERS, SUDO_USERS, OWNER_ID, CO_OWNER_ID
 
 
 class CustomFilters(object):
-    class _Supporters(BaseFilter):
+    class _Supporters(MessageFilter):
         def filter(self, message: Message):
             return bool(message.from_user and message.from_user.id in SUPPORT_USERS)
 
     support_filter = _Supporters()
 
-    class _Sudoers(BaseFilter):
+    class _Sudoers(MessageFilter):
         def filter(self, message: Message):
             return bool(message.from_user and message.from_user.id in SUDO_USERS)
 
     sudo_filter = _Sudoers()
 
-    class _Admins(BaseFilter):
+    class _Admins(MessageFilter):
         def filter(self, message: Message):
             return bool((message.from_user and message.from_user.id == OWNER_ID) or (message.from_user and message.from_user.id == CO_OWNER_ID))
 
     admin_filter = _Admins()
 
-    class _MimeType(BaseFilter):
+    class _MimeType(MessageFilter):
         def __init__(self, mimetype):
             self.mime_type = mimetype
             self.name = "CustomFilters.mime_type({})".format(self.mime_type)
@@ -50,7 +50,7 @@ class CustomFilters(object):
 
     mime_type = _MimeType
 
-    class _HasText(BaseFilter):
+    class _HasText(MessageFilter):
         def filter(self, message: Message):
             return bool(message.text or message.sticker or message.photo or message.document or message.video)
 

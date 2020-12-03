@@ -33,7 +33,6 @@ from tg_bot.strings.string_helper import get_string
 FLOOD_GROUP = 3
 
 
-@run_async
 @loggable
 def check_flood(update: Update, context: CallbackContext) -> str:
     user = update.effective_user  # type: Optional[User]
@@ -65,7 +64,6 @@ def check_flood(update: Update, context: CallbackContext) -> str:
         return get_string("antiflood", "ERR_NO_PERMS_HTML", lang.get_lang(update.effective_chat.id)).format(chat.title) # ERR_NO_PERMS_HTML
 
 
-@run_async
 @user_admin
 @can_restrict
 @loggable
@@ -104,7 +102,6 @@ def set_flood(update: Update, context: CallbackContext) -> str:
     return ""
 
 
-@run_async
 def flood(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
 
@@ -133,9 +130,9 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "AntiFlood"
 
-FLOOD_BAN_HANDLER = MessageHandler(Filters.all & ~Filters.status_update & Filters.group, check_flood)
-SET_FLOOD_HANDLER = CommandHandler("setflood", set_flood, pass_args=True, filters=Filters.group)
-FLOOD_HANDLER = CommandHandler("flood", flood, filters=Filters.group)
+FLOOD_BAN_HANDLER = MessageHandler(Filters.all & ~Filters.status_update & Filters.group, check_flood, run_async=True)
+SET_FLOOD_HANDLER = CommandHandler("setflood", set_flood, pass_args=True, filters=Filters.group, run_async=True)
+FLOOD_HANDLER = CommandHandler("flood", flood, filters=Filters.group, run_async=True)
 
 dispatcher.add_handler(FLOOD_BAN_HANDLER, FLOOD_GROUP)
 dispatcher.add_handler(SET_FLOOD_HANDLER)

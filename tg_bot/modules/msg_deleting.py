@@ -29,7 +29,6 @@ from tg_bot.modules.helper_funcs.chat_status import user_admin, can_delete
 from tg_bot.modules.log_channel import loggable
 
 
-@run_async
 @user_admin
 @loggable
 def purge(update: Update, context: CallbackContext) -> str:
@@ -83,7 +82,6 @@ def purge(update: Update, context: CallbackContext) -> str:
     return ""
 
 
-@run_async
 @user_admin
 @loggable
 def del_message(update: Update, context: CallbackContext) -> str:
@@ -115,9 +113,9 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Message Deletion"
 
-DELETE_HANDLER = CommandHandler("del", del_message, filters=Filters.group)
-PURGE_HANDLER = CommandHandler("purge", purge, filters=Filters.group, pass_args=True)
-PURGE2_HANDLER = CommandHandler("p", purge, filters=Filters.group, pass_args=True)
+DELETE_HANDLER = CommandHandler("del", del_message, filters=Filters.group, run_async=True)
+PURGE_HANDLER = CommandHandler("purge", purge, filters=Filters.group, pass_args=True, run_async=True)
+PURGE2_HANDLER = CommandHandler("p", purge, filters=Filters.group, pass_args=True, run_async=True)
 
 dispatcher.add_handler(DELETE_HANDLER)
 dispatcher.add_handler(PURGE_HANDLER)

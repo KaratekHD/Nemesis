@@ -44,12 +44,10 @@ GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
 GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
 
 
-@run_async
 def runs(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_random_string("runs", lang.get_lang(update.effective_chat.id)))
 
 
-@run_async
 def nice(update: Update, context: CallbackContext):
     dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     dir = f"{dir}/misc"
@@ -77,7 +75,6 @@ def nice(update: Update, context: CallbackContext):
             update.effective_message.reply_text(get_random_string("nice", lang.get_lang(update.effective_chat.id)))
 
 
-@run_async
 def slap(update: Update, context: CallbackContext):
     args = context.args
     bot = context.bot
@@ -117,7 +114,6 @@ def slap(update: Update, context: CallbackContext):
     reply_text(repl, parse_mode=ParseMode.MARKDOWN)
 
 
-@run_async
 def get_bot_ip(update: Update, context: CallbackContext):
     """ Sends the bot's IP address, so as to be able to ssh in if necessary.
         OWNER ONLY.
@@ -126,7 +122,6 @@ def get_bot_ip(update: Update, context: CallbackContext):
     update.message.reply_text(res.text)
 
 
-@run_async
 def get_id(update: Update, context: CallbackContext):
     args = context.args
     bot = context.bot
@@ -157,7 +152,6 @@ def get_id(update: Update, context: CallbackContext):
                                                 parse_mode=ParseMode.MARKDOWN) # MSG_GROUP_ID
 
 
-@run_async
 def info(update: Update, context: CallbackContext):
     args = context.args
     bot = context.bot
@@ -217,7 +211,6 @@ def info(update: Update, context: CallbackContext):
     update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
-@run_async
 def get_time(update: Update, context: CallbackContext):
     # This does not work
     args = context.args
@@ -262,7 +255,6 @@ def get_time(update: Update, context: CallbackContext):
                 update.message.reply_text(get_string("misc", "MSG_TIME", lang.get_lang(update.effective_chat.id)).format(time_there, location)) # MSG_TIME
 
 
-@run_async
 def echo(update: Update, context: CallbackContext):
     args = update.effective_message.text.split(None, 1)
     message = update.effective_message
@@ -273,7 +265,6 @@ def echo(update: Update, context: CallbackContext):
     message.delete()
 
 
-@run_async
 def gdpr(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_string("misc", "MSG_DELETING_DATA", lang.get_lang(update.effective_chat.id))) # MSG_DELETING_DATA
     for mod in GDPR:
@@ -282,14 +273,12 @@ def gdpr(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_string("misc", "MSG_DELETING_SUCCESS", lang.get_lang(update.effective_chat.id)), parse_mode=ParseMode.MARKDOWN) # MSG_DELETING_SUCCESS
 
 
-@run_async
 def markdown_help(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP", lang.get_lang(update.effective_chat.id)), parse_mode=ParseMode.HTML)
     update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP_FORWARD", lang.get_lang(update.effective_chat.id))) # MARKDOWN_HELP_FORWARD
     update.effective_message.reply_text(get_string("misc", "MARKDOWN_HELP_FORWARD_MSG", lang.get_lang(update.effective_chat.id))) # MARKDOWN_HELP_FORWARD_MSG
 
 
-@run_async
 def stats(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_string("misc", "CURRENT_STATS", lang.get_lang(update.effective_chat.id)) + "\n".join([mod.__stats__() for mod in STATS]))
 
@@ -305,21 +294,22 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Misc"
 
-ID_HANDLER = DisableAbleCommandHandler("id", get_id)
+ID_HANDLER = DisableAbleCommandHandler("id", get_id, run_async=True)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=CustomFilters.admin_filter)
 
 TIME_HANDLER = CommandHandler("time", get_time)
 
-RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
-SLAP_HANDLER = DisableAbleCommandHandler("slap", slap)
-INFO_HANDLER = DisableAbleCommandHandler("info", info)
-NICE_HANDLER = DisableAbleCommandHandler("nice", nice)
+RUNS_HANDLER = DisableAbleCommandHandler("runs", runs, run_async=True)
+SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, run_async=True)
+INFO_HANDLER = DisableAbleCommandHandler("info", info, run_async=True)
+NICE_HANDLER = DisableAbleCommandHandler("nice", nice, run_async=True)
 
-ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.admin_filter)
-MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
+ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.admin_filter, run_async=True)
+MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private, run_async=True)
 
-STATS_HANDLER = CommandHandler("stats", stats, filters=CustomFilters.sudo_filter)
-GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
+STATS_HANDLER = CommandHandler("stats", stats, filters=CustomFilters.sudo_filter, run_async=True)
+GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private, run_async=True)
+
 
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)

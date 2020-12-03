@@ -24,7 +24,7 @@ from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleMessageHandler, DisableAbleCommandHandler
 import tg_bot.modules.sql.reputation_sql as sql
 
-@run_async
+
 def increase(update: Update, context: CallbackContext):
     msg = update.effective_message
     user1 = update.effective_user
@@ -42,7 +42,6 @@ def increase(update: Update, context: CallbackContext):
             sql.set_latest_rep_message(chat.id, new_msg)
 
 
-@run_async
 def decrease(update: Update, context: CallbackContext):
     msg = update.effective_message
     user1 = update.effective_user
@@ -69,10 +68,12 @@ def __help__(update: Update) -> str:
            " - /purge <integer X>: deletes the replied message, and X messages following it."
 
 
-INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)\+"), increase, friendly="increase")
+INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)\+"), increase, friendly="increase",
+                                                     run_async=True)
 dispatcher.add_handler(INCREASE_MESSAGE_HANDLER)
 
-INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)\-"), decrease, friendly="decrease")
+INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)\-"), decrease, friendly="decrease",
+                                                     run_async=True)
 dispatcher.add_handler(INCREASE_MESSAGE_HANDLER)
 
 

@@ -93,7 +93,6 @@ def send(update, message, keyboard, backup_message):
     return msg
 
 
-@run_async
 def new_member(update: Update, context: CallbackContext):
     bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
@@ -159,7 +158,6 @@ def new_member(update: Update, context: CallbackContext):
                 sql.set_clean_welcome(chat.id, sent.message_id)
 
 
-@run_async
 def left_member(update: Update, context: CallbackContext):
     bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
@@ -445,7 +443,6 @@ WELC_HELP_TXT = "Your group's welcome/goodbye messages can be personalised in mu
                 "replying to the desired media, and calling /setwelcome.".format(dispatcher.bot.username) # DESC
 
 
-@run_async
 @user_admin
 def welcome_help(update: Update, context: CallbackContext):
     update.effective_message.reply_text(WELC_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
@@ -490,16 +487,16 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Welcomes/Goodbyes" # MODULE_NAME
 
-NEW_MEM_HANDLER = MessageHandler(Filters.status_update.new_chat_members, new_member)
-LEFT_MEM_HANDLER = MessageHandler(Filters.status_update.left_chat_member, left_member)
-WELC_PREF_HANDLER = CommandHandler("welcome", welcome, pass_args=True, filters=Filters.group)
-GOODBYE_PREF_HANDLER = CommandHandler("goodbye", goodbye, pass_args=True, filters=Filters.group)
-SET_WELCOME = CommandHandler("setwelcome", set_welcome, filters=Filters.group)
-SET_GOODBYE = CommandHandler("setgoodbye", set_goodbye, filters=Filters.group)
-RESET_WELCOME = CommandHandler("resetwelcome", reset_welcome, filters=Filters.group)
-RESET_GOODBYE = CommandHandler("resetgoodbye", reset_goodbye, filters=Filters.group)
-CLEAN_WELCOME = CommandHandler("cleanwelcome", clean_welcome, pass_args=True, filters=Filters.group)
-WELCOME_HELP = CommandHandler("welcomehelp", welcome_help)
+NEW_MEM_HANDLER = MessageHandler(Filters.status_update.new_chat_members, new_member, run_async=True)
+LEFT_MEM_HANDLER = MessageHandler(Filters.status_update.left_chat_member, left_member, run_async=True)
+WELC_PREF_HANDLER = CommandHandler("welcome", welcome, pass_args=True, filters=Filters.group, run_async=True)
+GOODBYE_PREF_HANDLER = CommandHandler("goodbye", goodbye, pass_args=True, filters=Filters.group, run_async=True)
+SET_WELCOME = CommandHandler("setwelcome", set_welcome, filters=Filters.group, run_async=True)
+SET_GOODBYE = CommandHandler("setgoodbye", set_goodbye, filters=Filters.group, run_async=True)
+RESET_WELCOME = CommandHandler("resetwelcome", reset_welcome, filters=Filters.group, run_async=True)
+RESET_GOODBYE = CommandHandler("resetgoodbye", reset_goodbye, filters=Filters.group, run_async=True)
+CLEAN_WELCOME = CommandHandler("cleanwelcome", clean_welcome, pass_args=True, filters=Filters.group, run_async=True)
+WELCOME_HELP = CommandHandler("welcomehelp", welcome_help, run_async=True)
 
 dispatcher.add_handler(NEW_MEM_HANDLER)
 dispatcher.add_handler(LEFT_MEM_HANDLER)

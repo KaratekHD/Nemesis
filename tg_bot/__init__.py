@@ -26,18 +26,30 @@ from tg_bot.strings.string_helper import get_string
 module = "init"
 
 # enable logging
-logging.basicConfig(
-    format="[%(asctime)s | %(levelname)s] %(message)s",
-    level=logging.DEBUG)  # For development purpose only
+
 
 LOGGER = logging.getLogger(__name__)
 
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
     DEFAULT_LANG = os.environ.get('DEFAULT_LANG')
+    DEBUG = os.environ.get('DEBUG', None)
 else:
     from tg_bot.config import Development as Config
     DEFAULT_LANG = Config.DEFAULT_LANG
+    DEBUG = Config.DEBUG
+
+LOGFORMAT = "[%(asctime)s | %(levelname)s] %(message)s"
+if DEBUG:
+    logging.basicConfig(
+        format=LOGFORMAT,
+        level=logging.DEBUG)
+else:
+    logging.basicConfig(
+        format=LOGFORMAT,
+        level=logging.INFO)
+
+
 
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:

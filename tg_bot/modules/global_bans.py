@@ -65,7 +65,6 @@ UNGBAN_ERRORS = {
 }
 
 
-@run_async
 def gban(update: Update, context: CallbackContext):
     args = context.args
     bot = context.bot
@@ -148,7 +147,6 @@ def gban(update: Update, context: CallbackContext):
     message.reply_text(get_string("gbans", "SUCCESS_REPLY", lang.get_lang(update.effective_chat.id))) # SUCCESS_REPLY
 
 
-@run_async
 def ungban(update: Update, context: CallbackContext):
     args = context.args
     bot = context.bot
@@ -209,7 +207,6 @@ def ungban(update: Update, context: CallbackContext):
     message.reply_text(get_string("gbans", "UNBANN_SCS_REPLY", lang.get_lang(update.effective_chat.id))) # UNBANN_SCS_REPLY
 
 
-@run_async
 def gbanlist(update: Update, context: CallbackContext):
 
     banned_users = sql.get_gban_list()
@@ -237,7 +234,6 @@ def check_and_ban(update, user_id, should_message=True):
             update.effective_message.reply_text(get_string("gbans", "THIS_IS_A_BAD_PERSON", lang.get_lang(update.effective_chat.id))) # THIS_IS_A_BAD_PERSON
 
 
-@run_async
 def enforce_gban(update: Update, context: CallbackContext):
     bot = context.bot
     args = context.args
@@ -261,7 +257,6 @@ def enforce_gban(update: Update, context: CallbackContext):
                 check_and_ban(update, user.id, should_message=False)
 
 
-@run_async
 @user_admin
 def gbanstat(update: Update, context: CallbackContext):
     args = context.args
@@ -308,15 +303,15 @@ def __help__(update: Update) -> str:
 __mod_name__ = "Global Bans" # MODULE_NAME
 
 GBAN_HANDLER = CommandHandler("gban", gban, pass_args=True,
-                              filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+                              filters=CustomFilters.sudo_filter | CustomFilters.support_filter, run_async=True)
 UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True,
-                                filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+                                filters=CustomFilters.sudo_filter | CustomFilters.support_filter, run_async=True)
 GBAN_LIST = CommandHandler("gbanlist", gbanlist,
-                           filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+                           filters=CustomFilters.sudo_filter | CustomFilters.support_filter, run_async=True)
 
-GBAN_STATUS = CommandHandler("gbanstat", gbanstat, pass_args=True, filters=Filters.group)
+GBAN_STATUS = CommandHandler("gbanstat", gbanstat, pass_args=True, filters=Filters.group, run_async=True)
 
-GBAN_ENFORCER = MessageHandler(Filters.all & Filters.group, enforce_gban)
+GBAN_ENFORCER = MessageHandler(Filters.all & Filters.group, enforce_gban, run_async=True)
 
 dispatcher.add_handler(GBAN_HANDLER)
 dispatcher.add_handler(UNGBAN_HANDLER)

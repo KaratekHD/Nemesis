@@ -20,7 +20,7 @@ from typing import Optional, List
 
 from telegram import Message, Chat, Update, Bot, User, ParseMode
 from telegram.error import BadRequest, Unauthorized
-from telegram.ext import CommandHandler, RegexHandler, run_async, Filters, CallbackContext
+from telegram.ext import CommandHandler, RegexHandler, run_async, Filters, CallbackContext, MessageHandler
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, LOGGER
@@ -31,7 +31,6 @@ from tg_bot.modules.sql import reporting_sql as sql
 REPORT_GROUP = 5
 
 
-@run_async
 @user_admin
 def report_setting(update: Update, context: CallbackContext):
     args = context.args
@@ -66,7 +65,6 @@ def report_setting(update: Update, context: CallbackContext):
                            parse_mode=ParseMode.MARKDOWN)
 
 
-@run_async
 @user_not_admin
 @loggable
 def report(update: Update, context: CallbackContext) -> str:
@@ -151,9 +149,10 @@ def __help__(update: Update) -> str:
            " - If done in pm, toggles your status.\n" \
            " - If in chat, toggles that chat's status."
 
-REPORT_HANDLER = CommandHandler("report", report, filters=Filters.group)
-SETTING_HANDLER = CommandHandler("reports", report_setting, pass_args=True)
-ADMIN_REPORT_HANDLER = RegexHandler("(?i)@admin(s)?", report)
+
+REPORT_HANDLER = CommandHandler("report", report, filters=Filters.group, run_async=True)
+SETTING_HANDLER = CommandHandler("reports", report_setting, pass_args=True, run_async=True)
+ADMIN_REPORT_HANDLER = MessageHandler(Filters.regex("(?i)@admin(s)?"), report, run_async=True)
 
 dispatcher.add_handler(REPORT_HANDLER, REPORT_GROUP)
 dispatcher.add_handler(ADMIN_REPORT_HANDLER, REPORT_GROUP)

@@ -64,7 +64,6 @@ def get_user_id(username):
     return None
 
 
-@run_async
 def broadcast(update: Update, context: CallbackContext):
     bot = context.bot
     to_send = update.effective_message.text.split(None, 1)
@@ -83,7 +82,6 @@ def broadcast(update: Update, context: CallbackContext):
                                             "due to being kicked.".format(failed))
 
 
-@run_async
 def log_user(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
@@ -104,7 +102,6 @@ def log_user(update: Update, context: CallbackContext):
                         msg.forward_from.username)
 
 
-@run_async
 def chats(update: Update, context: CallbackContext):
     all_chats = sql.get_all_chats() or []
     chatfile = 'List of chats.\n'
@@ -142,9 +139,9 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Users"
 
-BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=CustomFilters.admin_filter)
-USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
-CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=CustomFilters.sudo_filter)
+BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=CustomFilters.admin_filter, run_async=True)
+USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user, run_async=True)
+CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=CustomFilters.sudo_filter, run_async=True)
 
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)

@@ -35,7 +35,6 @@ import tg_bot.modules.sql.lang_sql as lang
 import tg_bot.modules.sql.mute as mute_sql
 
 
-@run_async
 @bot_admin
 @user_admin
 @loggable
@@ -53,7 +52,6 @@ def toggle_mute(update: Update, context: CallbackContext) -> str:
         return f"{update.effective_user.first_name} muted the chat!"
 
 
-@run_async
 @user_not_admin
 def on_message(update: Update, context: CallbackContext):
     LOGGER.debug("Yeet!")
@@ -61,7 +59,6 @@ def on_message(update: Update, context: CallbackContext):
         update.effective_message.delete()
 
 
-@run_async
 @typing_action
 @bot_admin
 @can_promote
@@ -112,7 +109,6 @@ def promote(update: Update, context: CallbackContext) -> str:
         mention_html(user_member.user.id, user_member.user.first_name))  # PROMOTE_SUCCESS_HTML
 
 
-@run_async
 @bot_admin
 @can_promote
 @user_admin
@@ -168,7 +164,6 @@ def demote(update: Update, context: CallbackContext) -> str:
         return ""
 
 
-@run_async
 @bot_admin
 @can_pin
 @user_admin
@@ -201,7 +196,6 @@ def pin(update: Update, context: CallbackContext) -> str:
     return ""
 
 
-@run_async
 @bot_admin
 @can_pin
 @user_admin
@@ -225,7 +219,6 @@ def unpin(update: Update, context: CallbackContext) -> str:
                                                                                                              user.first_name))  # UNPINNED_HTML
 
 
-@run_async
 @bot_admin
 @user_admin
 @typing_action
@@ -248,7 +241,6 @@ def invite(update: Update, context: CallbackContext):
                                                        lang.get_lang(update.effective_chat.id)))  # ERR_NO_SUPERGROUP
 
 
-@run_async
 @typing_action
 def adminlist(update: Update, context: CallbackContext):
     administrators = update.effective_chat.get_administrators()
@@ -278,18 +270,18 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Admin"  # MODULE_NAME
 
-PIN_HANDLER = CommandHandler("pin", pin, pass_args=True, filters=Filters.group)
-UNPIN_HANDLER = CommandHandler("unpin", unpin, filters=Filters.group)
+PIN_HANDLER = CommandHandler("pin", pin, pass_args=True, filters=Filters.group, run_async=True)
+UNPIN_HANDLER = CommandHandler("unpin", unpin, filters=Filters.group, run_async=True)
 
-INVITE_HANDLER = CommandHandler("invitelink", invite, filters=Filters.group)
+INVITE_HANDLER = CommandHandler("invitelink", invite, filters=Filters.group, run_async=True)
 
-PROMOTE_HANDLER = CommandHandler("promote", promote, pass_args=True, filters=Filters.group)
-DEMOTE_HANDLER = CommandHandler("demote", demote, pass_args=True, filters=Filters.group)
+PROMOTE_HANDLER = CommandHandler("promote", promote, pass_args=True, filters=Filters.group, run_async=True)
+DEMOTE_HANDLER = CommandHandler("demote", demote, pass_args=True, filters=Filters.group, run_async=True)
 
-ADMINLIST_HANDLER = CommandHandler("adminlist", adminlist, filters=Filters.group)
+ADMINLIST_HANDLER = CommandHandler("adminlist", adminlist, filters=Filters.group, run_async=True)
 
-MUTE_HANDLER = CommandHandler("globalmute", toggle_mute)
-DELETE_HANDLER = MessageHandler(Filters.all & Filters.group, on_message)
+MUTE_HANDLER = CommandHandler("globalmute", toggle_mute, run_async=True)
+DELETE_HANDLER = MessageHandler(Filters.all & Filters.group, on_message, run_async=True)
 
 dispatcher.add_handler(MUTE_HANDLER)
 dispatcher.add_handler(DELETE_HANDLER, 70)  # I have no idea why this number is necessary, but without it it breaks...

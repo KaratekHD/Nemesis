@@ -22,7 +22,7 @@ from typing import Optional, List
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
 from telegram import Message, Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, RegexHandler, CallbackContext
+from telegram.ext import CommandHandler, RegexHandler, CallbackContext, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown
 
@@ -126,7 +126,6 @@ def get(bot, update, notename, show_none=True, no_format=False):
         message.reply_text("This note doesn't exist")
 
 
-@run_async
 def cmd_get(update: Update, context: CallbackContext):
     args = context.args
     bot = context.bot
@@ -138,7 +137,6 @@ def cmd_get(update: Update, context: CallbackContext):
         update.effective_message.reply_text("Get rekt")
 
 
-@run_async
 def hash_get(update: Update, context: CallbackContext):
     bot = context.bot
     message = update.effective_message.text
@@ -147,7 +145,6 @@ def hash_get(update: Update, context: CallbackContext):
     get(bot, update, no_hash, show_none=False)
 
 
-@run_async
 @user_admin
 def save(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
@@ -181,7 +178,6 @@ def save(update: Update, context: CallbackContext):
         return
 
 
-@run_async
 @user_admin
 def clear(update: Update, context: CallbackContext):
     args = context.args
@@ -195,7 +191,6 @@ def clear(update: Update, context: CallbackContext):
             update.effective_message.reply_text("That's not a note in my database!")
 
 
-@run_async
 def list_notes(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     note_list = sql.get_all_chat_notes(chat_id)
@@ -265,13 +260,13 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Notes"
 
-GET_HANDLER = CommandHandler("get", cmd_get, pass_args=True)
-HASH_GET_HANDLER = RegexHandler(r"^#[^\s]+", hash_get)
+GET_HANDLER = CommandHandler("get", cmd_get, pass_args=True, run_async=True)
+HASH_GET_HANDLER = MessageHandler(Filters.regex(r"^#[^\s]+"), hash_get, run_async=True)
 
-SAVE_HANDLER = CommandHandler("save", save)
-DELETE_HANDLER = CommandHandler("clear", clear, pass_args=True)
+SAVE_HANDLER = CommandHandler("save", save, run_async=True)
+DELETE_HANDLER = CommandHandler("clear", clear, pass_args=True, run_async=True)
 
-LIST_HANDLER = DisableAbleCommandHandler(["notes", "saved"], list_notes, admin_ok=True)
+LIST_HANDLER = DisableAbleCommandHandler(["notes", "saved"], list_notes, admin_ok=True, run_async=True)
 
 dispatcher.add_handler(GET_HANDLER)
 dispatcher.add_handler(SAVE_HANDLER)

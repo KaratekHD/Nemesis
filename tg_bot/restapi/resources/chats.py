@@ -16,28 +16,20 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from http import HTTPStatus
 
+from flask import request, jsonify
 from flask_httpauth import HTTPBasicAuth
 from flask_restplus import Namespace, Resource
 import tg_bot.modules.sql.api_sql as sql
-
-auth = HTTPBasicAuth()
-
-
-@auth.verify_password
-def authenticate(username, password):
-    if username and password:
-        if username is "jens":
-            return username
-    else:
-        return False
-
+from tg_bot import LOGGER
 
 chats_api = Namespace("chats", description="Gather information about chats you have access to.")
 
 
 @chats_api.route("")
 class List(Resource):
-    @auth.login_required
     def get(self):
+        key = request.args.get('api_key')
+        test = sql.verify_key(key)
+        LOGGER.debug(test)
         '''Get All chats you have access to.'''
         return "Nemesis Telegram Bot v2.0 Development Preview 1", HTTPStatus.OK

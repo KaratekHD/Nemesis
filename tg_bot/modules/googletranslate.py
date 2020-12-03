@@ -21,7 +21,6 @@ from telegram.ext import CallbackContext, run_async, CommandHandler
 from tg_bot import dispatcher, LOGGER
 
 
-@run_async
 def translate(update: Update, context: CallbackContext):
     msg = update.effective_message
     args = context.args
@@ -40,7 +39,9 @@ def translate(update: Update, context: CallbackContext):
         return
     msg.reply_text(translated)
 
-TRANSLATION_HANDLER = CommandHandler("translate", translate)
+
+TRANSLATION_HANDLER = CommandHandler("translate", translate, run_async=True)
+
 
 dispatcher.add_handler(TRANSLATION_HANDLER)
 

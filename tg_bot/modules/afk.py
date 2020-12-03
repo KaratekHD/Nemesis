@@ -32,7 +32,6 @@ AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
 
 
-@run_async
 def afk(update: Update, context: CallbackContext):
     args = update.effective_message.text.split(None, 1)
     if len(args) >= 2:
@@ -44,7 +43,6 @@ def afk(update: Update, context: CallbackContext):
     update.effective_message.reply_text(get_string("afk", "MSG_IS_AFK_NOW", lang.get_lang(update.effective_chat.id)).format(update.effective_user.first_name)) # MSG_IS_AFK_NOW
 
 
-@run_async
 def no_longer_afk(update: Update, context: CallbackContext):
     user = update.effective_user  # type: Optional[User]
 
@@ -56,7 +54,6 @@ def no_longer_afk(update: Update, context: CallbackContext):
         update.effective_message.reply_text(get_string("afk", "MSG_IS_NOT_AFK", lang.get_lang(update.effective_chat.id)).format(update.effective_user.first_name)) # MSG_IS_NOT_AFK
 
 
-@run_async
 def reply_afk(update: Update, context: CallbackContext):
     bot = context.bot
     message = update.effective_message  # type: Optional[Message]
@@ -97,11 +94,11 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "AFK" # MODULE_NAME
 
-AFK_HANDLER = DisableAbleCommandHandler("afk", afk)
-AFK_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)brb"), afk, friendly="afk")
-NO_AFK_HANDLER = MessageHandler(Filters.all & Filters.group, no_longer_afk)
+AFK_HANDLER = DisableAbleCommandHandler("afk", afk, run_async=True)
+AFK_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)brb"), afk, friendly="afk", run_async=True)
+NO_AFK_HANDLER = MessageHandler(Filters.all & Filters.group, no_longer_afk, run_async=True)
 AFK_REPLY_HANDLER = MessageHandler(Filters.entity(MessageEntity.MENTION) | Filters.entity(MessageEntity.TEXT_MENTION),
-                                   reply_afk)
+                                   reply_afk, run_async=True)
 
 dispatcher.add_handler(AFK_HANDLER, AFK_GROUP)
 dispatcher.add_handler(AFK_MESSAGE_HANDLER, AFK_GROUP)

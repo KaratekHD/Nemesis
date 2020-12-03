@@ -33,7 +33,6 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_action import typing_action
 
 
-@run_async
 @typing_action
 def kang(update, context):
     msg = update.effective_message
@@ -406,7 +405,6 @@ def makepack_internal(
         msg.reply_text("Failed to create sticker pack. Possibly due to blek mejik.")
 
 
-@run_async
 def getsticker(update, context):
     msg = update.effective_message
     chat_id = update.effective_chat.id
@@ -437,7 +435,6 @@ def getsticker(update, context):
         )
 
 
-@run_async
 @typing_action
 def stickerid(update, context):
     msg = update.effective_message
@@ -469,9 +466,9 @@ def __help__(update: Update) -> str:
         """
 
 __mod_name__ = "Stickers"
-KANG_HANDLER = DisableAbleCommandHandler("kang", kang, pass_args=True, admin_ok=True)
-STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
-GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
+KANG_HANDLER = DisableAbleCommandHandler("kang", kang, pass_args=True, admin_ok=True, run_async=True)
+STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid, run_async=True)
+GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker, run_async=True)
 
 dispatcher.add_handler(KANG_HANDLER)
 dispatcher.add_handler(STICKERID_HANDLER)
