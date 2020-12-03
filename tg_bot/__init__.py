@@ -50,12 +50,10 @@ else:
         level=logging.INFO)
 
 
-
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     LOGGER.error(get_string(module, "ERR_INVALID_PYTHON_VERSION", DEFAULT_LANG)) # ERR_INVALID_PYTHON_VERSION
     quit(1)
-
 
 
 if ENV:

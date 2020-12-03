@@ -16,9 +16,9 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import html
-from typing import Optional, List
+from typing import Optional
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Chat, Update, User
 from telegram import ParseMode, InlineKeyboardMarkup
 from telegram.error import BadRequest
 from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, CallbackContext
@@ -151,7 +151,7 @@ def new_member(update: Update, context: CallbackContext):
         if prev_welc:
             try:
                 bot.delete_message(chat.id, prev_welc)
-            except BadRequest as excp:
+            except BadRequest:
                 pass
 
             if sent:
