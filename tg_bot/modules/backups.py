@@ -19,9 +19,9 @@ import json
 from io import BytesIO
 from typing import Optional
 
-from telegram import Message, Chat, Update, Bot
+from telegram import Message, Chat, Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, CallbackContext
+from telegram.ext import CommandHandler, CallbackContext
 
 from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.chat_action import typing_action
@@ -82,8 +82,8 @@ def export_data(update: Update, context: CallbackContext):
                                                 caption="Here you go.") # MSG_EXPORT_SUCCESS
 
 
-
 __mod_name__ = "Backups"
+
 
 def __help__(update: Update) -> str:
     return "\n*Admin only:*\n" \

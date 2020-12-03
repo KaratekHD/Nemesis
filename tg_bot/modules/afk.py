@@ -17,16 +17,17 @@
 
 from typing import Optional
 
-from telegram import Message, Update, Bot, User
+from telegram import Message, Update, User
 from telegram import MessageEntity
-from telegram.ext import Filters, MessageHandler, run_async, CallbackContext, CommandHandler
+from telegram.ext import Filters, MessageHandler, CallbackContext
 
 from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler, DisableAbleMessageHandler
+from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
 from tg_bot.modules.sql import afk_sql as sql
 from tg_bot.modules.users import get_user_id
 import tg_bot.modules.sql.lang_sql as lang
 from tg_bot.strings.string_helper import get_string
+
 
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
@@ -92,7 +93,9 @@ def __gdpr__(user_id):
 def __help__(update: Update) -> str:
     return get_string("afk", "HELP", lang.get_lang(update.effective_chat.id))
 
+
 __mod_name__ = "AFK" # MODULE_NAME
+
 
 AFK_HANDLER = DisableAbleCommandHandler("afk", afk, run_async=True)
 AFK_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)brb"), afk, friendly="afk", run_async=True)

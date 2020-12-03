@@ -18,9 +18,9 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Message, Chat, Update, User
 from telegram.error import BadRequest
-from telegram.ext import Filters, MessageHandler, CommandHandler, run_async, CallbackContext
+from telegram.ext import Filters, MessageHandler, CommandHandler, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher
@@ -128,7 +128,9 @@ def __chat_settings__(chat_id, user_id):
 def __help__(update: Update) -> str:
     return get_string("antiflood", "HELP", lang.get_lang(update.effective_chat.id))
 
+
 __mod_name__ = "AntiFlood"
+
 
 FLOOD_BAN_HANDLER = MessageHandler(Filters.all & ~Filters.status_update & Filters.group, check_flood, run_async=True)
 SET_FLOOD_HANDLER = CommandHandler("setflood", set_flood, pass_args=True, filters=Filters.group, run_async=True)

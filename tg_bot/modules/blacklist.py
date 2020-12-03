@@ -19,9 +19,9 @@ import html
 import re
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, ParseMode
+from telegram import Message, Chat, Update, ParseMode
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters, run_async, CallbackContext
+from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContext
 
 import tg_bot.modules.sql.blacklist_sql as sql
 import tg_bot.modules.sql.lang_sql as lang

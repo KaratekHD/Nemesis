@@ -18,9 +18,9 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Message, Chat, Update, User
 from telegram.error import BadRequest
-from telegram.ext import run_async, CommandHandler, Filters, CallbackContext
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, BAN_STICKER, LOGGER

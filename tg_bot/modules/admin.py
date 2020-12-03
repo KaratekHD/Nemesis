@@ -18,11 +18,10 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Message, Chat, Update, User
 from telegram import ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters, CallbackContext, MessageHandler
-from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown, mention_html
 
 from tg_bot import dispatcher, LOGGER
