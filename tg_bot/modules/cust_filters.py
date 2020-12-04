@@ -14,6 +14,19 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
 from typing import Optional
@@ -22,7 +35,7 @@ import telegram
 from telegram import ParseMode, InlineKeyboardMarkup, Message, Chat
 from telegram import Update, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, DispatcherHandlerStop, run_async
+from telegram.ext import CommandHandler, MessageHandler, DispatcherHandlerStop, run_async, CallbackContext
 from telegram.utils.helpers import escape_markdown
 
 from tg_bot import dispatcher, LOGGER, DEFAULT_LANG
@@ -41,8 +54,7 @@ HANDLER_GROUP = 10
 # BASIC_FILTER_STRING = "*Filters in this chat:*\n" # BASIC_FILTER_STRING
 
 
-@run_async
-def list_handlers(bot: Bot, update: Update):
+def list_handlers(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     all_handlers = sql.get_chat_triggers(chat.id)
 
@@ -65,7 +77,7 @@ def list_handlers(bot: Bot, update: Update):
 
 # NOT ASYNC BECAUSE DISPATCHER HANDLER RAISED
 @user_admin
-def filters(bot: Bot, update: Update):
+def filters(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
     args = msg.text.split(None, 1)  # use python's maxsplit to separate Cmd, keyword, and reply_text
@@ -139,7 +151,7 @@ def filters(bot: Bot, update: Update):
 
 # NOT ASYNC BECAUSE DISPATCHER HANDLER RAISED
 @user_admin
-def stop_filter(bot: Bot, update: Update):
+def stop_filter(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     args = update.effective_message.text.split(None, 1)
 
@@ -161,8 +173,8 @@ def stop_filter(bot: Bot, update: Update):
     update.effective_message.reply_text(get_string("filters", "ERR_NOT_A_FILTER", lang.get_lang(update.effective_chat.id))) # ERR_NOT_A_FILTER
 
 
-@run_async
-def reply_filter(bot: Bot, update: Update):
+def reply_filter(update: Update, context: CallbackContext):
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
     to_match = extract_text(message)
@@ -229,12 +241,17 @@ def __chat_settings__(chat_id, user_id):
 def __help__(update: Update) -> str:
     return get_string("filters", "HELP", lang.get_lang(update.effective_chat.id))
 
+
 __mod_name__ = "Filters"
 
-FILTER_HANDLER = CommandHandler("filter", filters)
-STOP_HANDLER = CommandHandler("stop", stop_filter)
-LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers, admin_ok=True)
-CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter)
+
+# NOT ASYNC BECAUSE DISPATCHER HANDLER RAISED
+FILTER_HANDLER = CommandHandler("filter", filters, run_async=False)
+# NOT ASYNC BECAUSE DISPATCHER HANDLER RAISED
+STOP_HANDLER = CommandHandler("stop", stop_filter, run_async=False)
+LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers, run_async=True)
+CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter, run_async=True)
+
 
 dispatcher.add_handler(FILTER_HANDLER)
 dispatcher.add_handler(STOP_HANDLER)

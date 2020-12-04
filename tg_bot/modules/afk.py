@@ -17,23 +17,23 @@
 
 from typing import Optional
 
-from telegram import Message, Update, Bot, User
+from telegram import Message, Update, User
 from telegram import MessageEntity
-from telegram.ext import Filters, MessageHandler, run_async
+from telegram.ext import Filters, MessageHandler, CallbackContext
 
 from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler
+from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
 from tg_bot.modules.sql import afk_sql as sql
 from tg_bot.modules.users import get_user_id
 import tg_bot.modules.sql.lang_sql as lang
 from tg_bot.strings.string_helper import get_string
 
+
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
 
 
-@run_async
-def afk(bot: Bot, update: Update):
+def afk(update: Update, context: CallbackContext):
     args = update.effective_message.text.split(None, 1)
     if len(args) >= 2:
         reason = args[1]
@@ -44,8 +44,7 @@ def afk(bot: Bot, update: Update):
     update.effective_message.reply_text(get_string("afk", "MSG_IS_AFK_NOW", lang.get_lang(update.effective_chat.id)).format(update.effective_user.first_name)) # MSG_IS_AFK_NOW
 
 
-@run_async
-def no_longer_afk(bot: Bot, update: Update):
+def no_longer_afk(update: Update, context: CallbackContext):
     user = update.effective_user  # type: Optional[User]
 
     if not user:  # ignore channels
@@ -56,8 +55,8 @@ def no_longer_afk(bot: Bot, update: Update):
         update.effective_message.reply_text(get_string("afk", "MSG_IS_NOT_AFK", lang.get_lang(update.effective_chat.id)).format(update.effective_user.first_name)) # MSG_IS_NOT_AFK
 
 
-@run_async
-def reply_afk(bot: Bot, update: Update):
+def reply_afk(update: Update, context: CallbackContext):
+    bot = context.bot
     message = update.effective_message  # type: Optional[Message]
     entities = message.parse_entities([MessageEntity.TEXT_MENTION, MessageEntity.MENTION])
     if message.entities and entities:
@@ -94,15 +93,17 @@ def __gdpr__(user_id):
 def __help__(update: Update) -> str:
     return get_string("afk", "HELP", lang.get_lang(update.effective_chat.id))
 
+
 __mod_name__ = "AFK" # MODULE_NAME
 
-AFK_HANDLER = DisableAbleCommandHandler("afk", afk)
-AFK_REGEX_HANDLER = DisableAbleRegexHandler("(?i)brb", afk, friendly="afk")
-NO_AFK_HANDLER = MessageHandler(Filters.all & Filters.group, no_longer_afk)
+
+AFK_HANDLER = DisableAbleCommandHandler("afk", afk, run_async=True)
+AFK_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)brb"), afk, friendly="afk", run_async=True)
+NO_AFK_HANDLER = MessageHandler(Filters.all & Filters.group, no_longer_afk, run_async=True)
 AFK_REPLY_HANDLER = MessageHandler(Filters.entity(MessageEntity.MENTION) | Filters.entity(MessageEntity.TEXT_MENTION),
-                                   reply_afk)
+                                   reply_afk, run_async=True)
 
 dispatcher.add_handler(AFK_HANDLER, AFK_GROUP)
-dispatcher.add_handler(AFK_REGEX_HANDLER, AFK_GROUP)
+dispatcher.add_handler(AFK_MESSAGE_HANDLER, AFK_GROUP)
 dispatcher.add_handler(NO_AFK_HANDLER, AFK_GROUP)
 dispatcher.add_handler(AFK_REPLY_HANDLER, AFK_REPLY_GROUP)

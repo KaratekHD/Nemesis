@@ -20,14 +20,17 @@ import re
 
 from feedparser import parse
 from telegram import ParseMode, constants, Update
-from telegram.ext import CommandHandler
+from telegram.ext import CommandHandler, CallbackContext
 
 from tg_bot import dispatcher, updater
+from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.sql import rss_sql as sql
 
 
-def show_url(bot, update, args):
+def show_url(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     tg_chat_id = str(update.effective_chat.id)
 
     if len(args) >= 1:
@@ -68,7 +71,8 @@ def show_url(bot, update, args):
         update.effective_message.reply_text("URL missing")
 
 
-def list_urls(bot, update):
+def list_urls(update: Update, context: CallbackContext):
+    bot = context.bot
     tg_chat_id = str(update.effective_chat.id)
 
     user_data = sql.get_urls(tg_chat_id)
@@ -89,7 +93,8 @@ def list_urls(bot, update):
 
 
 @user_admin
-def add_url(bot, update, args):
+def add_url(update: Update, context: CallbackContext):
+    args = context.args
     if len(args) >= 1:
         chat = update.effective_chat
 
@@ -123,7 +128,8 @@ def add_url(bot, update, args):
 
 
 @user_admin
-def remove_url(bot, update, args):
+def remove_url(update: Update, context: CallbackContext):
+    args = context.args
     if len(args) >= 1:
         tg_chat_id = str(update.effective_chat.id)
 
@@ -146,7 +152,9 @@ def remove_url(bot, update, args):
         update.effective_message.reply_text("URL missing")
 
 
-def rss_update(bot, job):
+def rss_update(context: CallbackContext):
+    bot = context.bot
+    job = context.job
     user_data = sql.get_all()
 
     # this loop checks for every row in the DB
@@ -202,7 +210,9 @@ def rss_update(bot, job):
                              .format(len(new_entry_links) - 5))
 
 
-def rss_set(bot, job):
+def rss_set(context: CallbackContext):
+    bot = context.bot
+    job = context.job
     user_data = sql.get_all()
 
     # this loop checks for every row in the DB
@@ -248,10 +258,10 @@ job_rss_update = job.run_repeating(rss_update, interval=60, first=60)
 job_rss_set.enabled = True
 job_rss_update.enabled = True
 
-SHOW_URL_HANDLER = CommandHandler("rss", show_url, pass_args=True)
-ADD_URL_HANDLER = CommandHandler("addrss", add_url, pass_args=True)
+SHOW_URL_HANDLER = DisableAbleCommandHandler("rss", show_url, pass_args=True)
+ADD_URL_HANDLER = CommandHandler("addrss", add_url)
 REMOVE_URL_HANDLER = CommandHandler("removerss", remove_url, pass_args=True)
-LIST_URLS_HANDLER = CommandHandler("listrss", list_urls)
+LIST_URLS_HANDLER = DisableAbleCommandHandler("listrss", list_urls)
 
 dispatcher.add_handler(SHOW_URL_HANDLER)
 dispatcher.add_handler(ADD_URL_HANDLER)

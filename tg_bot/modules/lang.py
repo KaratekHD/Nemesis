@@ -18,17 +18,16 @@
 from typing import List
 
 from telegram import Bot, Update
-from telegram.ext import run_async, CommandHandler
+from telegram.ext import run_async, CommandHandler, CallbackContext
 
 from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
 import tg_bot.modules.sql.lang_sql as sql
 
 
-@run_async
 @bot_admin
 @user_admin
-def setlang(bot: Bot, update: Update, args: List[str]):
+def setlang(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     msg = update.effective_message  # type: Optional[Message]
     raw_text = msg.text
@@ -61,6 +60,6 @@ def __help__(update: Update) -> str:
     return "\nTest\n\nThis is a test."
 
 
-LANG_HANDLER = CommandHandler("lang", setlang, pass_args=True)
+LANG_HANDLER = CommandHandler("lang", setlang, pass_args=True, run_async=True)
 
 dispatcher.add_handler(LANG_HANDLER)

@@ -18,9 +18,9 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Message, Chat, Update, User
 from telegram.error import BadRequest
-from telegram.ext import Filters, MessageHandler, CommandHandler, run_async
+from telegram.ext import Filters, MessageHandler, CommandHandler, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher
@@ -33,9 +33,8 @@ from tg_bot.strings.string_helper import get_string
 FLOOD_GROUP = 3
 
 
-@run_async
 @loggable
-def check_flood(bot: Bot, update: Update) -> str:
+def check_flood(update: Update, context: CallbackContext) -> str:
     user = update.effective_user  # type: Optional[User]
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
@@ -65,11 +64,11 @@ def check_flood(bot: Bot, update: Update) -> str:
         return get_string("antiflood", "ERR_NO_PERMS_HTML", lang.get_lang(update.effective_chat.id)).format(chat.title) # ERR_NO_PERMS_HTML
 
 
-@run_async
 @user_admin
 @can_restrict
 @loggable
-def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
+def set_flood(update: Update, context: CallbackContext) -> str:
+    args = context.args
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
@@ -103,8 +102,7 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
     return ""
 
 
-@run_async
-def flood(bot: Bot, update: Update):
+def flood(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
 
     limit = sql.get_flood_limit(chat.id)
@@ -130,11 +128,13 @@ def __chat_settings__(chat_id, user_id):
 def __help__(update: Update) -> str:
     return get_string("antiflood", "HELP", lang.get_lang(update.effective_chat.id))
 
+
 __mod_name__ = "AntiFlood"
 
-FLOOD_BAN_HANDLER = MessageHandler(Filters.all & ~Filters.status_update & Filters.group, check_flood)
-SET_FLOOD_HANDLER = CommandHandler("setflood", set_flood, pass_args=True, filters=Filters.group)
-FLOOD_HANDLER = CommandHandler("flood", flood, filters=Filters.group)
+
+FLOOD_BAN_HANDLER = MessageHandler(Filters.all & ~Filters.status_update & Filters.group, check_flood, run_async=True)
+SET_FLOOD_HANDLER = CommandHandler("setflood", set_flood, pass_args=True, filters=Filters.group, run_async=True)
+FLOOD_HANDLER = CommandHandler("flood", flood, filters=Filters.group, run_async=True)
 
 dispatcher.add_handler(FLOOD_BAN_HANDLER, FLOOD_GROUP)
 dispatcher.add_handler(SET_FLOOD_HANDLER)

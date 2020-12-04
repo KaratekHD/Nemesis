@@ -25,7 +25,7 @@ from typing import Optional, List
 from telegram import Message, Chat, Update, Bot, User
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import Unauthorized, BadRequest, TimedOut, NetworkError, ChatMigrated, TelegramError
-from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
+from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler, CallbackContext
 from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 from telegram.utils.helpers import escape_markdown
 
@@ -39,6 +39,9 @@ from tg_bot.strings.string_helper import  get_string
 from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
+from tg_bot.modules.helper_funcs.misc import is_module_loaded
+import tg_bot.restapi as restapi
+from multiprocessing import Process
 
 
 IMPORTED = {}
@@ -58,7 +61,7 @@ for module_name in ALL_MODULES:
     imported_module = importlib.import_module("tg_bot.modules." + module_name)
     if not hasattr(imported_module, "__mod_name__"):
         imported_module.__mod_name__ = imported_module.__name__
-
+    LOGGER.debug("Loaded Module {}".format(imported_module.__mod_name__))
     if not imported_module.__mod_name__.lower() in IMPORTED:
         IMPORTED[imported_module.__mod_name__.lower()] = imported_module
     else:
@@ -93,6 +96,8 @@ for module_name in ALL_MODULES:
         USER_SETTINGS[imported_module.__mod_name__.lower()] = imported_module
 
 
+
+
 @run_async
 def send_help(chat_id, text, keyboard=None):
     if not keyboard:
@@ -112,8 +117,9 @@ def test(bot: Bot, update: Update):
 
 
 @run_async
-def start(bot: Bot, update: Update, args: List[str]):
+def start(update: Update, context: CallbackContext):
     if update.effective_chat.type == "private":
+        args = context.args
         if len(args) >= 1:
             if args[0].lower() == "help":
                 HELP_STRINGS = get_string("main", "HELP_STRINGS", lang.get_lang(update.effective_chat.id))
@@ -134,7 +140,7 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_text(
-                get_string("main", "PM_START_TEXT", lang.get_lang(update.effective_chat.id)).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
+                get_string("main", "PM_START_TEXT", lang.get_lang(update.effective_chat.id)).format(escape_markdown(first_name), escape_markdown(context.bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN)
     else:
         update.effective_message.reply_text(get_string("main", "START_IN_GROUP", lang.get_lang(update.effective_chat.id))) # START_IN_GROUP
@@ -170,7 +176,8 @@ def error_callback(bot, update, error):
 
 
 @run_async
-def help_button(bot: Bot, update: Update):
+def help_button(update: Update, context: CallbackContext):
+    bot = context.bot
     query = update.callback_query
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
     prev_match = re.match(r"help_prev\((.+?)\)", query.data)
@@ -224,7 +231,7 @@ def help_button(bot: Bot, update: Update):
 
 
 @run_async
-def get_help(bot: Bot, update: Update):
+def get_help(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     args = update.effective_message.text.split(None, 1)
 
@@ -235,7 +242,7 @@ def get_help(bot: Bot, update: Update):
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text=get_string("main", "PM_FOR_HELP_BUTTON", lang.get_lang(chat.id)),
                                                                        url="t.me/{}?start=help".format(
-                                                                           bot.username))]])) # PM_FOR_HELP and PM_FOR_HELP_BUTTON
+                                                                           context.bot.username))]])) # PM_FOR_HELP and PM_FOR_HELP_BUTTON
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
@@ -275,7 +282,8 @@ def send_settings(chat_id, user_id, user=False):
 
 
 @run_async
-def settings_button(bot: Bot, update: Update):
+def settings_button(update: Update, context: CallbackContext):
+    bot = context.bot
     query = update.callback_query
     user = update.effective_user
     mod_match = re.match(r"stngs_module\((.+?),(.+?)\)", query.data)
@@ -336,8 +344,9 @@ def settings_button(bot: Bot, update: Update):
         else:
             LOGGER.exception(get_string("main", "ERR_EXCP_SETTINGS_BUTTONS", DEFAULT_LANG), str(query.data)) # ERR_EXCP_SETTINGS_BUTTONS
 
+
 @run_async
-def get_settings(bot: Bot, update: Update):
+def get_settings(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
@@ -358,7 +367,7 @@ def get_settings(bot: Bot, update: Update):
     else:
         send_settings(chat.id, user.id, True)
 
-def migrate_chats(bot: Bot, update: Update):
+def migrate_chats(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
     if msg.migrate_to_chat_id:
         old_chat = update.effective_chat.id
@@ -378,7 +387,7 @@ def migrate_chats(bot: Bot, update: Update):
 
 
 @run_async
-def about(bot: Bot, update: Update, args: List[str]):
+def about(update: Update, context: CallbackContext):
     DEVELOPMENT = " - [KaratekHD](https://github.com/KaratekHD)\n" \
                                         " - [PaulSonOfLars](https://github.com/PaulSonOfLars)\n" \
                                         " - [Juliano Dorneles dos Santos](https://github.com/jvlianodorneles)\n" \
@@ -421,9 +430,22 @@ def about(bot: Bot, update: Update, args: List[str]):
                                         "{}".format(DEVELOPMENT, TRANSLATION, PRODUCTION), parse_mode=ParseMode.MARKDOWN)
 
 
+def load_api():
+        if is_module_loaded("rest"):
+            LOGGER.debug("Loading API...")
+            LOGGER.warning("BE CAREFULLY!")
+            LOGGER.warning("Rest API is still in early development and considered unstable. Only enable it if you "
+                           "really know what you're doing. You have been warned.")
+            p = Process(target=restapi.app.run())
+            p.start()
+            p.join()
+        else:
+            LOGGER.debug("Not loading API")
+
+
 def main():
     # test_handler = CommandHandler("test", test)
-    start_handler = CommandHandler("start", start, pass_args=True)
+    start_handler = CommandHandler("start", start)
 
     help_handler = CommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
@@ -445,8 +467,6 @@ def main():
 
     # dispatcher.add_error_handler(error_callback)
 
-    # add antiflood processor
-    Dispatcher.process_update = process_update
 
     if WEBHOOK:
         LOGGER.info(get_string("main", "WEBHOOKS", DEFAULT_LANG)) # WEBHOOKS
@@ -463,7 +483,7 @@ def main():
     else:
         LOGGER.info(get_string("main", "LONG_POLLING", DEFAULT_LANG)) # LONG_POLLING
         updater.start_polling(timeout=15, read_latency=4)
-
+    load_api()
     updater.idle()
 
 
@@ -481,6 +501,7 @@ def process_update(self, update):
         return
 
     now = datetime.datetime.utcnow()
+
     cnt = CHATS_CNT.get(update.effective_chat.id, 0)
 
     t = CHATS_TIME.get(update.effective_chat.id, datetime.datetime(1970, 1, 1))
@@ -494,10 +515,12 @@ def process_update(self, update):
         return
 
     CHATS_CNT[update.effective_chat.id] = cnt
+
+
     for group in self.groups:
         try:
             for handler in (x for x in self.handlers[group] if x.check_update(update)):
-                handler.handle_update(update, self)
+                handler.handle_update(update, self, handler.check_update(update))
                 break
 
         # Stop processing with any other handler.
@@ -520,6 +543,8 @@ def process_update(self, update):
         # Errors should not stop the thread.
         except Exception:
             self.logger.exception(get_string("main", "ERR_UPDATE_UNKNOWN", DEFAULT_LANG)) # ERR_UPDATE_UNKNOWN
+
+
 
 
 if __name__ == '__main__':

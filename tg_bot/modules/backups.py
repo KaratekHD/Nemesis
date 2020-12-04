@@ -19,21 +19,22 @@ import json
 from io import BytesIO
 from typing import Optional
 
-from telegram import Message, Chat, Update, Bot
+from telegram import Message, Chat, Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop
+from telegram.ext import CommandHandler, CallbackContext
 
 from tg_bot import dispatcher
+from tg_bot.modules.helper_funcs.chat_action import typing_action
 from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
 import tg_bot.modules.helper_funcs.backups as helper
-
 
 
 @user_admin
 @bot_admin
 # NOTE: This file won't be translated (for now), since this feature is gonna get rewritten completely.
-def import_data(bot: Bot, update):
+def import_data(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     # TODO: allow uploading doc with command, not just as reply
     # only work with a doc
@@ -71,17 +72,18 @@ def import_data(bot: Bot, update):
         msg.reply_text("Backup fully imported. Welcome back! :D") # MSG_IMPORT_SUCCESS
 
 
-@run_async
 @user_admin
-def export_data(bot: Bot, update: Update):
+@typing_action
+def export_data(update: Update, context: CallbackContext):
+    bot = context.bot
     with BytesIO(str.encode(helper.export_data(update.effective_chat, bot))) as output:
         output.name = str(update.effective_chat.id) + ".toml"
         update.effective_message.reply_document(document=output, filename=str(update.effective_chat.id) + ".toml",
                                                 caption="Here you go.") # MSG_EXPORT_SUCCESS
 
 
-
 __mod_name__ = "Backups"
+
 
 def __help__(update: Update) -> str:
     return "\n*Admin only:*\n" \
@@ -89,8 +91,9 @@ def __help__(update: Update) -> str:
            that files/photos can't be imported due to telegram restrictions.\n" \
            " - /export: !!! This isn't a command yet, but should be coming soon!" # HELP
 
+
 IMPORT_HANDLER = CommandHandler("import", import_data)
-EXPORT_HANDLER = CommandHandler("export", export_data)
+EXPORT_HANDLER = CommandHandler("export", export_data, run_async=True)
 
 dispatcher.add_handler(IMPORT_HANDLER)
 dispatcher.add_handler(EXPORT_HANDLER)

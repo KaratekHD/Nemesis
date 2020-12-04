@@ -26,24 +26,34 @@ from tg_bot.strings.string_helper import get_string
 module = "init"
 
 # enable logging
-logging.basicConfig(
-    format="[%(asctime)s | %(levelname)s] %(message)s",
-    level=logging.INFO)
+
 
 LOGGER = logging.getLogger(__name__)
 
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
     DEFAULT_LANG = os.environ.get('DEFAULT_LANG')
+    DEBUG = os.environ.get('DEBUG', None)
 else:
     from tg_bot.config import Development as Config
     DEFAULT_LANG = Config.DEFAULT_LANG
+    DEBUG = Config.DEBUG
+
+LOGFORMAT = "[%(asctime)s | %(levelname)s] %(message)s"
+if DEBUG:
+    logging.basicConfig(
+        format=LOGFORMAT,
+        level=logging.DEBUG)
+else:
+    logging.basicConfig(
+        format=LOGFORMAT,
+        level=logging.INFO)
+
 
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     LOGGER.error(get_string(module, "ERR_INVALID_PYTHON_VERSION", DEFAULT_LANG)) # ERR_INVALID_PYTHON_VERSION
     quit(1)
-
 
 
 if ENV:
@@ -144,7 +154,7 @@ SUDO_USERS.add(CO_OWNER_ID)
 LOGGER.info("Owner: %s", OWNER_ID )
 LOGGER.info("Co-Owner: %s", CO_OWNER_ID )
 
-updater = tg.Updater(TOKEN, workers=WORKERS)
+updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 
 dispatcher = updater.dispatcher
 

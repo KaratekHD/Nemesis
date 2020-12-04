@@ -20,16 +20,18 @@ from pprint import pprint
 
 import requests
 from telegram import Update, Bot
-from telegram.ext import CommandHandler
+from telegram.ext import CommandHandler, CallbackContext
 
 from tg_bot import dispatcher
 
 # Open API key
+from tg_bot.modules.disable import DisableAbleCommandHandler
+
 API_KEY = "6ae0c3a0-afdc-4532-a810-82ded0054236"
 URL = "http://services.gingersoftware.com/Ginger/correct/json/GingerTheText"
 
 
-def translate(bot: Bot, update: Update):
+def translate(update: Update, context: CallbackContext):
     if update.effective_message.reply_to_message:
         msg = update.effective_message.reply_to_message
 
@@ -67,9 +69,9 @@ def translate(bot: Bot, update: Update):
 def __help__(update: Update) -> str:
     return "\n - /t: while replying to a message, will reply with a grammar corrected version (English Only!)"
 
-__mod_name__ = "Translator"
+__mod_name__ = "Grammar"
 
 
-TRANSLATE_HANDLER = CommandHandler('t', translate)
+TRANSLATE_HANDLER = DisableAbleCommandHandler('t', translate, run_async=True)
 
 dispatcher.add_handler(TRANSLATE_HANDLER)

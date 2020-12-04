@@ -25,7 +25,7 @@ FILENAME = __name__.rsplit(".", 1)[-1]
 if is_module_loaded(FILENAME):
     from telegram import Bot, Update, ParseMode, Message, Chat
     from telegram.error import BadRequest, Unauthorized
-    from telegram.ext import CommandHandler, run_async
+    from telegram.ext import CommandHandler, run_async, CallbackContext
     from telegram.utils.helpers import escape_markdown
 
     from tg_bot import dispatcher, LOGGER
@@ -35,8 +35,9 @@ if is_module_loaded(FILENAME):
 
     def loggable(func):
         @wraps(func)
-        def log_action(bot: Bot, update: Update, *args, **kwargs):
-            result = func(bot, update, *args, **kwargs)
+        def log_action(update: Update, context: CallbackContext, *args, **kwargs):
+            bot = context.bot
+            result = func(update, context, *args, **kwargs)
             chat = update.effective_chat  # type: Optional[Chat]
             message = update.effective_message  # type: Optional[Message]
             if result:
@@ -72,7 +73,6 @@ if is_module_loaded(FILENAME):
                 bot.send_message(log_chat_id, result + "\n\nFormatting has been disabled due to an unexpected error.") # ERR_IN_FORMATING
 
 
-    @run_async
     @user_admin
     def logging(bot: Bot, update: Update):
         message = update.effective_message  # type: Optional[Message]
@@ -90,7 +90,6 @@ if is_module_loaded(FILENAME):
             message.reply_text("No log channel has been set for this group!") # NO_LOG
 
 
-    @run_async
     @user_admin
     def setlog(bot: Bot, update: Update):
         message = update.effective_message  # type: Optional[Message]
@@ -127,7 +126,6 @@ if is_module_loaded(FILENAME):
                                " - forward the /setlog to the group\n") # STEPS
 
 
-    @run_async
     @user_admin
     def unsetlog(bot: Bot, update: Update):
         message = update.effective_message  # type: Optional[Message]
@@ -172,9 +170,9 @@ if is_module_loaded(FILENAME):
 
     __mod_name__ = "Log Channels" # MODULE_NAME
 
-    LOG_HANDLER = CommandHandler("logchannel", logging)
-    SET_LOG_HANDLER = CommandHandler("setlog", setlog)
-    UNSET_LOG_HANDLER = CommandHandler("unsetlog", unsetlog)
+    LOG_HANDLER = CommandHandler("logchannel", logging, run_async=True)
+    SET_LOG_HANDLER = CommandHandler("setlog", setlog, run_async=True)
+    UNSET_LOG_HANDLER = CommandHandler("unsetlog", unsetlog, run_async=True)
 
     dispatcher.add_handler(LOG_HANDLER)
     dispatcher.add_handler(SET_LOG_HANDLER)

@@ -18,9 +18,9 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Message, Chat, Update, User
 from telegram.error import BadRequest
-from telegram.ext import run_async, CommandHandler, Filters
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, BAN_STICKER, LOGGER
@@ -34,12 +34,13 @@ import tg_bot.modules.sql.lang_sql as lang
 from tg_bot.strings.string_helper import get_string
 
 
-@run_async
 @bot_admin
 @can_restrict
 @user_admin
 @loggable
-def ban(bot: Bot, update: Update, args: List[str]) -> str:
+def ban(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
@@ -94,12 +95,13 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     return ""
 
 
-@run_async
 @bot_admin
 @can_restrict
 @user_admin
 @loggable
-def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
+def temp_ban(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
@@ -172,12 +174,13 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     return ""
 
 
-@run_async
 @bot_admin
 @can_restrict
 @user_admin
 @loggable
-def kick(bot: Bot, update: Update, args: List[str]) -> str:
+def kick(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
@@ -223,10 +226,11 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
     return ""
 
 
-@run_async
 @bot_admin
 @can_restrict
-def kickme(bot: Bot, update: Update):
+def kickme(update: Update, context: CallbackContext):
+    args = context.args
+    bot = context.bot
     user_id = update.effective_message.from_user.id
     if is_user_admin(update.effective_chat, user_id):
         update.effective_message.reply_text(get_string("bans", "ERR_KICKME_TARGET_IS_ADMIN", lang.get_lang(update.effective_chat.id))) # ERR_KICKME_TARGET_IS_ADMIN
@@ -239,12 +243,13 @@ def kickme(bot: Bot, update: Update):
         update.effective_message.reply_text(get_string("bans", "ERR_KICKME_GENERAL", lang.get_lang(update.effective_chat.id)))
 
 
-@run_async
 @bot_admin
 @can_restrict
 @user_admin
 @loggable
-def unban(bot: Bot, update: Update, args: List[str]) -> str:
+def unban(update: Update, context: CallbackContext) -> str:
+    args = context.args
+    bot = context.bot
     message = update.effective_message  # type: Optional[Message]
     user = update.effective_user  # type: Optional[User]
     chat = update.effective_chat  # type: Optional[Chat]
@@ -290,11 +295,11 @@ def __help__(update: Update) -> str:
 
 __mod_name__ = "Bans"
 
-BAN_HANDLER = CommandHandler("ban", ban, pass_args=True, filters=Filters.group)
-TEMPBAN_HANDLER = CommandHandler(["tban", "tempban"], temp_ban, pass_args=True, filters=Filters.group)
-KICK_HANDLER = CommandHandler("kick", kick, pass_args=True, filters=Filters.group)
-UNBAN_HANDLER = CommandHandler("unban", unban, pass_args=True, filters=Filters.group)
-KICKME_HANDLER = DisableAbleCommandHandler("kickme", kickme, filters=Filters.group)
+BAN_HANDLER = CommandHandler("ban", ban, filters=Filters.group, run_async=True)
+TEMPBAN_HANDLER = CommandHandler(["tban", "tempban"], temp_ban,filters=Filters.group, run_async=True)
+KICK_HANDLER = CommandHandler("kick", kick, filters=Filters.group, run_async=True)
+UNBAN_HANDLER = CommandHandler("unban", unban, filters=Filters.group, run_async=True)
+KICKME_HANDLER = DisableAbleCommandHandler("kickme", kickme, filters=Filters.group, run_async=True)
 
 dispatcher.add_handler(BAN_HANDLER)
 dispatcher.add_handler(TEMPBAN_HANDLER)

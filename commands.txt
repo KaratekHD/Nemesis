@@ -1,0 +1,90 @@
+start - Starts the bot
+help - Get a list of commands
+settings - Manage this chats settings, as well as yours
+about - Display version information, credits and licenses
+rules - Get this chat's rules
+setrules - Set this chat's rules
+clearrules - Clear this chat's rules
+runs - Check whether the bot is running
+slap - 'Slaps' another user
+ip - Get the bot's ip (Staff only!)
+id - Get a user's or group's Telegram ID
+info - Display information about a user
+echo - Make the Bot say something (Staff only!)
+gdpr - Delete your personal information from the bot's database
+markdownhelp - Send some help for markdown's syntax
+stats - Display some statistics about the bot's usage (Staff only!)
+promote - Promote an user
+demote - Demote an user
+pin - Pin a message to the top of the group
+unpin - remove the pinned message
+invitelink - Get the group's invitelink
+adminlist - Display a list containing all admins in a chat
+afk - Mark yourself as away from keyboard (AFK)
+del - Delete a message
+purge - Delete a bunch of messages
+export - Exports your current chat settings to a .toml file
+import - Import a .json file from Rose's export feature
+ban - Bans an user
+kickme - Try it out!
+kick - Kicks an user
+tempban - Bans an user for a specific period of time
+unban - Reverts the ban of an user
+filter - Add a new filter
+filters - List all filters in the current group
+stop - Delete a filter
+broadcast - Broadcast a message to all chats the bot is in (Staff only!)
+chatlist - Get a file containing all chats the bot is in (Staff only!)
+lang - Set this chat's language
+t - Correct grammar in replied message (english only)
+setflood - Set the antiflood setting for the current chat
+flood - get the current antiflood settings
+gban - Globally ban a user (Staff only!)
+ungban - Globally unban a user (Staff only!)
+gbanlist - Get a list of all globally banned users (Staff only!)
+gbanstat - Toggle whether global bans should effect your group
+blacklist - Get all words on the current blacklist
+addblacklist - Blacklist a word
+unblacklist - Remove a word from the blacklist
+globalmute - Mutes the entire chat, so all messages not sent by admins will get instantly deleted
+kang - Save a sticker in your own stickerpack
+stickerid - Get the ID of a sticker
+getsticker - download a sticker as png
+translate - Translate a message using google translate
+welcome - Send the current welcome message
+goodbye - Send the current goodbye message
+setwelcome - Set the welcome message
+setgoodbye - Set the goodbye message
+resetwelcome - Reset the welcome message to the default value
+resetgoodbye - Reset the goodbye message to the default value
+cleanwelcome - Toggle whether the bot should delete old welcome messages
+warn - Warn an user
+resetwarn - Reset warns of an user to 0
+resetwarns - Reset warns of an user to 0
+warns - List all warns of an user
+addwarn - Add a warn filter
+nowarn - Remove a warn filter
+stopwarn - Remove a warn filter
+warnlist - List all warn filters
+warnfilters - List all warn filters
+warnlimit - Set the maximum number of warns an user can have before it gets punished
+strongwarn - Toggle whether reaching the warnlimit should ban or just kick the user
+mute - Mute an user
+unmute - Unmute an user
+tempmute - Mute an user temporary
+report - Report a message
+get - Get a note
+save - Save a note
+clear - Delete a note
+rss -  shows the link's data and the last entry, for testing purposes.
+addrss - add an RSS link to the subscriptions.
+listrss - shows the list of rss feeds that the chat is currently subscribed to.
+removerss - removes the RSS link from the subscriptions.
+me  - will get your or another user's info
+setme - will set your info
+bio - will get your or another user's bio. This cannot be set by yourself.
+setbio - while replying, will save another user's bio
+locktypes - a list of possible locktypes
+lock - lock items of a certain type (not available in private)
+unlock - unlock items of a certain type (not available in private)
+locks - the current list of locks in this chat.
