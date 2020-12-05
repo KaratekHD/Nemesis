@@ -18,10 +18,10 @@
 
 from telegram import Update, ParseMode
 from telegram.error import BadRequest
-from telegram.ext import CallbackContext, Filters, run_async, MessageHandler
+from telegram.ext import CallbackContext, Filters
 
 from tg_bot import dispatcher, LOGGER
-from tg_bot.modules.disable import DisableAbleMessageHandler, DisableAbleCommandHandler
+from tg_bot.modules.disable import DisableAbleMessageHandler
 import tg_bot.modules.sql.reputation_sql as sql
 
 
