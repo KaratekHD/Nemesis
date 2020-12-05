@@ -68,11 +68,11 @@ def __help__(update: Update) -> str:
            " - /purge <integer X>: deletes the replied message, and X messages following it."
 
 
-INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)\+"), increase, friendly="increase",
+INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex(r"^\+$"), increase, friendly="increase",
                                                      run_async=True)
 dispatcher.add_handler(INCREASE_MESSAGE_HANDLER)
 
-INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)\-"), decrease, friendly="decrease",
+INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex(r"^\-$"), decrease, friendly="decrease",
                                                      run_async=True)
 dispatcher.add_handler(INCREASE_MESSAGE_HANDLER)
 
