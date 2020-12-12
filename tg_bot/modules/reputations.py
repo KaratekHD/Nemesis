@@ -18,19 +18,30 @@
 
 from telegram import Update, ParseMode
 from telegram.error import BadRequest
-from telegram.ext import CallbackContext, Filters
+from telegram.ext import CallbackContext, Filters, CommandHandler
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleMessageHandler
 import tg_bot.modules.sql.reputation_sql as sql
+import tg_bot.modules.sql.reputation_settings_sql as settings
+
 
 
 def increase(update: Update, context: CallbackContext):
     msg = update.effective_message
     user1 = update.effective_user
     chat = update.effective_chat
+    if not settings.chat_should_reputate(chat.id):
+        return
     if msg.reply_to_message:
         user2 = msg.reply_to_message.from_user
+        if not settings.user_should_reputate(user1.id):
+            msg.reply_text("You have opted out of reputations, so you are not able to change others reputation neither.")
+            return
+        if not settings.user_should_reputate(user2.id):
+            msg.reply_text(f"{user2.full_name} opted out of reputations,"
+                           f" so you are not able to change their reputation.")
+            return
         if user1.id != user2.id:
             LOGGER.debug(f"{user2.id} : {sql.get_reputation(chat.id, user2.id)}")
             sql.increase_reputation(chat.id, user2.id)
@@ -46,8 +57,17 @@ def decrease(update: Update, context: CallbackContext):
     msg = update.effective_message
     user1 = update.effective_user
     chat = update.effective_chat
+    if not settings.chat_should_reputate(chat.id):
+        return
     if msg.reply_to_message:
         user2 = msg.reply_to_message.from_user
+        if not settings.user_should_reputate(user1.id):
+            msg.reply_text("You have opted out of reputations, so you are not able to change others reputation neither.")
+            return
+        if not settings.user_should_reputate(user2.id):
+            msg.reply_text(f"{user2.full_name} opted out of reputations,"
+                           f" so you are not able to change their reputation.")
+            return
         if user1.id != user2.id:
             LOGGER.debug(f"{user2.id} : {sql.get_reputation(chat.id, user2.id)}")
             sql.decrease_reputation(chat.id, user2.id)
@@ -61,20 +81,64 @@ def decrease(update: Update, context: CallbackContext):
             sql.set_latest_rep_message(chat.id, new_msg)
 
 
+def reputation(update: Update, context: CallbackContext):
+    args = context.args
+    chat = update.effective_chat  # type: Optional[Chat]
+    msg = update.effective_message  # type: Optional[Message]
+
+    if chat.type == chat.PRIVATE:
+        if len(args) >= 1:
+            if args[0] in ("yes", "on"):
+                settings.set_user_setting(chat.id, True)
+                msg.reply_text("Turned on reputation!")
+
+            elif args[0] in ("no", "off"):
+                settings.set_user_setting(chat.id, False)
+                msg.reply_text("Turned off reputation!")
+        else:
+            msg.reply_text("Your current reputation preference is: `{}`".format(settings.user_should_reputate(chat.id)),
+                           parse_mode=ParseMode.MARKDOWN)
+
+    else:
+        if len(args) >= 1:
+            if args[0] in ("yes", "on"):
+                settings.set_chat_setting(chat.id, True)
+                msg.reply_text("Turned on reputation! Users will now be able to vote on each others messages, except "
+                               "if they opted out.")
+
+            elif args[0] in ("no", "off"):
+                settings.set_chat_setting(chat.id, False)
+                msg.reply_text("Turned off reputation!")
+        else:
+            msg.reply_text("This chat's current setting is: `{}`".format(settings.chat_should_reputate(chat.id)),
+                           parse_mode=ParseMode.MARKDOWN)
+
+
 def __help__(update: Update) -> str:
-    return "\n*Admin only:*\n" \
-           "- /del: deletes the message you replied to\n" \
-           " - /purge: deletes all messages between this and the replied to message.\n" \
-           " - /purge <integer X>: deletes the replied message, and X messages following it."
+    return "" \
+           " - /reputation: manage this chats reputation settings, as well as yours.\n" \
+           " - +: Increase someones reputation.\n" \
+           " - -: Decrease someones reputation."
+
+
+def __chat_settings__(chat_id, user_id):
+    return "Reputations is enabled in this chat, change with /reputation: `{}`".format(
+       settings.chat_should_reputate(chat_id))
+
+
+def __user_settings__(user_id):
+    return "Your current reputations setting is `{}`.\nChange this with /reputation in PM.".format(
+        settings.user_should_reputate(user_id))
 
 
 INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex(r"^\+$"), increase, friendly="increase",
                                                      run_async=True)
 dispatcher.add_handler(INCREASE_MESSAGE_HANDLER)
-
 INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex(r"^\-$"), decrease, friendly="decrease",
                                                      run_async=True)
 dispatcher.add_handler(INCREASE_MESSAGE_HANDLER)
+SETTINGS_HANDLER = CommandHandler("reputation", reputation, run_async=True)
+dispatcher.add_handler(SETTINGS_HANDLER)
 
 
 def __migrate__(old_chat_id, new_chat_id):

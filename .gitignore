@@ -9,3 +9,4 @@
 /tg_bot/config.toml
 /tg_bot/modules/mail.py
 /tg_bot/misc/
+/tg_bot/modules/spotify.py

@@ -65,6 +65,11 @@ def get_latest_rep_message(chat_id):
 
 
 class Reputation(BASE):
+    # I know this  is messed up.
+    # The chat id is stored in the column 'user_id', and the chat id in 'user_id'.
+    # But I am to lazy to fix this, as this is already rolled out and fixing this would
+    # require to migrate existing entries.
+    # And this works, so why should I touch it?
     __tablename__ = "reputations"
 
     user_id = Column(BigInteger, primary_key=True)

@@ -350,6 +350,7 @@ def get_settings(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
+    bot = context.bot
     args = msg.text.split(None, 1)
 
     # ONLY send settings in PM
