@@ -22,12 +22,12 @@ import sys
 import telegram.ext as tg
 from tg_bot.strings.string_helper import get_string
 
+VERSION = 2.1
+
 # Module name
 module = "init"
 
 # enable logging
-
-
 LOGGER = logging.getLogger(__name__)
 
 ENV = bool(os.environ.get('ENV', False))
@@ -49,7 +49,11 @@ else:
         format=LOGFORMAT,
         level=logging.INFO)
 
-
+LOGGER.info(f"Nemesis v{VERSION}\n"
+            f"This program is free software: you can redistribute it and/or modify\n"
+            f"it under the terms of the GNU General Public License as published by\n"
+            f"the Free Software Foundation, either version 3 of the License, or\n"
+            f"(at your option) any later version.")
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     LOGGER.error(get_string(module, "ERR_INVALID_PYTHON_VERSION", DEFAULT_LANG)) # ERR_INVALID_PYTHON_VERSION
@@ -152,7 +156,6 @@ else:
 SUDO_USERS.add(OWNER_ID)
 SUDO_USERS.add(CO_OWNER_ID)
 LOGGER.info("Owner: %s", OWNER_ID )
-LOGGER.info("Co-Owner: %s", CO_OWNER_ID )
 
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 

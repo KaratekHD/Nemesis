@@ -30,7 +30,7 @@ from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 from telegram.utils.helpers import escape_markdown
 
 from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
-    ALLOW_EXCL, DEFAULT_LANG
+    ALLOW_EXCL, DEFAULT_LANG, VERSION
 
 from tg_bot.strings.string_helper import  get_string
 
@@ -368,6 +368,7 @@ def get_settings(update: Update, context: CallbackContext):
     else:
         send_settings(chat.id, user.id, True)
 
+
 def migrate_chats(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
     if msg.migrate_to_chat_id:
@@ -412,7 +413,7 @@ def about(update: Update, context: CallbackContext):
                                         " - [Severus Snape](https://t.me/GenosseSeverus) - Co-Owner\n" \
                                         " - [Luna Loony](https://t.me/Luna_loony) - Admin\n"
 
-    update.effective_message.reply_text("*Nemesis - Powerful open-source group manager*\n"
+    update.effective_message.reply_text("*Nemesis v{} - Powerful open-source group manager*\n"
                                         "Copyright (C) 2017 - 2019 Paul Larsen\n"
                                         "Copyright (C) 2019 - 2020 KaratekHD\n\n"
                                         "This program is free software: you can redistribute it and/or modify "
@@ -428,7 +429,7 @@ def about(update: Update, context: CallbackContext):
                                         "*Translation*\n"
                                         "{}"
                                         "*Production*\n"
-                                        "{}".format(DEVELOPMENT, TRANSLATION, PRODUCTION), parse_mode=ParseMode.MARKDOWN)
+                                        "{}".format(VERSION, DEVELOPMENT, TRANSLATION, PRODUCTION), parse_mode=ParseMode.MARKDOWN)
 
 
 def load_api():
