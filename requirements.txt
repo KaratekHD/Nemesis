@@ -6,11 +6,11 @@ python-telegram-bot==13.1
 psycopg2-binary
 feedparser
 toml
-googletrans
+googletrans==4.0.0-rc1
 pillow
 alphabet-detector
 flask
 flask-restplus
-Werkzeug==0.16.1
+Werkzeug==1.0.1
 flask-httpauth
 schedule
