@@ -14,18 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from flask_restplus import fields
 
-from flask import Flask
-from flask_restplus import Api
-from tg_bot.restapi.resources.basic import basic_api
-from tg_bot.restapi.resources.chats import chats_api
-import tg_bot.restapi.resources.management as management
-import tg_bot.restapi.resources.modules.admin as admin
 
-app = Flask("Nemesis Telegram Bot")
-api = Api(app, version="2.0 Development Preview 1", title="Nemesis Telegram Bot")
-
-api.add_namespace(basic_api)
-api.add_namespace(chats_api)
-api.add_namespace(management.api)
-api.add_namespace(admin.api)
+def create_chat_model(api):
+    model = api.model('Chats', {
+        'id': fields.String(description="unique group identifier", required=True),
+        'name': fields.String(description="group name", required=True)
+    })
+    return model

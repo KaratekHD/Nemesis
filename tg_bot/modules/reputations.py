@@ -133,10 +133,18 @@ def __user_settings__(user_id):
 
 INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex(r"^\+$"), increase, friendly="increase",
                                                      run_async=True)
+
 dispatcher.add_handler(INCREASE_MESSAGE_HANDLER)
-INCREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex(r"^\-$"), decrease, friendly="decrease",
+DECREASE_MESSAGE_HANDLER = DisableAbleMessageHandler(Filters.regex(r"^\-$"), decrease, friendly="decrease",
                                                      run_async=True)
-dispatcher.add_handler(INCREASE_MESSAGE_HANDLER)
+dispatcher.add_handler(DECREASE_MESSAGE_HANDLER)
+INCREASE_MESSAGE_HANDLER2 = DisableAbleMessageHandler(Filters.regex(r"^\👍$"), increase, friendly="increase",
+                                                     run_async=True)
+
+dispatcher.add_handler(INCREASE_MESSAGE_HANDLER2)
+DECREASE_MESSAGE_HANDLER2 = DisableAbleMessageHandler(Filters.regex(r"^\👎$"), decrease, friendly="decrease",
+                                                     run_async=True)
+dispatcher.add_handler(DECREASE_MESSAGE_HANDLER2)
 SETTINGS_HANDLER = CommandHandler("reputation", reputation, run_async=True)
 dispatcher.add_handler(SETTINGS_HANDLER)
 

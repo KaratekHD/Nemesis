@@ -15,17 +15,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import Flask
-from flask_restplus import Api
-from tg_bot.restapi.resources.basic import basic_api
-from tg_bot.restapi.resources.chats import chats_api
-import tg_bot.restapi.resources.management as management
-import tg_bot.restapi.resources.modules.admin as admin
+from flask_restplus import fields
 
-app = Flask("Nemesis Telegram Bot")
-api = Api(app, version="2.0 Development Preview 1", title="Nemesis Telegram Bot")
+from tg_bot.restapi.models import users
 
-api.add_namespace(basic_api)
-api.add_namespace(chats_api)
-api.add_namespace(management.api)
-api.add_namespace(admin.api)
+
+def create_chat_model(api):
+    model = api.model("Chat", {
+        "id": fields.Integer(description="Telegram ID of group", required=True),
+        "name": fields.String(description="Name of group", required=True),
+        "is_muted": fields.Boolean(description="Global mute status", required=True),
+        # "link": fields.String(description="Convenience property. If username is available, returns a t.me link of the user.", required=False),
+        "admins": fields.Nested(users.create_user_model(api), description="Administrators", required=False)
+    })
+    return model

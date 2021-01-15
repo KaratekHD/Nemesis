@@ -170,6 +170,9 @@ def kang(update, context):
                 print(e)
 
         else:
+            update.effective_message.reply_text("Kanging animated stickers is not supported, see"
+                                                " [#57](https://github.com/KaratekHD/Nemesis/issues/57)", parse_mode=ParseMode.MARKDOWN)
+            return
             packname = "animated" + str(user.id) + "_by_" + context.bot.username
             packname_found = 0
             max_stickers = 50
@@ -304,7 +307,7 @@ def kang(update, context):
             elif e.message == "Invalid sticker emojis":
                 msg.reply_text("Invalid emoji(s).")
             elif e.message == "Stickers_too_much":
-                msg.reply_text("Max packsize reached. Press F to pay respecc.")
+                msg.reply_text("Max packsize reached. Press F to pay respect.")
             elif e.message == "Internal Server Error: sticker set not found (500)":
                 msg.reply_text(
                     "Sticker successfully added to [pack](t.me/addstickers/%s)"
@@ -466,6 +469,8 @@ def __help__(update: Update) -> str:
         """
 
 __mod_name__ = "Stickers"
+
+
 KANG_HANDLER = DisableAbleCommandHandler("kang", kang, pass_args=True, admin_ok=True, run_async=True)
 STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid, run_async=True)
 GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker, run_async=True)
