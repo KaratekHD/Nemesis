@@ -88,6 +88,13 @@ def ensure_bot_in_db():
         SESSION.commit()
 
 
+def get_chatname(chat_id):
+    try:
+        return SESSION.query(Chats).get(str(chat_id)).chat_name
+    finally:
+        SESSION.close()
+
+
 def update_user(user_id, username, chat_id=None, chat_name=None):
     with INSERTION_LOCK:
         user = SESSION.query(Users).get(user_id)
@@ -141,9 +148,23 @@ def get_chat_members(chat_id):
         SESSION.close()
 
 
+def get_chats_by_member(user_id):
+    try:
+        return SESSION.query(ChatMembers).filter(ChatMembers.user == str(user_id)).all()
+    finally:
+        SESSION.close()
+
+
 def get_all_chats():
     try:
         return SESSION.query(Chats).all()
+    finally:
+        SESSION.close()
+
+
+def get_all_users():
+    try:
+        return SESSION.query(Users).all()
     finally:
         SESSION.close()
 

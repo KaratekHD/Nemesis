@@ -53,7 +53,6 @@ def toggle_mute(update: Update, context: CallbackContext) -> str:
 
 @user_not_admin
 def on_message(update: Update, context: CallbackContext):
-    LOGGER.debug("Yeet!")
     if mute_sql.get_muted(update.effective_chat.id):
         update.effective_message.delete()
 

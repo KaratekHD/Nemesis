@@ -37,6 +37,7 @@ class Api(BASE):
 
 Api.__table__.create(checkfirst=True)
 
+
 def set_key(user_id, key):
     user = SESSION.query(Api).get(user_id)
     if not user:
@@ -49,10 +50,10 @@ def set_key(user_id, key):
 
 
 def verify_key(key):
-    hash = SESSION.query(Api).get(Api.key == str(key))
-    ret = "null"
-    if hash:
-        ret = hash.user_id
+    result = SESSION.query(Api).filter(Api.key == str(key)).scalar()
+    ret = None
+    if result:
+        ret = result.user_id
     SESSION.close()
     return ret
 

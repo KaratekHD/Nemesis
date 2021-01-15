@@ -14,32 +14,9 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from functools import wraps
-
-from flask import request, abort
 
 import tg_bot.modules.sql.api_sql as sql
 
 
-def token_required(view_function):
-    @wraps(view_function)
-    # the new, post-decoration function. Note *args and **kwargs here.
-    def decorated_function(*args, **kwargs):
-        if request.args.get('key') and request.args.get('key') == "test":
-            return view_function(*args, **kwargs)
-        else:
-            abort(401)
-    return decorated_function
-
-def authenticate(username, password):
-    if username and password:
-        key = sql.get_key(username)
-        if key != "null":
-            if password is key:
-                return True
-            else:
-                return False
-        else:
-            return False
-    else:
-        return False
+def verify_auth_token(token):
+    sql.verify_key(token)
