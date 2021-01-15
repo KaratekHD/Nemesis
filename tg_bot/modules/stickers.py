@@ -466,6 +466,8 @@ def __help__(update: Update) -> str:
         """
 
 __mod_name__ = "Stickers"
+
+
 KANG_HANDLER = DisableAbleCommandHandler("kang", kang, pass_args=True, admin_ok=True, run_async=True)
 STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid, run_async=True)
 GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker, run_async=True)
