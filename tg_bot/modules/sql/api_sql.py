@@ -15,10 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import threading
 
 from sqlalchemy import Column, String, UnicodeText, func, distinct, Integer
-from werkzeug.security import generate_password_hash, check_password_hash
 from tg_bot.modules.sql import SESSION, BASE
 
 
