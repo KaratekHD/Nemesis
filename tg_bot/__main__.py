@@ -40,7 +40,6 @@ from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
-import tg_bot.restapi as restapi
 from multiprocessing import Process
 
 
@@ -434,6 +433,7 @@ def about(update: Update, context: CallbackContext):
 
 def load_api():
         if is_module_loaded("rest"):
+            import tg_bot.restapi as restapi
             LOGGER.debug("Loading API...")
             LOGGER.warning("BE CAREFULLY!")
             LOGGER.warning("Rest API is still in early development and considered unstable. Only enable it if you "
