@@ -22,7 +22,7 @@ import sys
 import telegram.ext as tg
 from tg_bot.strings.string_helper import get_string
 
-VERSION = 2.1
+VERSION = "2.1.1"
 
 # Module name
 module = "init"
