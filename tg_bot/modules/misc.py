@@ -45,7 +45,7 @@ GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
 
 
 def runs(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(get_random_string("runs", lang.get_lang(update.effective_chat.id)))
+    update.effective_message.reply_text(get_random_string("runs", "en"))
 
 
 def nice(update: Update, context: CallbackContext):

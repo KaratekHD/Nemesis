@@ -10,7 +10,10 @@
   "9" : "{user1} grabs up a {item} and {hits} {user2} with it.",
   "10" : "{user1} ties {user2} to a chair and {throws} a {item} at them.",
   "11" : "{user1} gave a friendly push to help {user2} learn to swim in lava.",
-  "12" : "{user1} takes a billiardtable and starts hiting {user2}.",
+  "12" : "{user1} takes a billiardtable and starts hitting {user2}.",
   "13" : "{user1} rips out a tree and throws it at {user2}.",
-  "14" : "{user1} throws a steak at {user2}."
+  "14" : "{user1} throws a steak at {user2}.",
+  "15" : "{user1} tortures {user2} using the cruciatus curse.",
+  "16" : "{user1} tortures {user2} using Rictusempra.",
+  "17" : "{user1} tortures {user2} using Sectumsempra."
 }
