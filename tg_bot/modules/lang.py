@@ -23,6 +23,7 @@ from telegram.ext import run_async, CommandHandler, CallbackContext
 from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
 import tg_bot.modules.sql.lang_sql as sql
+from tg_bot.strings.string_helper import get_string
 
 
 @bot_admin
@@ -34,30 +35,31 @@ def setlang(update: Update, context: CallbackContext):
     args = raw_text.split(None, 1)  # use python's maxsplit to separate cmd and args
     if len(args) == 2:
         txt = args[1]
-        if txt == "de":
-            sql.set_lang(chat_id, "de")
-            msg.reply_text("Die Sprache wurde auf 'Deutsch' gesetzt.")
+        SUPPORTED_LANGUAGES = ["de", "en"]
+        if txt not in SUPPORTED_LANGUAGES:
+            msg.reply_text(get_string("lang", "ERR_UNKNOWN_LANG", sql.get_lang(chat_id))) # ERR_UNKNOWN_LANG
         else:
-            sql.set_lang(chat_id, "en")
-            msg.reply_text("Set language to English.")
+            sql.set_lang(chat_id, txt)
+            msg.reply_text(get_string("lang", "LANG_SET", sql.get_lang(chat_id))) # LANG_SET
+
     else:
-        msg.reply_text("You didn't tell me what language to set! Use /lang <de or en>!")
+        msg.reply_text(get_string("lang", "ERR_NO_LANG", sql.get_lang(chat_id))) # ERR_NO_LANG
 
 
 __mod_name__ = "Languages"
 
 
 def __chat_settings__(chat_id):
-    return "Language in this chat, change with /lang: `{}`".format(sql.get_lang(chat_id))
+    return get_string("lang", "CHAT_SETTINGS", sql.get_lang(chat_id)).format(sql.get_lang(chat_id)) # CHAT_SETTINGS
 
 
 def __user_settings__(user_id):
-    return "Your current language is `{}`.\nChange this with /lang in PM.".format(
-        sql.get_lang(user_id))
+    return get_string("lang", "USER_SETTINGS", sql.get_lang(user_id)).format(
+        sql.get_lang(user_id)) # USER_SETTINGS
 
 
 def __help__(update: Update) -> str:
-    return "\nTest\n\nThis is a test."
+    return get_string("lang", "HELP", sql.get_lang(update.effective_chat.id)) # HELP
 
 
 LANG_HANDLER = CommandHandler("lang", setlang, pass_args=True, run_async=True)
