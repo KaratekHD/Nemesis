@@ -17,19 +17,21 @@
 
 from googletrans import Translator
 from telegram import Update
-from telegram.ext import CallbackContext, run_async, CommandHandler
-from tg_bot import dispatcher, LOGGER
+from telegram.ext import CallbackContext, CommandHandler
+from tg_bot import dispatcher
+from tg_bot.strings.string_helper import get_string
+import tg_bot.modules.sql.lang_sql as lang
 
 
 def translate(update: Update, context: CallbackContext):
     msg = update.effective_message
     args = context.args
     if not args:
-        msg.reply_text("Please tell me what language to translate to!")
+        msg.reply_text(get_string("googletranslate", "ERR_NO_LANG", update.effective_chat.id)) # ERR_NO_LANG
         return
     text = update.effective_message.reply_to_message
     if not text:
-        msg.reply_text("Please refer to a message.")
+        msg.reply_text(get_string("googletranslate", "ERR_NO_MSG", update.effective_chat.id)) # ERR_NO_MSG
         return
     try :
         translator = Translator()
@@ -48,6 +50,6 @@ dispatcher.add_handler(TRANSLATION_HANDLER)
 __mod_name__ = "Translation"
 
 def __help__(update: Update) -> str:
-    return "Helpstring here"
+    return get_string("googletranslate", "HELP", update.effective_chat.id) # HELP
 
 
