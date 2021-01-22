@@ -25,6 +25,8 @@ from telegram.utils.helpers import escape_markdown
 from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.handlers import CMD_STARTERS
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
+from tg_bot.strings.string_helper import get_string
+import tg_bot.modules.sql.lang_sql as lang
 
 FILENAME = __name__.rsplit(".", 1)[-1]
 
@@ -125,13 +127,13 @@ if is_module_loaded(FILENAME):
 
             if disable_cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 sql.disable_command(chat.id, disable_cmd)
-                update.effective_message.reply_text("Disabled the use of `{}`".format(disable_cmd),
+                update.effective_message.reply_text(get_string("disable", "DISABLED_COMMAND", lang.get_lang(update.effective_chat.id)).format(disable_cmd),
                                                     parse_mode=ParseMode.MARKDOWN) # DISABLED_COMMAND
             else:
-                update.effective_message.reply_text("That command can't be disabled") # ERR_INVALID_COMMAND
+                update.effective_message.reply_text(get_string("disable", "ERR_INVALID_COMMAND", lang.get_lang(update.effective_chat.id))) # ERR_INVALID_COMMAND
 
         else:
-            update.effective_message.reply_text("What should I disable?") # ERR_NO_COMMAND
+            update.effective_message.reply_text(get_string("disable", "ERR_NO_COMMAND", lang.get_lang(update.effective_chat.id))) # ERR_NO_COMMAND
 
 
     @user_admin
@@ -144,13 +146,13 @@ if is_module_loaded(FILENAME):
                 enable_cmd = enable_cmd[1:]
 
             if sql.enable_command(chat.id, enable_cmd):
-                update.effective_message.reply_text("Enabled the use of `{}`".format(enable_cmd),
+                update.effective_message.reply_text(get_string("disable", "ENABLED_COMMAND", lang.get_lang(update.effective_chat.id)).format(enable_cmd),
                                                     parse_mode=ParseMode.MARKDOWN) # ENABLED_COMMAND
             else:
-                update.effective_message.reply_text("Is that even disabled?") # ERR_NOT_DISABLED
+                update.effective_message.reply_text(get_string("disable", "ERR_NOT_DISABLED", lang.get_lang(update.effective_chat.id))) # ERR_NOT_DISABLED
 
         else:
-            update.effective_message.reply_text("What should I enable?") # ERR_NO_COMMAND_TO_ENABLE
+            update.effective_message.reply_text(get_string("disable", "ERR_NO_COMMAND_TO_ENABLE", lang.get_lang(update.effective_chat.id))) # ERR_NO_COMMAND_TO_ENABLE
 
 
     @user_admin
@@ -159,22 +161,22 @@ if is_module_loaded(FILENAME):
             result = ""
             for cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 result += " - `{}`\n".format(escape_markdown(cmd))
-            update.effective_message.reply_text("The following commands are toggleable:\n{}".format(result),
+            update.effective_message.reply_text(get_string("disable", "LIST_OF_COMMANDS", lang.get_lang(update.effective_chat.id)).format(result),
                                                 parse_mode=ParseMode.MARKDOWN) # LIST_OF_COMMANDS
         else:
-            update.effective_message.reply_text("No commands can be disabled.") # NO_CMD_AVAILABLE
+            update.effective_message.reply_text(get_string("disable", "NO_CMD_AVAILABLE", lang.get_lang(update.effective_chat.id))) # NO_CMD_AVAILABLE
 
 
     # do not async
     def build_curr_disabled(chat_id: Union[str, int]) -> str:
         disabled = sql.get_all_disabled(chat_id)
         if not disabled:
-            return "No commands are disabled!" # NO_CMD_DISABLED
+            return get_string("disable", "NO_CMD_DISABLED", lang.get_lang(chat_id.effective_chat.id)) # NO_CMD_DISABLED
 
         result = ""
         for cmd in disabled:
             result += " - `{}`\n".format(escape_markdown(cmd))
-        return "The following commands are currently restricted:\n{}".format(result) # DISABLED_COMMANDS
+        return get_string("disable", "DISABLED_COMMANDS", lang.get_lang(update.effective_chat.id)).format(result) # DISABLED_COMMANDS
 
 
     def commands(update: Update, context: CallbackContext):
@@ -197,11 +199,7 @@ if is_module_loaded(FILENAME):
     __mod_name__ = "Command disabling"
 
     def __help__(update: Update) -> str:
-        return "\n - /cmds: check the current status of disabled commands\n\n" \
-               "*Admin only:*\n" \
-               " - /enable <cmd name>: enable that command\n" \
-               " - /disable <cmd name>: disable that command\n" \
-               " - /listcmds: list all possible toggleable commands"
+        return get_string("disable", "HELP", lang.get_lang(update.effective_chat.id)) # HELP
 
     DISABLE_HANDLER = CommandHandler("disable", disable, pass_args=True, filters=Filters.group, run_async=True)
     ENABLE_HANDLER = CommandHandler("enable", enable, pass_args=True, filters=Filters.group, run_async=True)
