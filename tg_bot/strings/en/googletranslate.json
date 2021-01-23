@@ -1,0 +1,5 @@
+{
+  "ERR_NO_LANG" : "Please tell me what language to translate to!",
+  "ERR_NO_MSG" : "Please refer to a message.",
+  "HELP" : "\n/translate <language>: Translate a message."
+}
