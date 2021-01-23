@@ -43,11 +43,11 @@ def toggle_mute(update: Update, context: CallbackContext) -> str:
     is_muted = mute_sql.get_muted(chat.id)
     if is_muted:
         mute_sql.set_muted(chat.id, False)
-        msg.reply_text("This chat is now unmuted, everyone may write now!")
+        msg.reply_text(get_string("admin", "MSG_CHAT_UMUTED", lang.get_lang(chat.id))) # MSG_CHAT_UMUTED
         return f"{update.effective_user.first_name} unmuted the chat!"
     if not is_muted:
         mute_sql.set_muted(chat.id, True)
-        msg.reply_text("This chat is now muted, only administrators may write now!")
+        msg.reply_text(get_string("admin", "MSG_CHAT_MUTED", lang.get_lang(chat.id))) # MSG_CHAT_MUTED
         return f"{update.effective_user.first_name} muted the chat!"
 
 

@@ -27,6 +27,8 @@ from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.chat_action import typing_action
 from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_admin
 import tg_bot.modules.helper_funcs.backups as helper
+from tg_bot.strings.string_helper import get_string
+import tg_bot.modules.sql.lang_sql as lang
 
 
 @user_admin
@@ -42,8 +44,7 @@ def import_data(update: Update, context: CallbackContext):
         try:
             file_info = bot.get_file(msg.reply_to_message.document.file_id)
         except BadRequest:
-            msg.reply_text("Try downloading and reuploading the file as yourself before importing - this one seems "
-                           "to be iffy!") # MSG_REUPLOAD
+            msg.reply_text(get_string("backups", "MSG_REUPLOAD", lang.get_lang(update.effective_chat.id))) # MSG_REUPLOAD
             return
 
         with BytesIO() as file:
@@ -69,7 +70,7 @@ def import_data(update: Update, context: CallbackContext):
                 if i["type"] is 0:
                     helper.import_note(chat.id, i["name"], i["text"])
 
-        msg.reply_text("Backup fully imported. Welcome back! :D") # MSG_IMPORT_SUCCESS
+        msg.reply_text(get_string("backups", "MSG_IMPORT_SUCCESS", lang.get_lang(update.effective_chat.id))) # MSG_IMPORT_SUCCESS
 
 
 @user_admin
@@ -86,10 +87,7 @@ __mod_name__ = "Backups"
 
 
 def __help__(update: Update) -> str:
-    return "\n*Admin only:*\n" \
-           " - /import: reply to a group butler backup file to import as much as possible, making the transfer super simple! Note \
-           that files/photos can't be imported due to telegram restrictions.\n" \
-           " - /export: !!! This isn't a command yet, but should be coming soon!" # HELP
+    return get_string("backups", "HELP", lang.get_lang(update.effective_chat.id)) # HELP
 
 
 IMPORT_HANDLER = CommandHandler("import", import_data)

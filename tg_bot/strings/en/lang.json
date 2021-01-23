@@ -1,0 +1,8 @@
+{
+  "ERR_UNKNOWN_LANG": "Unsupported language!",
+  "LANG_SET" : "Language set.",
+  "ERR_NO_LANG" : "You didn't tell me what language to set! Use /lang <de or en>!",
+  "CHAT_SETTINGS" : "Language in this chat, change with /lang: `{}`",
+  "USER_SETTINGS" : "Your current language is `{}`.\nChange this with /lang in PM.",
+  "HELP" : "\n/lang <de/en>: Set the language"
+}
