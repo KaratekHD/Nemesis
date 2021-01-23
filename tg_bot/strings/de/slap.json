@@ -10,7 +10,10 @@
   "9": "{user1} greift einen {item} und {hits} {user2} damit.",
   "10": "{user1} bindet {user2} an einen Stuhl und {throws} einen {item} auf ihn.",
   "11": "{user1} hat {user2} einen freundlichen Stoß gegeben, um ihm/ihr beim Schwimmen in Lava zu helfen.",
-  "12": "{user1} nimmt einen Billardtisch und greift {user2} an.",
+  "12": "{user1} takes a billiardtable and starts hitting {user2}.",
   "13": "{user1} reißt einen Baum aus und wirft ihn nach {user2}.",
-  "14": "{user1} wirft ein Steak auf {user2}."
+  "14": "{user1} wirft ein Steak auf {user2}.",
+  "15": "{user1} tortures {user2} using the cruciatus curse.",
+  "16": "{user1} tortures {user2} using Rictusempra.",
+  "17": "{user1} tortures {user2} using Sectumsempra."
 }
