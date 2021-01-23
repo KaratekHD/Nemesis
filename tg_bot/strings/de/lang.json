@@ -1,0 +1,8 @@
+{
+  "ERR_UNKNOWN_LANG": "Sprache wird nicht unterstützt!",
+  "LANG_SET": "Sprache gesetzt.",
+  "ERR_NO_LANG": "Du hast mir nicht gesagt, welche Sprache du setzen willst! Benutze /lang <de or en>!",
+  "CHAT_SETTINGS": "Sprache in diesem Chat, ändern mit /lang: `{}`",
+  "USER_SETTINGS": "Deine aktuelle Sprache ist `{}`.\nÄndere dies mit /lang in PM.",
+  "HELP": "\n/lang <de/en>: Sprache festlegen"
+}
