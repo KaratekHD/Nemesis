@@ -11,6 +11,6 @@ pillow
 alphabet-detector
 flask
 flask-restplus
-Werkzeug==1.0.1
+Werkzeug==0.16.0
 flask-httpauth
 schedule
