@@ -22,6 +22,7 @@ from telegram import User, Chat, ChatMember, Update
 from telegram.ext import CallbackContext
 
 from tg_bot import DEL_CMDS, SUDO_USERS, WHITELIST_USERS
+from tg_bot.modules.sql import approval_sql
 
 
 def can_delete(chat: Chat, bot_id: int) -> bool:
@@ -171,3 +172,22 @@ def user_not_admin(func):
             return func(update, context, *args, **kwargs)
 
     return is_not_admin
+
+
+def user_not_approved(func):
+    @wraps(func)
+    def is_not_approved(update: Update, context: CallbackContext, *args, **kwargs):
+        user = update.effective_user  # type: Optional[User]
+        if user and not approval_sql.check_approval(update.effective_chat.id, user.id):
+            return func(update, context, *args, **kwargs)
+
+    return is_not_approved
+
+def user_approved(func):
+    @wraps(func)
+    def is_approved(update: Update, context: CallbackContext, *args, **kwargs):
+        user = update.effective_user  # type: Optional[User]
+        if user and  approval_sql.check_approval(update.effective_chat.id, user.id):
+            return func(update, context, *args, **kwargs)
+
+    return is_approved()

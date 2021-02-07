@@ -27,7 +27,7 @@ import tg_bot.modules.sql.blacklist_sql as sql
 import tg_bot.modules.sql.lang_sql as lang
 from tg_bot import dispatcher, LOGGER, DEFAULT_LANG
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import user_admin, user_not_admin
+from tg_bot.modules.helper_funcs.chat_status import user_admin, user_not_admin, user_not_approved
 from tg_bot.modules.helper_funcs.extraction import extract_text
 from tg_bot.modules.helper_funcs.misc import split_message
 from tg_bot.strings.string_helper import get_string
@@ -123,6 +123,7 @@ def unblacklist(update: Update, context: CallbackContext):
         msg.reply_text(get_string("blacklist", "ERR_REMOVE_BAD_REQUEST", lang.get_lang(update.effective_chat.id))) # ERR_REMOVE_BAD_REQUEST
 
 
+@user_not_approved
 @user_not_admin
 def del_blacklist(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]

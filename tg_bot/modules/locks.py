@@ -32,9 +32,8 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import (
     can_delete,
     is_user_admin,
-    user_not_admin,
     is_bot_admin,
-    user_admin,
+    user_admin, user_not_approved, user_not_admin,
 )
 from tg_bot.modules.log_channel import loggable
 
@@ -324,6 +323,7 @@ def unlock(update: Update, context: CallbackContext) -> str:
     return ""
 
 
+@user_not_approved
 @user_not_admin
 def del_lockables(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]

@@ -24,7 +24,8 @@ from telegram.ext import Filters, MessageHandler, CommandHandler, CallbackContex
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher
-from tg_bot.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict
+from tg_bot.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict, user_not_approved, \
+    user_not_admin
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import antiflood_sql as sql
 import tg_bot.modules.sql.lang_sql as lang
@@ -34,6 +35,8 @@ FLOOD_GROUP = 3
 
 
 @loggable
+@user_not_admin
+@user_not_approved
 def check_flood(update: Update, context: CallbackContext) -> str:
     user = update.effective_user  # type: Optional[User]
     chat = update.effective_chat  # type: Optional[Chat]
@@ -42,10 +45,6 @@ def check_flood(update: Update, context: CallbackContext) -> str:
     if not user:  # ignore channels
         return ""
 
-    # ignore admins
-    if is_user_admin(chat, user.id):
-        sql.update_flood(chat.id, None)
-        return ""
 
     should_ban = sql.update_flood(chat.id, user.id)
     if not should_ban:
