@@ -168,11 +168,17 @@ if is_module_loaded(FILENAME):
                " - forwarding the /setlog to the group"
 # HELP
 
+    def not_supported(update: Update, context: CallbackContext):
+        update.effective_message.reply_text("Log Channels are <b>not supported</b> anymore as of Nemesis v2.2. "
+                                            "If you'd like to bring them back, see "
+                                            "<a href=\"https://karatek.net/Projects_and_Services/Services/Nemesis/#get-involved\">the get involved section</a> "
+                                            "in our wiki.", parse_mode=ParseMode.HTML)
+
     __mod_name__ = "Log Channels" # MODULE_NAME
 
-    LOG_HANDLER = CommandHandler("logchannel", logging, run_async=True)
-    SET_LOG_HANDLER = CommandHandler("setlog", setlog, run_async=True)
-    UNSET_LOG_HANDLER = CommandHandler("unsetlog", unsetlog, run_async=True)
+    LOG_HANDLER = CommandHandler("logchannel", not_supported, run_async=True)
+    SET_LOG_HANDLER = CommandHandler("setlog", not_supported, run_async=True)
+    UNSET_LOG_HANDLER = CommandHandler("unsetlog", not_supported, run_async=True)
 
     dispatcher.add_handler(LOG_HANDLER)
     dispatcher.add_handler(SET_LOG_HANDLER)
