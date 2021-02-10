@@ -155,12 +155,12 @@ def del_message(update: Update, context: CallbackContext) -> str:
     return ""
 
 
-
 def __help__(update: Update) -> str:
     return "\n*Admin only:*\n" \
            "- /del: deletes the message you replied to\n" \
            " - /purge: deletes all messages between this and the replied to message.\n" \
-           " - /purge <integer X>: deletes the replied message, and X messages following it."
+           " - /purge <integer X>: deletes the replied message, and X messages following it.\n" \
+            " - /spurge: same as /purge, but without sending a message after completing."
 
 
 __mod_name__ = "Message Deletion"
