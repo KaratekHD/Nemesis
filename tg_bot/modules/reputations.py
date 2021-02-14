@@ -1,4 +1,4 @@
-#  Nemesis - Powerful  Telegram group managment bot
+#  OpenGM - Powerful  Telegram group managment bot
 #  Copyright (C) 2017 - 2019 Paul Larsen
 #  Copyright (C) 2019 - 2020 KaratekHD
 #

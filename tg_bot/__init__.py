@@ -1,4 +1,4 @@
-#  Nemesis - Powerful  Telegram group managment bot
+#  OpenGM - Powerful  Telegram group managment bot
 #  Copyright (C) 2017 - 2019 Paul Larsen
 #  Copyright (C) 2019 - 2020 KaratekHD
 #
@@ -22,7 +22,7 @@ import sys
 import telegram.ext as tg
 from tg_bot.strings.string_helper import get_string
 
-VERSION = "2.2.0a"
+VERSION = "2.2.0"
 
 # Module name
 module = "init"

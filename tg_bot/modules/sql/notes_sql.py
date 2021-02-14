@@ -1,4 +1,4 @@
-#  Nemesis - Powerful  Telegram group managment bot
+#  OpenGM - Powerful  Telegram group managment bot
 #  Copyright (C) 2017 - 2019 Paul Larsen
 #  Copyright (C) 2019 - 2020 KaratekHD
 #
@@ -14,6 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 # Note: chat_id's are stored as strings because the int is too large to be stored in a PSQL database.
 import threading
