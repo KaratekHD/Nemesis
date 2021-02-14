@@ -1,4 +1,4 @@
-#  Nemesis - Powerful  Telegram group managment bot
+#  OpenGM - Powerful  Telegram group managment bot
 #  Copyright (C) 2017 - 2019 Paul Larsen
 #  Copyright (C) 2019 - 2020 KaratekHD
 #
@@ -14,6 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 import html
 
@@ -32,9 +33,8 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import (
     can_delete,
     is_user_admin,
-    user_not_admin,
     is_bot_admin,
-    user_admin,
+    user_admin, user_not_approved, user_not_admin,
 )
 from tg_bot.modules.log_channel import loggable
 
@@ -324,6 +324,7 @@ def unlock(update: Update, context: CallbackContext) -> str:
     return ""
 
 
+@user_not_approved
 @user_not_admin
 def del_lockables(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]

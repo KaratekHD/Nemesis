@@ -1,4 +1,4 @@
-#  Nemesis - Powerful  Telegram group managment bot
+#  OpenGM - Powerful  Telegram group managment bot
 #  Copyright (C) 2017 - 2019 Paul Larsen
 #  Copyright (C) 2019 - 2020 KaratekHD
 #
@@ -14,6 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 
 from sqlalchemy import Column, String, UnicodeText, func, distinct, Integer

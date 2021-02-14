@@ -1,4 +1,4 @@
-#  Nemesis - Powerful  Telegram group managment bot
+#  OpenGM - Powerful  Telegram group managment bot
 #  Copyright (C) 2017 - 2019 Paul Larsen
 #  Copyright (C) 2019 - 2020 KaratekHD
 #
@@ -22,7 +22,7 @@ import sys
 import telegram.ext as tg
 from tg_bot.strings.string_helper import get_string
 
-VERSION = "2.1.2"
+VERSION = "2.2.0"
 
 # Module name
 module = "init"
@@ -102,7 +102,7 @@ if ENV:
     DEL_CMDS = bool(os.environ.get('DEL_CMDS', False))
     STRICT_GBAN = bool(os.environ.get('STRICT_GBAN', False))
     WORKERS = int(os.environ.get('WORKERS', 8))
-    BAN_STICKER = os.environ.get('BAN_STICKER', 'CAADAgADOwADPPEcAXkko5EB3YGYAg')
+    BAN_STICKER = os.environ.get('BAN_STICKER', 'CAACAgIAAx0CRMLKjgACBjtgHtmyflcZm_zsltAYGf_AtIy60AAClgEAAhZCawp7Vw4iU3POsB4E')
     ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
 
 

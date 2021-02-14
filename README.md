@@ -1,4 +1,4 @@
-# Nemesis
+# OpenGM (Open Group Manager)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f07503e9b21a451795a9d1f57b3ba79e)](https://app.codacy.com/manual/KaratekHD/Nemesis?utm_source=github.com&utm_medium=referral&utm_content=KaratekHD/Nemesis&utm_campaign=Badge_Grade_Dashboard)
 [![Crowdin](https://badges.crowdin.net/karatekbot/localized.svg)](https://translate.karatek.systems/project/karatekbot)

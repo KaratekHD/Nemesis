@@ -1,4 +1,4 @@
-#  Nemesis - Powerful  Telegram group managment bot
+#  OpenGM - Powerful  Telegram group managment bot
 #  Copyright (C) 2017 - 2019 Paul Larsen
 #  Copyright (C) 2019 - 2020 KaratekHD
 #
@@ -15,8 +15,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
 import datetime
 import importlib
+import os
 import re
 import tg_bot.modules.sql.lang_sql as lang
 
@@ -412,7 +414,7 @@ def about(update: Update, context: CallbackContext):
                                         " - [Severus Snape](https://t.me/GenosseSeverus) - Co-Owner\n" \
                                         " - [Luna Loony](https://t.me/Luna_loony) - Admin\n"
 
-    update.effective_message.reply_text("*Nemesis v{} - Powerful open-source group manager*\n"
+    update.effective_message.reply_text("*OpenGM v{} - Powerful open-source group manager*\n"
                                         "Copyright (C) 2017 - 2019 Paul Larsen\n"
                                         "Copyright (C) 2019 - 2021 KaratekHD\n\n"
                                         "This program is free software: you can redistribute it and/or modify "
@@ -446,6 +448,7 @@ def load_api():
 
 
 def main():
+    LOGGER.debug(os.getcwd())
     # test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start)
 

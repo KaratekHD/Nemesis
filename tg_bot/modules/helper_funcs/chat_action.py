@@ -1,6 +1,6 @@
-#  Nemesis - Powerful  Telegram group managment bot
-#  Copyright (C) 2020 The Skyleebot Constributors
-#  Copyright (C) 2020 KaratekHD
+#  OpenGM - Powerful  Telegram group managment bot
+#  Copyright (C) 2017 - 2019 Paul Larsen
+#  Copyright (C) 2019 - 2020 KaratekHD
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 from functools import wraps
 from telegram import error, ChatAction
