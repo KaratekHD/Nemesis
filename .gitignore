@@ -10,3 +10,7 @@
 /tg_bot/modules/mail.py
 /tg_bot/misc/
 /tg_bot/modules/spotify.py
+/.kdev4/
+/Temp/
+/venv/
+/venv2/
