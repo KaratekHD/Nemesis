@@ -195,7 +195,7 @@ def lock(update: Update, context: CallbackContext) -> str:
                     )
                 )
 
-            elif ltype in LOCK_CHAT_RESTRICTION:
+            if ltype in LOCK_CHAT_RESTRICTION:
                 if update.effective_message.chat.type == "private":
                     send_message(
                         update.effective_message,
@@ -226,12 +226,10 @@ def lock(update: Update, context: CallbackContext) -> str:
                         ltype,
                     )
                 )
-
-            else:
-                send_message(
-                    update.effective_message,
-                    "What are you trying to lock...? Try /locktypes for the list of lockables",
-                )
+            send_message(
+                update.effective_message,
+                "What are you trying to lock...? Try /locktypes for the list of lockables",
+            )
         else:
             send_message(update.effective_message, "What are you trying to lock...?")
 
@@ -279,7 +277,7 @@ def unlock(update: Update, context: CallbackContext) -> str:
                     )
                 )
 
-            elif ltype in UNLOCK_CHAT_RESTRICTION:
+            if ltype in UNLOCK_CHAT_RESTRICTION:
                 if update.effective_message.chat.type == "private":
                     send_message(
                         update.effective_message,
@@ -312,11 +310,10 @@ def unlock(update: Update, context: CallbackContext) -> str:
                         ltype,
                     )
                 )
-            else:
-                send_message(
-                    update.effective_message,
-                    "What are you trying to unlock...? Try /locktypes for the list of lockables.",
-                )
+            send_message(
+                update.effective_message,
+                "What are you trying to unlock...? Try /locktypes for the list of lockables.",
+            )
 
         else:
             send_message(update.effective_message, "What are you trying to unlock...?")

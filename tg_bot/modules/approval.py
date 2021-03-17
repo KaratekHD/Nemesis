@@ -60,8 +60,7 @@ def approve(update: Update, context: CallbackContext):
         if excp.message == "User not found":
             msg.reply_text("I can't seem to find this user")
             return ""
-        else:
-            raise
+        raise
     if member.ADMINISTRATOR:
         msg.reply_text("This user is a chat admin, approving would not make any sense.")
         return
@@ -85,8 +84,7 @@ def unapprove(update: Update, context: CallbackContext):
         if excp.message == "User not found":
             msg.reply_text("I can't seem to find this user")
             return ""
-        else:
-            raise
+        raise
     if member.ADMINISTRATOR:
         msg.reply_text("This user is a chat admin, this does not make sense.")
     elif not sql.check_approval(chat.id, member.user.id):
@@ -117,8 +115,7 @@ def status(update: Update, context: CallbackContext):
             else:
                 msg.reply_text(f"The user {u} is not approved.", parse_mode=ParseMode.MARKDOWN)
             return
-        else:
-            raise
+        raise
 
     if member.user.username:
         u = "@" + escape_markdown(member.user.username)

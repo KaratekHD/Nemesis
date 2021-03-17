@@ -401,22 +401,21 @@ def clean_welcome(update: Update, context: CallbackContext) -> str:
         sql.set_clean_welcome(str(chat.id), True)
         update.effective_message.reply_text("I'll try to delete old welcome messages!") # MSG_DELETE_WELCOME_TRUE
         return "<b>{}:</b>" \
-               "\n#CLEAN_WELCOME" \
-               "\n<b>Admin:</b> {}" \
-               "\nHas toggled clean welcomes to <code>ON</code>.".format(html.escape(chat.title),
+                   "\n#CLEAN_WELCOME" \
+                   "\n<b>Admin:</b> {}" \
+                   "\nHas toggled clean welcomes to <code>ON</code>.".format(html.escape(chat.title),
                                                                          mention_html(user.id, user.first_name)) # MSG_TOGGLE_WELCOME_DELETE_ON_HTML
-    elif args[0].lower() in ("off", "no"):
+    if args[0].lower() in ("off", "no"):
         sql.set_clean_welcome(str(chat.id), False)
         update.effective_message.reply_text("I won't delete old welcome messages.") # MSG_TOGGLE_WELCOME_DELTE_FALSE
         return "<b>{}:</b>" \
-               "\n#CLEAN_WELCOME" \
-               "\n<b>Admin:</b> {}" \
-               "\nHas toggled clean welcomes to <code>OFF</code>.".format(html.escape(chat.title),
+                   "\n#CLEAN_WELCOME" \
+                   "\n<b>Admin:</b> {}" \
+                   "\nHas toggled clean welcomes to <code>OFF</code>.".format(html.escape(chat.title),
                                                                           mention_html(user.id, user.first_name)) # MSG_TOGGLE_WELCOME_DELETE_FALSE_HTML
-    else:
-        # idek what you're writing, say yes or no
-        update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!") # ERR_INVALID_COMMAND
-        return ""
+    # idek what you're writing, say yes or no
+    update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!") # ERR_INVALID_COMMAND
+    return ""
 
 
 WELC_HELP_TXT = "Your group's welcome/goodbye messages can be personalised in multiple ways. If you want the messages" \

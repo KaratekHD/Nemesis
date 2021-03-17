@@ -59,8 +59,7 @@ def check_approval(chat_id, user_id):
     approval = SESSION.query(Approval).get((str(chat_id), str(user_id)))
     if approval:
         return True
-    else:
-        return False
+    return False
 
 
 def migrate_chat(old_chat_id, new_chat_id):
