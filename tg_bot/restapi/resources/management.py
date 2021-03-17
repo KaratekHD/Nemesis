@@ -40,7 +40,8 @@ chatnumber = create_chatnumber_model(api)
 @api.response(401, "Unauthorized")
 class NumChats(Resource):
     @api.marshal_with(chatnumber)
-    def get(self):
+    @staticmethod
+    def get():
         '''Count all chats from database'''
         key = request.args.get('api_key')
         if not key:
@@ -67,7 +68,8 @@ listchats = create_chatlist_model(api)
 @api.response(401, "Unauthorized")
 class ListChats(Resource):
     @api.marshal_with(listchats)
-    def get(self):
+    @staticmethod
+    def get():
         '''List all chats from database'''
         key = request.args.get('api_key')
         if not key:
@@ -100,7 +102,8 @@ broadcast = create_broadcast_model(api)
 @api.response(400, "Bad Request")
 class Broadcast(Resource):
     @api.marshal_with(broadcast)
-    def post(self):
+    @staticmethod
+    def post():
         '''Send a message to all chats'''
         key = request.args.get('api_key')
         if not key:
@@ -147,7 +150,8 @@ class Broadcast(Resource):
 @api.response(400, "Bad Request")
 class ListUsers(Resource):
     @api.marshal_with(create_userlist_model(api))
-    def get(self):
+    @staticmethod
+    def get():
         '''Get a list of all users known to the bot. Note that this does only include people who messaged the bot at least once.'''
         key = request.args.get('api_key')
         if not key:
@@ -208,7 +212,8 @@ class ListUsers(Resource):
 @api.response(400, "Bad Request")
 class CountUsers(Resource):
     @api.marshal_with(create_countusers_model(api))
-    def get(self):
+    @staticmethod
+    def get():
         '''Count all users from database'''
         key = request.args.get('api_key')
         if not key:
@@ -231,7 +236,8 @@ class CountUsers(Resource):
 @api.response(401, "Unauthorized")
 @api.response(400, "Bad Request")
 class UpdateUser(Resource):
-    def post(self):
+    @staticmethod
+    def post():
         '''Update a user inside the db. Use at your own risk!'''
         key = request.args.get('api_key')
         if not key:

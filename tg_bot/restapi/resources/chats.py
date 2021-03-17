@@ -39,7 +39,8 @@ chat = create_chat_model(chats_api)
 @chats_api.response(410, "Bot is not a member of the chat (anymore).")
 class Chats(Resource):
     @chats_api.marshal_with(chat)
-    def get(self, id):
+    @staticmethod
+    def get(id):
         '''Gets a chat by id'''
         key = request.args.get('api_key')
         if not key:
