@@ -77,7 +77,7 @@ def promote(update: Update, context: CallbackContext) -> str:
         return ""
 
     user_member = chat.get_member(user_id)
-    if user_member.status == 'administrator' or user_member.status == 'creator':
+    if user_member.status in ("administrator", "creator"):
         message.reply_text(get_string("admin", "ERR_CANT_PROMOTE_ADMIN",
                                       lang.get_lang(update.effective_chat.id)))  # ERR_CANT_PROMOTE_ADMIN
         return ""
@@ -173,13 +173,13 @@ def pin(update: Update, context: CallbackContext) -> str:
     user = update.effective_user  # type: Optional[User]
     chat = update.effective_chat  # type: Optional[Chat]
 
-    is_group = chat.type != "private" and chat.type != "channel"
+    is_group = chat.type not in ("private", "channel")
 
     prev_message = update.effective_message.reply_to_message
 
     is_silent = True
     if len(args) >= 1:
-        is_silent = not (args[0].lower() == 'notify' or args[0].lower() == 'loud' or args[0].lower() == 'violent')
+        is_silent = not (args[0].lower() in ('notify', 'loud', 'violent'))
 
     if prev_message and is_group:
         try:
@@ -227,7 +227,7 @@ def invite(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     if chat.username:
         update.effective_message.reply_text(chat.username)
-    elif chat.type == chat.SUPERGROUP or chat.type == chat.CHANNEL:
+    elif chat.type in (chat.SUPERGROUP, chat.CHANNEL):
         bot_member = chat.get_member(bot.id)
         if bot_member.can_invite_users:
             invitelink = bot.exportChatInviteLink(chat.id)

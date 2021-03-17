@@ -97,7 +97,7 @@ def unmute(update: Update, context: CallbackContext) -> str:
             message.reply_text("This is an admin, what do you expect me to do?")
             return ""
 
-        elif member.status != 'kicked' and member.status != 'left':
+        elif member.status not in ("kicked", "left"):
             if member.can_send_messages and member.can_send_media_messages \
                     and member.can_send_other_messages and member.can_add_web_page_previews:
                 message.reply_text("This user already has the right to speak.")

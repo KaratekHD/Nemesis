@@ -36,10 +36,13 @@ Approval.__table__.create(checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 
+APPROVALS = {}
+
 
 def approve(chat_id, user_id):
     with INSERTION_LOCK:
         approval = Approval(str(chat_id), str(user_id))
+        APPROVALS[str(chat_id)] = APPROVALS[str(chat_id)].append(str(user_id))
         SESSION.merge(approval)
         SESSION.commit()
 

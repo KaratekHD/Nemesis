@@ -104,7 +104,7 @@ def new_member(update: Update, context: CallbackContext):
         new_members = update.effective_message.new_chat_members
         for new_mem in new_members:
             # Give the owner a special welcome
-            if new_mem.id == OWNER_ID or new_mem.id == CO_OWNER_ID:
+            if new_mem.id in (OWNER_ID, CO_OWNER_ID):
                 update.effective_message.reply_text("Master is in the houseeee, let's get this party started!") # WELCOME_OWNER
                 continue
 
@@ -114,7 +114,7 @@ def new_member(update: Update, context: CallbackContext):
 
             else:
                 # If welcome message is media, send with appropriate function
-                if welc_type != sql.Types.TEXT and welc_type != sql.Types.BUTTON_TEXT:
+                if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                     ENUM_FUNC_MAP[welc_type](chat.id, cust_welcome)
                     return
                 # else, move on
@@ -176,7 +176,7 @@ def left_member(update: Update, context: CallbackContext):
                 return
 
             # if media goodbye, use appropriate function for it
-            if goodbye_type != sql.Types.TEXT and goodbye_type != sql.Types.BUTTON_TEXT:
+            if goodbye_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                 ENUM_FUNC_MAP[goodbye_type](chat.id, cust_goodbye)
                 return
 

@@ -34,16 +34,17 @@ def approved(update: Update, context: CallbackContext):
     chat = update.effective_chat
 
     all_approvals = sql.get_chat_approvals(chat.id)
-    approval_list = "List of approved users in  this chat:\n\n"
+    approval_list = ["List of approved users in  this chat:\n\n"]
     for user in all_approvals:
         if chat.get_member(user.user_id).user.username:
             u = "@" + escape_markdown(chat.get_member(user.user_id).user.username)
         else:
             u = "[{}](tg://user?id={})".format(chat.get_member(user.user_id).user.full_name, user.user_id)
-        approval_list += " - {}\n".format(u)
-    if approval_list is "List of approved users in  this chat:\n\n":
-        approval_list = "No approved users here!"
-    msg.reply_text(approval_list, parse_mode=ParseMode.MARKDOWN)
+        approval_list.append(" - {}\n".format(u))
+    text = "".join(approval_list)
+    if text is "List of approved users in  this chat:\n\n":
+        text = "No approved users here!"
+    msg.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
 @user_admin
@@ -103,7 +104,7 @@ def status(update: Update, context: CallbackContext):
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found" or excp.message == "Invalid user_id specified":
+        if excp.message in ("User not found", "Invalid user_id specified"):
             if update.effective_user.username:
                 u = "@" + escape_markdown(update.effective_user.username)
             else:
