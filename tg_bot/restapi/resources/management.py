@@ -167,11 +167,11 @@ class ListUsers(Resource):
             result = []
             list_groups_str = request.args.get('list_groups')
             if list_groups_str:
-                if list_groups_str == "True" or list_groups_str == "true":
+                if list_groups_str in ("True", "true"):
                     list_groups = True
-                if list_groups_str == "False" or list_groups_str == "false":
+                if list_groups_str in ("False", "false"):
                     list_groups = False
-                if list_groups_str.lower() != "false" and list_groups_str.lower() != "true":
+                if list_groups_str.lower() not in ("false", "true"):
                     abort(HTTPStatus.BAD_REQUEST, "'list_groups' is invalid.")
             else:
                 list_groups = False

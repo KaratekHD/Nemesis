@@ -75,7 +75,7 @@ def set_flood(update: Update, context: CallbackContext) -> str:
 
     if len(args) >= 1:
         val = args[0].lower()
-        if val == "off" or val == "no" or val == "0":
+        if val in ("off", "no", "0"):
             sql.set_flood(chat.id, 0)
             message.reply_text(get_string("antiflood", "MSG_DISABLED", lang.get_lang(update.effective_chat.id))) # MSG_DISABLED
 

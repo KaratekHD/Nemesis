@@ -23,6 +23,7 @@ from telegram import User, Chat, ChatMember, Update
 from telegram.ext import CallbackContext
 
 from tg_bot import DEL_CMDS, SUDO_USERS, WHITELIST_USERS
+from tg_bot.caching import MWT
 from tg_bot.modules.sql import approval_sql
 
 
@@ -130,6 +131,7 @@ def bot_admin(func):
     return is_admin
 
 
+@MWT(timeout=60 * 5)
 def user_admin(func):
     @wraps(func)
     def is_admin(update: Update, context: CallbackContext, *args, **kwargs):

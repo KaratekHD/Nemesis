@@ -69,7 +69,7 @@ def button(update: Update, context: CallbackContext):
     sender = whisper_message.sender_id
     receiver = whisper_message.receiver_id
     message = whisper_message.message
-    if update.effective_user.id != sender and update.effective_user.id != receiver:
+    if update.effective_user.id not in (sender, receiver):
         context.bot.answer_callback_query(update.callback_query.id,
                                           "You are not permitted to read this message.",
                                           show_alert=False)
