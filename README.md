@@ -10,7 +10,7 @@ bots aiming to provide simple plugin expansion via a simple drag and drop.
 
 Can be found on telegram as [Nemesis](https://t.me/karatekbot).
 ## Installing the bot
-To install the bot on openSUSE, follow the steps on https://build.opensuse.org/package/show/openSUSE:Factory/systemd?rev=324
+To install the bot on openSUSE, follow the steps on https://software.opensuse.org/download/package?package=opengm&project=home%3AKaratekHD
 
 ## Starting the bot.
 
