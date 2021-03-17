@@ -20,11 +20,11 @@ import re
 import sre_constants
 
 import telegram
-from telegram import Update, Bot
-from telegram.ext import run_async, CallbackContext, Filters
+from telegram import Update
+from telegram.ext import CallbackContext, Filters
 
 from tg_bot import dispatcher, LOGGER
-from tg_bot.modules.disable import DisableAbleRegexHandler, DisableAbleMessageHandler
+from tg_bot.modules.disable import DisableAbleMessageHandler
 
 DELIMITERS = ("/", ":", "|", "_")
 

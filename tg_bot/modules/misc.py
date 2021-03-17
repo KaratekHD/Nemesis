@@ -24,12 +24,12 @@ from datetime import datetime
 from typing import Optional, List
 
 import requests
-from telegram import Message, Chat, Update, Bot, MessageEntity
+from telegram import Message, Chat, Update, MessageEntity
 from telegram import ParseMode
-from telegram.ext import CommandHandler, run_async, Filters, CallbackContext
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, CO_OWNER_ID, LOGGER
+from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, CO_OWNER_ID
 from tg_bot.__main__ import GDPR
 from tg_bot.__main__ import STATS, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler

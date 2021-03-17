@@ -22,9 +22,9 @@ from datetime import datetime
 from uuid import uuid4
 
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, ParseMode, InlineKeyboardButton, \
-    InlineKeyboardMarkup, chat
+    InlineKeyboardMarkup
 from telegram.error import BadRequest
-from telegram.ext import run_async, CallbackContext, InlineQueryHandler, MessageHandler, Filters, CallbackQueryHandler, \
+from telegram.ext import CallbackContext, InlineQueryHandler, CallbackQueryHandler, \
     ChosenInlineResultHandler
 
 from tg_bot import LOGGER, dispatcher

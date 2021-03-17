@@ -21,13 +21,12 @@ from time import sleep
 from typing import Optional
 
 from telegram import TelegramError, Chat, Message
-from telegram import Update, Bot
+from telegram import Update
 from telegram.error import BadRequest
 from telegram.ext import MessageHandler, Filters, CommandHandler, CallbackContext
-from telegram.ext.dispatcher import run_async
 
 import tg_bot.modules.sql.users_sql as sql
-from tg_bot import dispatcher, OWNER_ID, LOGGER
+from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 USERS_GROUP = 4

@@ -19,7 +19,7 @@
 from typing import Union, List, Optional
 
 from future.utils import string_types
-from telegram import ParseMode, Update, Bot, Chat, User
+from telegram import ParseMode, Update, Chat
 from telegram.ext import CommandHandler, RegexHandler, Filters, MessageHandler, CallbackContext
 from telegram.utils.helpers import escape_markdown
 

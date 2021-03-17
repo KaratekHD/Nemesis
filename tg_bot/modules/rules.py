@@ -17,10 +17,10 @@
 
 from typing import Optional
 
-from telegram import Message, Update, Bot, User
+from telegram import Message, Update, User
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, Filters, CallbackContext
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.utils.helpers import escape_markdown
 
 import tg_bot.modules.sql.rules_sql as sql

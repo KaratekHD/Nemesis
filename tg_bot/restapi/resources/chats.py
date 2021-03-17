@@ -15,10 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import json
 from http import HTTPStatus
 
-from flask import request, jsonify, abort
+from flask import request, abort
 from flask_restplus import Namespace, Resource
 from telegram import TelegramError
 

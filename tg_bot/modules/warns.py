@@ -22,9 +22,9 @@ from typing import Optional, List
 
 import telegram
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User, CallbackQuery
-from telegram import Message, Chat, Update, Bot
+from telegram import Message, Chat, Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, MessageHandler, Filters, \
+from telegram.ext import CommandHandler, DispatcherHandlerStop, MessageHandler, Filters, \
     CallbackQueryHandler, CallbackContext
 from telegram.utils.helpers import mention_html
 

@@ -25,7 +25,6 @@ from html import escape
 
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, Update
 from telegram import TelegramError
-from telegram.ext import run_async
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher

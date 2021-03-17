@@ -25,7 +25,7 @@ from telegram.ext import Filters, MessageHandler, CommandHandler, CallbackContex
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher
-from tg_bot.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict, user_not_approved, \
+from tg_bot.modules.helper_funcs.chat_status import user_admin, can_restrict, user_not_approved, \
     user_not_admin
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import antiflood_sql as sql

@@ -21,10 +21,9 @@ from io import BytesIO
 from typing import Optional, List
 
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
-from telegram import Message, Update, Bot
+from telegram import Message, Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, RegexHandler, CallbackContext, MessageHandler, Filters
-from telegram.ext.dispatcher import run_async
+from telegram.ext import CommandHandler, CallbackContext, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown
 
 import tg_bot.modules.sql.notes_sql as sql

@@ -18,8 +18,8 @@
 
 from typing import List
 
-from telegram import Bot, Update
-from telegram.ext import run_async, CommandHandler, CallbackContext
+from telegram import Update
+from telegram.ext import CommandHandler, CallbackContext
 
 from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
