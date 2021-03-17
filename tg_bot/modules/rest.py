@@ -19,7 +19,7 @@
 
 import secrets
 
-from telegram.ext import run_async, CallbackContext, CommandHandler
+from telegram.ext import CallbackContext, CommandHandler
 
 from tg_bot import dispatcher
 import tg_bot.modules.sql.api_sql as sql

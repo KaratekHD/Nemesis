@@ -21,9 +21,9 @@ import html
 from io import BytesIO
 from typing import Optional, List
 
-from telegram import Message, Update, Bot, User, Chat, ParseMode
+from telegram import Message, Update, User, Chat, ParseMode
 from telegram.error import BadRequest, TelegramError
-from telegram.ext import run_async, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContext
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.global_bans_sql as sql

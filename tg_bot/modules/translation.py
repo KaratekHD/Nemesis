@@ -20,8 +20,8 @@ import json
 from pprint import pprint
 
 import requests
-from telegram import Update, Bot
-from telegram.ext import CommandHandler, CallbackContext
+from telegram import Update
+from telegram.ext import CallbackContext
 
 from tg_bot import dispatcher
 

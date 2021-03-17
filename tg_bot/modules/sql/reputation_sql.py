@@ -18,8 +18,6 @@
 import threading
 
 from sqlalchemy import Column, String, UnicodeText, Integer, BigInteger
-
-from tg_bot import LOGGER
 from tg_bot.modules.sql import BASE, SESSION
 
 
