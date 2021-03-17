@@ -24,7 +24,8 @@ basic_api = Namespace("basic", description="Basic tasks that do not require an a
 
 @basic_api.route("")
 class Version(Resource):
-    def get(self):
+    @staticmethod
+    def get():
         '''Get API Version'''
         return "Nemesis Telegram Bot v2.0 Development Preview 1", HTTPStatus.OK
 
