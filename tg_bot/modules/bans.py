@@ -58,8 +58,7 @@ def ban(update: Update, context: CallbackContext) -> str:
         if excp.message == "User not found":
             message.reply_text(get_string("bans", "ERR_USER_NOT_FOUND", lang.get_lang(update.effective_chat.id))) # ERR_USER_NOT_FOUND
             return ""
-        else:
-            raise
+        raise
 
     if is_user_ban_protected(chat, user_id, member):
         message.reply_text(get_string("bans", "ERR_TARGET_IS_ADMIN", lang.get_lang(update.effective_chat.id))) # ERR_TARGET_IS_ADMIN
@@ -87,11 +86,10 @@ def ban(update: Update, context: CallbackContext) -> str:
             # Do not reply
             message.reply_text(get_string("bans", "MSG_BAN_SUCCESS", lang.get_lang(update.effective_chat.id)), quote=False) # MSG_BAN_SUCCESS
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception(get_string("bans", "ERR_CONSOLE_CANT_BAN", lang.get_lang(update.effective_chat.id)), user_id, chat.title, chat.id,
-                             excp.message) # ERR_CONSOLE_CANT_BAN
-            message.reply_text(get_string("bans", "ERR_CANT_BAN", lang.get_lang(update.effective_chat.id))) # ERR_CANT_BAN
+        LOGGER.warning(update)
+        LOGGER.exception(get_string("bans", "ERR_CONSOLE_CANT_BAN", lang.get_lang(update.effective_chat.id)), user_id, chat.title, chat.id,
+                         excp.message) # ERR_CONSOLE_CANT_BAN
+        message.reply_text(get_string("bans", "ERR_CANT_BAN", lang.get_lang(update.effective_chat.id))) # ERR_CANT_BAN
 
     return ""
 
@@ -119,8 +117,7 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
         if excp.message == "User not found":
             message.reply_text(get_string("bans", "ERR_USER_NOT_FOUND", lang.get_lang(update.effective_chat.id))) # ERR_USER_NOT_FOUND
             return ""
-        else:
-            raise
+        raise
 
     if is_user_ban_protected(chat, user_id, member):
         message.reply_text(get_string("bans", "ERR_TARGET_IS_ADMIN", lang.get_lang(update.effective_chat.id))) # ERR_TARGET_IS_ADMIN
@@ -166,11 +163,10 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
             # Do not reply
             message.reply_text(get_string("bans", "MSG_TEMPBAN_SUCCES", lang.get_lang(update.effective_chat.id)).format(time_val), quote=False) # MSG_TEMPBAN_SUCCES
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception(get_string("bans", "ERR_CONSOLE_CANT_BAN", lang.get_lang(update.effective_chat.id)), user_id, chat.title, chat.id,
-                             excp.message) # ERR_CONSOLE_CANT_BAN
-            message.reply_text(get_string("bans", "ERR_CANT_BAN", lang.get_lang(update.effective_chat.id))) # ERR_CANT_BAN
+        LOGGER.warning(update)
+        LOGGER.exception(get_string("bans", "ERR_CONSOLE_CANT_BAN", lang.get_lang(update.effective_chat.id)), user_id, chat.title, chat.id,
+                         excp.message) # ERR_CONSOLE_CANT_BAN
+        message.reply_text(get_string("bans", "ERR_CANT_BAN", lang.get_lang(update.effective_chat.id))) # ERR_CANT_BAN
 
     return ""
 
@@ -197,8 +193,7 @@ def kick(update: Update, context: CallbackContext) -> str:
         if excp.message == "User not found":
             message.reply_text(get_string("bans", "ERR_USER_NOT_FOUND", lang.get_lang(update.effective_chat.id))) # ERR_USER_NOT_FOUND
             return ""
-        else:
-            raise
+        raise
 
     if is_user_ban_protected(chat, user_id):
         message.reply_text(get_string("bans", "ERR_KICK_TARGET_ADMIN", lang.get_lang(update.effective_chat.id))) # ERR_KICK_TARGET_ADMIN
@@ -220,9 +215,7 @@ def kick(update: Update, context: CallbackContext) -> str:
             log += get_string("bans", "MSG_KICK_HTML_REASON", lang.get_lang(update.effective_chat.id)).format(reason) # MSG_KICK_HTML_REASON
 
         return log
-
-    else:
-        message.reply_text(get_string("bans", "ERR_CANT_KICK", lang.get_lang(update.effective_chat.id)))
+    message.reply_text(get_string("bans", "ERR_CANT_KICK", lang.get_lang(update.effective_chat.id)))
 
     return ""
 
@@ -266,8 +259,7 @@ def unban(update: Update, context: CallbackContext) -> str:
         if excp.message == "User not found":
             message.reply_text(get_string("bans", "ERR_USER_NOT_FOUND", lang.get_lang(update.effective_chat.id))) # ERR_USER_NOT_FOUND
             return ""
-        else:
-            raise
+        raise
 
     if user_id == bot.id:
         message.reply_text(get_string("bans", "ERR_UNBAN_ITSELF", lang.get_lang(update.effective_chat.id))) # ERR_UNBAN_ITSELF

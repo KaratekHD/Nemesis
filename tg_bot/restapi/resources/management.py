@@ -140,8 +140,7 @@ class Broadcast(Resource):
                                        str(chat.chat_name))
                 if failed_chats == 0:
                     return {"message": to_send, "failed": failed}
-                else:
-                    return {"message": to_send, "failed": failed, "failed_chats": failed_chats}
+                return {"message": to_send, "failed": failed, "failed_chats": failed_chats}
 
 
 @api.route("/listusers")

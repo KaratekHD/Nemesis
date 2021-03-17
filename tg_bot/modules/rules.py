@@ -45,8 +45,7 @@ def send_rules(update, chat_id, from_pm=False):
             bot.send_message(user.id, "The rules shortcut for this chat hasn't been set properly! Ask admins to "
                                       "fix this.")
             return
-        else:
-            raise
+        raise
 
     rules = sql.get_rules(chat_id)
     text = "The rules for *{}* are:\n\n{}".format(escape_markdown(chat.title), rules)

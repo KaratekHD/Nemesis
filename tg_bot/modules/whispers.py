@@ -74,8 +74,7 @@ def button(update: Update, context: CallbackContext):
                                           "You are not permitted to read this message.",
                                           show_alert=False)
         return
-    else:
-        context.bot.answer_callback_query(update.callback_query.id, message, show_alert=True)
+    context.bot.answer_callback_query(update.callback_query.id, message, show_alert=True)
 
 
 def process_inline_query(update: Update, context: CallbackContext):
