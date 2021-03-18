@@ -109,44 +109,42 @@ def new_member(update: Update, context: CallbackContext):
                 continue
 
             # Don't welcome yourself
-            elif new_mem.id == bot.id:
+            if new_mem.id == bot.id:
                 continue
+            # If welcome message is media, send with appropriate function
+            if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
+                ENUM_FUNC_MAP[welc_type](chat.id, cust_welcome)
+                return
+            # else, move on
+            first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
 
-            else:
-                # If welcome message is media, send with appropriate function
-                if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
-                    ENUM_FUNC_MAP[welc_type](chat.id, cust_welcome)
-                    return
-                # else, move on
-                first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
-
-                if cust_welcome:
-                    if new_mem.last_name:
-                        fullname = "{} {}".format(first_name, new_mem.last_name)
-                    else:
-                        fullname = first_name
-                    count = chat.get_members_count()
-                    mention = mention_markdown(new_mem.id, first_name)
-                    if new_mem.username:
-                        username = "@" + escape_markdown(new_mem.username)
-                    else:
-                        username = mention
-
-                    valid_format = escape_invalid_curly_brackets(cust_welcome, VALID_WELCOME_FORMATTERS)
-                    res = valid_format.format(first=escape_markdown(first_name),
-                                              last=escape_markdown(new_mem.last_name or first_name),
-                                              fullname=escape_markdown(fullname), username=username, mention=mention,
-                                              count=count, chatname=escape_markdown(chat.title), id=new_mem.id)
-                    buttons = sql.get_welc_buttons(chat.id)
-                    keyb = build_keyboard(buttons)
+            if cust_welcome:
+                if new_mem.last_name:
+                    fullname = "{} {}".format(first_name, new_mem.last_name)
                 else:
-                    res = sql.DEFAULT_WELCOME.format(first=first_name)
-                    keyb = []
+                    fullname = first_name
+                count = chat.get_members_count()
+                mention = mention_markdown(new_mem.id, first_name)
+                if new_mem.username:
+                    username = "@" + escape_markdown(new_mem.username)
+                else:
+                    username = mention
 
-                keyboard = InlineKeyboardMarkup(keyb)
+                valid_format = escape_invalid_curly_brackets(cust_welcome, VALID_WELCOME_FORMATTERS)
+                res = valid_format.format(first=escape_markdown(first_name),
+                                          last=escape_markdown(new_mem.last_name or first_name),
+                                          fullname=escape_markdown(fullname), username=username, mention=mention,
+                                          count=count, chatname=escape_markdown(chat.title), id=new_mem.id)
+                buttons = sql.get_welc_buttons(chat.id)
+                keyb = build_keyboard(buttons)
+            else:
+                res = sql.DEFAULT_WELCOME.format(first=first_name)
+                keyb = []
 
-                sent = send(update, res, keyboard,
-                            sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
+            keyboard = InlineKeyboardMarkup(keyb)
+
+            sent = send(update, res, keyboard,
+                        sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
 
         prev_welc = sql.get_clean_pref(chat.id)
         if prev_welc:
