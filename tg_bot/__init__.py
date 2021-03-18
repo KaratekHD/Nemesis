@@ -76,17 +76,17 @@ if ENV:
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
     try:
-        SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
+        SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
     except ValueError:
         raise Exception(get_string(module, "ERR_INVALID_SUDO_ID", DEFAULT_LANG)) # ERR_INVALID_SUDO_ID
 
     try:
-        SUPPORT_USERS = set(int(x) for x in os.environ.get("SUPPORT_USERS", "").split())
+        SUPPORT_USERS = {int(x) for x in os.environ.get("SUPPORT_USERS", "").split()}
     except ValueError:
         raise Exception(get_string(module, "ERR_INVALID_SUPPORT_ID", DEFAULT_LANG)) # ERR_INVALID_SUPPORT_ID
 
     try:
-        WHITELIST_USERS = set(int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
+        WHITELIST_USERS = {int(x) for x in os.environ.get("WHITELIST_USERS", "").split()}
     except ValueError:
         raise Exception(get_string(module, "ERR_INVALID_WHITELIST_ID", DEFAULT_LANG)) # ERR_INVALID_WHITELIST_ID
 
@@ -122,17 +122,17 @@ else:
     OWNER_USERNAME = Config.OWNER_USERNAME
 
     try:
-        SUDO_USERS = set(int(x) for x in Config.SUDO_USERS or [])
+        SUDO_USERS = {int(x) for x in Config.SUDO_USERS or []}
     except ValueError:
         raise Exception(get_string(module, "ERR_CONFIG_INVALID_SUDO_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_SUDO_ID
 
     try:
-        SUPPORT_USERS = set(int(x) for x in Config.SUPPORT_USERS or [])
+        SUPPORT_USERS = {int(x) for x in Config.SUPPORT_USERS or []}
     except ValueError:
         raise Exception(get_string(module, "ERR_CONFIG_INVALID_SUPPORT_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_SUPPORT_ID
 
     try:
-        WHITELIST_USERS = set(int(x) for x in Config.WHITELIST_USERS or [])
+        WHITELIST_USERS = {int(x) for x in Config.WHITELIST_USERS or []}
     except ValueError:
         raise Exception(get_string(module, "ERR_CONFIG_INVALID_WHITELIST_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_WHITELIST_ID
 
