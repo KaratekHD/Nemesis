@@ -1,0 +1,5 @@
+{
+  "ERR_NO_LANG": "Bitte sag mir, in welche Sprache ich übersetzen soll!",
+  "ERR_NO_MSG": "Bitte verweise auf eine Nachricht.",
+  "HELP": "\n/translate <Sprachcode>: Eine Nachricht übersetzen."
+}

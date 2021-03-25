@@ -18,5 +18,7 @@
   "ADMINS_IN": "Admins in *{}*:",
   "YOU_ADMIN": "Du bist ein *Admin*: `{}`",
   "HELP": " -/adminlist: Liste der Admins im Chat\n\n*Nur Admins:*\n - /pin: pinnt die Nachricht, auf die geantwortet wird, still an - füge 'laut' oder 'benachrichtigen' hinzu, um die Benutzer zu benachrichtigen.\n - /unpin: hebt die aktuell angeheftete Nachricht auf\n - /invitelink: Einladungslink wird gesendet\n - /promote: befördert den Benutzer, auf den geantwortet wurde\n - /demote: degradiert den Benutzer, auf den geantwortet wurde",
-  "MODULE_NAME": "Admin"
+  "MODULE_NAME": "Admin",
+  "MSG_CHAT_UMUTED": "Dieser Chat ist nun nicht mehr stummgeschaltet, jeder darf nun reden!",
+  "MSG_CHAT_MUTED": "Dieser Chat ist nun stummgeschaltet, nur Administratoren können jetzt schreiben!"
 }

@@ -1,5 +1,5 @@
 {
-  "PM_START_TEXT": "Hi {}, my name is {}! If you have any questions on how to use me, read /help - and then head to @MarieSupport.\n\nI'm a group manager bot built in python3, using the python-telegram-bot library, and am fully opensource;\nyou can find what makes me tick [here](github.com/KaratekHD/tgbot)!\n\nFeel free to submit pull requests on github, or to contact my support group, @MarieSupport, with any bugs, questions\nor feature requests you might have :)\nI also have a news channel, @MarieNews for announcements on new features, downtime, etc.\n\nYou can find the list of available commands with /help.\nYou can also read my documentation at [karatek.net](https://karatek.net/Projects_and_Services/Nemesisdocs/).\n\nBy using Nemesis, you agree to the privacy policies of Karatek Software Development, located at [karatek.net](https://karatek.net/Legal/privacy/).",
+  "PM_START_TEXT": "Hi {}, my name is {}! If you have any questions on how to use me, read /help - and then head to @MarieSupport.\n\nI'm an instance of OpenGM, an open source group manager bot built in python3, using the python-telegram-bot library, and am fully opensource;\nyou can find what makes me tick [here](github.com/KaratekHD/Nemesis)!\n\nFeel free to submit pull requests on github, or to contact my support group, @MarieSupport, with any bugs, questions\nor feature requests you might have :)\nI also have a news channel, @MarieNews for announcements on new features, downtime, etc.\n\nYou can find the list of available commands with /help.\nYou can also read my documentation at [karatek.net](https://karatek.net/Projects_and_Services/Nemesisdocs/).\n\nBy using Nemesis, you agree to the privacy policies of Karatek Software Development, located at [karatek.net](https://karatek.net/Legal/privacy/).",
   "HELP_STRINGS": "Hallo! Mein Name ist {}.\nIch bin modularer Gruppenverwaltungs Bot mit einigen Extras! Sieh dir einige Dinge an, mit denen ich dir helfen kann. Du kannst auch meine Dokumentation auf [karatek.net](https://karatek.net/Projects/Nemesisdocs/) lesen.\n\n*Grundlegende* Befehle:\n - /start: den Bot starten\n - /help: Schickt dir diese Nachricht.\n - /help <module name>: Schickt dir die Hilfe für das angegebene Modul.\n - /settings:\n   - als Privatnachricht: schickt dir die Einstellungen für alle unterstützten Module.\n   - in einer Gruppe: leitet dich zu einer Privatnachricht, die die jeweiligen Chat Einstellungen beinhaltet.\n\n{}\nUnd das folgende:",
   "HELP_STRINGS_PART_2": "\nAlle Befehle können entweder mit / oder ! benutzt werden.\n",
   "NO_TWO_MODULES": "Es können keine zwei Module mit dem gleichen Namen gleichzeitig geladen werden! Bitte ändere eines",
@@ -16,7 +16,7 @@
   "CURRENT_SETTINGS": "Das sind deine Momentanen Einstellungen:",
   "ERR_NO_USER_SETTINGS": "Siehst so aus als gäbe es keine Benutzerspezifischen Einstellungen :'(",
   "Q_SETTINGS_WHICH_MODULE": "Für welches Modul möchtest du die {}-Einstellungen überprüfen?",
-  "Q_SETTINGS_TO_GROUP": "Seems like there aren't any chat settings available :'(\\nSend this in a group chat you're admin in to find its current settings!",
+  "Q_SETTINGS_TO_GROUP": "Sieht so aus als wären keine Chat Einstellungen verfügbar :'(\\n\nSende diese Nachricht in eine Gruppe in der du Administrator bist, um dessen aktuelle Einstellungen zu sehen!",
   "MODULE_SETTINGS": "*{}* hat die folgenden Einstellungen für das *{}* Modul:\n\n",
   "LOT_OF_SETTINGS": "Hallo! Hier sind ein paar Einstellungen für {} - geh los und such dir aus, was dich interessiert!",
   "ERR_EXCP_SETTINGS_BUTTONS": "Ausnahme in den Einstellungsknöpfen. %s",
@@ -33,11 +33,11 @@
   "ERR_ERRHANDLER": "Fehlerbehandlung stoppt weitere Handlungen",
   "ERR_UPDATE_UNKNOWN": "Ein unerwarteter Fehler trat auf beim Verarbeiten des Updates",
   "MODULES_LOADED": "Folgende Module wurden erfolgreich geladen: ",
-  "ABOUT_TITLE": "Nemesis - Powerful open-source group manager*\n",
-  "ABOUT_GPL": "This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or(at your option) any later version.\n\n",
-  "ABOUT_GF": "*Huge thank you to the one person who just stands by me and makes me enjoy life more. I'm pretty sure the person knows she's meant, so, thank you for being part of my life!*\n\n",
-  "ABOUT_CONSTRIBUTORS": "*Contributors:*\n\n",
-  "ABOUT_DEV": "*Development:*\n",
-  "ABOUT_TRANSLATION": "*Translation*\n",
-  "ABOUT_PRODUCTION": "*Production*\n"
+  "ABOUT_TITLE": "Nemesis - mächtiger Open-Source-Gruppenmanager*\n",
+  "ABOUT_GPL": "Dieses Programm ist Freie Software: Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation, Version 3 der Lizenz oder (nach Ihrer Wahl) jeder neueren veröffentlichten Version, weiter verteilen und/oder modifizieren.\n\n",
+  "ABOUT_GF": "*Großes Dankeschön an die Person, die gerade zu mir steht und mich das Leben mehr genießen lässt. Ich bin ziemlich sicher, dass die Person weiß, dass sie gemeint ist, deshalb danke ich dir, dass du Teil meines Lebens bist!*\n\n",
+  "ABOUT_CONSTRIBUTORS": "*Mitwirkende:*\n\n",
+  "ABOUT_DEV": "*Entwicklung:*\n",
+  "ABOUT_TRANSLATION": "*Übersetzungen:*\n",
+  "ABOUT_PRODUCTION": "*Betrieb*\n"
 }
