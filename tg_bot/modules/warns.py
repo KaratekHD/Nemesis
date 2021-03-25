@@ -156,8 +156,7 @@ def warn_user(update: Update, context: CallbackContext) -> str:
         if message.reply_to_message and message.reply_to_message.from_user.id == user_id:
             return warn(message.reply_to_message.from_user, chat, reason, message.reply_to_message, warner)
         return warn(chat.get_member(user_id).user, chat, reason, message, warner)
-    else:
-        message.reply_text("No user was designated!") # ERR_NO_USER
+    message.reply_text("No user was designated!") # ERR_NO_USER
     return ""
 
 
