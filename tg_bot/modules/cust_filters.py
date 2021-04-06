@@ -21,9 +21,9 @@ from typing import Optional
 
 import telegram
 from telegram import ParseMode, InlineKeyboardMarkup, Message, Chat
-from telegram import Update, Bot
+from telegram import Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, DispatcherHandlerStop, run_async, CallbackContext
+from telegram.ext import CommandHandler, MessageHandler, DispatcherHandlerStop, CallbackContext
 from telegram.utils.helpers import escape_markdown
 
 from tg_bot import dispatcher, LOGGER, DEFAULT_LANG

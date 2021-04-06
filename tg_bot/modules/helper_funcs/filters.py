@@ -22,7 +22,7 @@ from telegram.ext import MessageFilter
 from tg_bot import SUPPORT_USERS, SUDO_USERS, OWNER_ID, CO_OWNER_ID
 
 
-class CustomFilters(object):
+class CustomFilters:
     class _Supporters(MessageFilter):
         def filter(self, message: Message):
             return bool(message.from_user and message.from_user.id in SUPPORT_USERS)

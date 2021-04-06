@@ -19,10 +19,9 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User, ChatPermissions
+from telegram import Message, Chat, Update, User, ChatPermissions
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters, CallbackContext
-from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, LOGGER
@@ -97,27 +96,26 @@ def unmute(update: Update, context: CallbackContext) -> str:
             message.reply_text("This is an admin, what do you expect me to do?")
             return ""
 
-        elif member.status not in ("kicked", "left"):
+        if member.status not in ("kicked", "left"):
             if member.can_send_messages and member.can_send_media_messages \
-                    and member.can_send_other_messages and member.can_add_web_page_previews:
+                                and member.can_send_other_messages and member.can_add_web_page_previews:
                 message.reply_text("This user already has the right to speak.")
                 return ""
-            else:
-                bot.restrict_chat_member(chat.id, int(user_id),
-                                         permissions=ChatPermissions(
-                                             can_send_messages=True,
-                                             can_send_media_messages=True,
-                                             can_send_other_messages=True,
-                                             can_add_web_page_previews=True
-                                            )
-                                         )
-                message.reply_text("Unmuted!")
-                return "<b>{}:</b>" \
-                       "\n#UNMUTE" \
-                       "\n<b>Admin:</b> {}" \
-                       "\n<b>User:</b> {}".format(html.escape(chat.title),
-                                                  mention_html(user.id, user.first_name),
-                                                  mention_html(member.user.id, member.user.first_name))
+            bot.restrict_chat_member(chat.id, int(user_id),
+                                     permissions=ChatPermissions(
+                                         can_send_messages=True,
+                                         can_send_media_messages=True,
+                                         can_send_other_messages=True,
+                                         can_add_web_page_previews=True
+                                        )
+                                     )
+            message.reply_text("Unmuted!")
+            return "<b>{}:</b>" \
+                                   "\n#UNMUTE" \
+                                   "\n<b>Admin:</b> {}" \
+                                   "\n<b>User:</b> {}".format(html.escape(chat.title),
+                                              mention_html(user.id, user.first_name),
+                                              mention_html(member.user.id, member.user.first_name))
     else:
         message.reply_text("This user isn't even in the chat, unmuting them won't make them talk more than they "
                            "already do!")
@@ -148,8 +146,7 @@ def temp_mute(update: Update, context: CallbackContext) -> str:
         if excp.message == "User not found":
             message.reply_text("I can't seem to find this user")
             return ""
-        else:
-            raise
+        raise
 
     if is_user_admin(chat, user_id, member):
         message.reply_text("I really wish I could mute admins...")
@@ -190,26 +187,24 @@ def temp_mute(update: Update, context: CallbackContext) -> str:
             bot.restrict_chat_member(chat.id, user_id, until_date=mutetime, permissions=ChatPermissions(can_send_messages=False))
             message.reply_text("Muted for {}!".format(time_val))
             return log
-        else:
-            message.reply_text("This user is already muted.")
+        message.reply_text("This user is already muted.")
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
             message.reply_text("Muted for {}!".format(time_val), quote=False)
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
-                             excp.message)
-            message.reply_text("Well damn, I can't mute that user.")
+        LOGGER.warning(update)
+        LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
+                         excp.message)
+        message.reply_text("Well damn, I can't mute that user.")
 
     return ""
 
 
 def __help__(update: Update) -> str:
     return "\n*Admin only:*\n" \
-           " - /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.\”" \
+           r" - /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.\”" \
            " - /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.\n" \
            " - /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user."
 

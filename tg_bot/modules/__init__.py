@@ -16,6 +16,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+import sys
 from tg_bot import LOAD, NO_LOAD, LOGGER
 
 
@@ -39,7 +40,7 @@ def __list_all_modules():
                     for mod in to_load
             ):
                 LOGGER.error("Invalid loadorder names. Quitting.")
-                quit(1)
+                sys.exit(1)
 
         else:
             to_load = all_modules

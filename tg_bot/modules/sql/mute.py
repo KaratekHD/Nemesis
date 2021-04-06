@@ -18,10 +18,9 @@
 
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, func, distinct, Boolean
+from sqlalchemy import Column, String, func, distinct, Boolean
 
 from tg_bot.modules.sql import SESSION, BASE
-from tg_bot import DEFAULT_LANG
 
 
 class Globalmute(BASE):

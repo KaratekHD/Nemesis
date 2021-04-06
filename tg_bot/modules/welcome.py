@@ -33,6 +33,11 @@ from tg_bot.modules.helper_funcs.msg_types import get_welcome_type
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser, \
     escape_invalid_curly_brackets
 from tg_bot.modules.log_channel import loggable
+import random
+import string
+from captcha.image import ImageCaptcha
+import os
+
 
 VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'count', 'chatname', 'mention']
 
@@ -47,6 +52,20 @@ ENUM_FUNC_MAP = {
     sql.Types.VIDEO.value: dispatcher.bot.send_video
 }
 
+
+def send_captcha(update: Update, context: CallbackContext):
+    image = ImageCaptcha()
+    msg_id = update.effective_message.message_id
+    file = str(msg_id) + ".png"
+    output_string = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(5))
+    image.write(output_string, file)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(file, 'rb'))
+    os.remove(file)
+    update.effective_message.reply_text(output_string)
+    return output_string
+
+CAPTCHA_HANDLER = CommandHandler("captcha", send_captcha, run_async=True)
+dispatcher.add_handler(CAPTCHA_HANDLER)
 
 # do not async
 def send(update, message, keyboard, backup_message):
@@ -109,44 +128,42 @@ def new_member(update: Update, context: CallbackContext):
                 continue
 
             # Don't welcome yourself
-            elif new_mem.id == bot.id:
+            if new_mem.id == bot.id:
                 continue
+            # If welcome message is media, send with appropriate function
+            if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
+                ENUM_FUNC_MAP[welc_type](chat.id, cust_welcome)
+                return
+            # else, move on
+            first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
 
-            else:
-                # If welcome message is media, send with appropriate function
-                if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
-                    ENUM_FUNC_MAP[welc_type](chat.id, cust_welcome)
-                    return
-                # else, move on
-                first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
-
-                if cust_welcome:
-                    if new_mem.last_name:
-                        fullname = "{} {}".format(first_name, new_mem.last_name)
-                    else:
-                        fullname = first_name
-                    count = chat.get_members_count()
-                    mention = mention_markdown(new_mem.id, first_name)
-                    if new_mem.username:
-                        username = "@" + escape_markdown(new_mem.username)
-                    else:
-                        username = mention
-
-                    valid_format = escape_invalid_curly_brackets(cust_welcome, VALID_WELCOME_FORMATTERS)
-                    res = valid_format.format(first=escape_markdown(first_name),
-                                              last=escape_markdown(new_mem.last_name or first_name),
-                                              fullname=escape_markdown(fullname), username=username, mention=mention,
-                                              count=count, chatname=escape_markdown(chat.title), id=new_mem.id)
-                    buttons = sql.get_welc_buttons(chat.id)
-                    keyb = build_keyboard(buttons)
+            if cust_welcome:
+                if new_mem.last_name:
+                    fullname = "{} {}".format(first_name, new_mem.last_name)
                 else:
-                    res = sql.DEFAULT_WELCOME.format(first=first_name)
-                    keyb = []
+                    fullname = first_name
+                count = chat.get_members_count()
+                mention = mention_markdown(new_mem.id, first_name)
+                if new_mem.username:
+                    username = "@" + escape_markdown(new_mem.username)
+                else:
+                    username = mention
 
-                keyboard = InlineKeyboardMarkup(keyb)
+                valid_format = escape_invalid_curly_brackets(cust_welcome, VALID_WELCOME_FORMATTERS)
+                res = valid_format.format(first=escape_markdown(first_name),
+                                          last=escape_markdown(new_mem.last_name or first_name),
+                                          fullname=escape_markdown(fullname), username=username, mention=mention,
+                                          count=count, chatname=escape_markdown(chat.title), id=new_mem.id)
+                buttons = sql.get_welc_buttons(chat.id)
+                keyb = build_keyboard(buttons)
+            else:
+                res = sql.DEFAULT_WELCOME.format(first=first_name)
+                keyb = []
 
-                sent = send(update, res, keyboard,
-                            sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
+            keyboard = InlineKeyboardMarkup(keyb)
+
+            sent = send(update, res, keyboard,
+                        sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
 
         prev_welc = sql.get_clean_pref(chat.id)
         if prev_welc:
@@ -171,7 +188,7 @@ def left_member(update: Update, context: CallbackContext):
                 return
 
             # Give the owner a special goodbye
-            if left_mem.id == OWNER_ID or left_mem.id == CO_OWNER_ID:
+            if left_mem.id in (OWNER_ID, CO_OWNER_ID):
                 update.effective_message.reply_text("RIP Master") # GOODBYE_OWNER
                 return
 
@@ -401,22 +418,21 @@ def clean_welcome(update: Update, context: CallbackContext) -> str:
         sql.set_clean_welcome(str(chat.id), True)
         update.effective_message.reply_text("I'll try to delete old welcome messages!") # MSG_DELETE_WELCOME_TRUE
         return "<b>{}:</b>" \
-               "\n#CLEAN_WELCOME" \
-               "\n<b>Admin:</b> {}" \
-               "\nHas toggled clean welcomes to <code>ON</code>.".format(html.escape(chat.title),
+                   "\n#CLEAN_WELCOME" \
+                   "\n<b>Admin:</b> {}" \
+                   "\nHas toggled clean welcomes to <code>ON</code>.".format(html.escape(chat.title),
                                                                          mention_html(user.id, user.first_name)) # MSG_TOGGLE_WELCOME_DELETE_ON_HTML
-    elif args[0].lower() in ("off", "no"):
+    if args[0].lower() in ("off", "no"):
         sql.set_clean_welcome(str(chat.id), False)
         update.effective_message.reply_text("I won't delete old welcome messages.") # MSG_TOGGLE_WELCOME_DELTE_FALSE
         return "<b>{}:</b>" \
-               "\n#CLEAN_WELCOME" \
-               "\n<b>Admin:</b> {}" \
-               "\nHas toggled clean welcomes to <code>OFF</code>.".format(html.escape(chat.title),
+                   "\n#CLEAN_WELCOME" \
+                   "\n<b>Admin:</b> {}" \
+                   "\nHas toggled clean welcomes to <code>OFF</code>.".format(html.escape(chat.title),
                                                                           mention_html(user.id, user.first_name)) # MSG_TOGGLE_WELCOME_DELETE_FALSE_HTML
-    else:
-        # idek what you're writing, say yes or no
-        update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!") # ERR_INVALID_COMMAND
-        return ""
+    # idek what you're writing, say yes or no
+    update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!") # ERR_INVALID_COMMAND
+    return ""
 
 
 WELC_HELP_TXT = "Your group's welcome/goodbye messages can be personalised in multiple ways. If you want the messages" \

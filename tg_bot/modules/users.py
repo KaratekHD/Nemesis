@@ -21,13 +21,12 @@ from time import sleep
 from typing import Optional
 
 from telegram import TelegramError, Chat, Message
-from telegram import Update, Bot
+from telegram import Update
 from telegram.error import BadRequest
 from telegram.ext import MessageHandler, Filters, CommandHandler, CallbackContext
-from telegram.ext.dispatcher import run_async
 
 import tg_bot.modules.sql.users_sql as sql
-from tg_bot import dispatcher, OWNER_ID, LOGGER
+from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 USERS_GROUP = 4
@@ -46,21 +45,19 @@ def get_user_id(username):
     if not users:
         return None
 
-    elif len(users) == 1:
+    if len(users) == 1:
         return users[0].user_id
+    for user_obj in users:
+        try:
+            userdat = dispatcher.bot.get_chat(user_obj.user_id)
+            if userdat.username == username:
+                return userdat.id
 
-    else:
-        for user_obj in users:
-            try:
-                userdat = dispatcher.bot.get_chat(user_obj.user_id)
-                if userdat.username == username:
-                    return userdat.id
-
-            except BadRequest as excp:
-                if excp.message == 'Chat not found':
-                    pass
-                else:
-                    LOGGER.exception("Error extracting user ID")
+        except BadRequest as excp:
+            if excp.message == 'Chat not found':
+                pass
+            else:
+                LOGGER.exception("Error extracting user ID")
 
     return None
 

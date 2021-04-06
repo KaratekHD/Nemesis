@@ -20,7 +20,6 @@ from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler
 from tg_bot import dispatcher
 from tg_bot.strings.string_helper import get_string
-import tg_bot.modules.sql.lang_sql as lang
 
 
 def translate(update: Update, context: CallbackContext):

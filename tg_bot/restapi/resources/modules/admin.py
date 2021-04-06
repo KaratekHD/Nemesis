@@ -40,7 +40,8 @@ api = Namespace("admin", description="Functions designed to manage basic things 
 @api.response(410, "Bot is not a member of the chat (anymore).")
 class Admins(Resource):
     @api.marshal_with(admin_model.create_chat_model(api))
-    def get(self, id):
+    @staticmethod
+    def get(id):
         key = request.args.get('api_key')
         if not key:
             abort(HTTPStatus.UNAUTHORIZED, "Unauthorized")

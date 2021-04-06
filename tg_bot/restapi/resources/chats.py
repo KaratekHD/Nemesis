@@ -15,10 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import json
 from http import HTTPStatus
 
-from flask import request, jsonify, abort
+from flask import request, abort
 from flask_restplus import Namespace, Resource
 from telegram import TelegramError
 
@@ -39,7 +38,8 @@ chat = create_chat_model(chats_api)
 @chats_api.response(410, "Bot is not a member of the chat (anymore).")
 class Chats(Resource):
     @chats_api.marshal_with(chat)
-    def get(self, id):
+    @staticmethod
+    def get(id):
         '''Gets a chat by id'''
         key = request.args.get('api_key')
         if not key:

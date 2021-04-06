@@ -28,10 +28,10 @@ from telegram import Message, Chat, Update, Bot, User
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import Unauthorized, BadRequest, TimedOut, NetworkError, ChatMigrated, TelegramError
 from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler, CallbackContext
-from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
+from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
 from telegram.utils.helpers import escape_markdown
 
-from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
+from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, CERT_PATH, PORT, URL, LOGGER, \
     ALLOW_EXCL, DEFAULT_LANG, VERSION
 
 from tg_bot.strings.string_helper import  get_string
@@ -246,10 +246,10 @@ def get_help(update: Update, context: CallbackContext):
                                                                            context.bot.username))]])) # PM_FOR_HELP and PM_FOR_HELP_BUTTON
         return
 
-    elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
+    if len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
         text = get_string("main", "HELP_FOR_MODULE_AVAILABLE", lang.get_lang(update.effective_chat.id)).format(HELPABLE[module].__mod_name__) \
-               + HELPABLE[module].__help__(update) # HELP_FOR_MODULE_AVAILABLE
+                   + HELPABLE[module].__help__(update) # HELP_FOR_MODULE_AVAILABLE
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
     else:

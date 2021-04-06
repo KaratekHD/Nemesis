@@ -17,7 +17,7 @@
 
 
 
-from sqlalchemy import Column, String, UnicodeText, func, distinct, Integer
+from sqlalchemy import Column, UnicodeText, Integer
 from tg_bot.modules.sql import SESSION, BASE
 
 

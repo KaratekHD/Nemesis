@@ -17,10 +17,10 @@
 
 from typing import Optional
 
-from telegram import Message, Update, Bot, User
+from telegram import Message, Update, User
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, Filters, CallbackContext
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.utils.helpers import escape_markdown
 
 import tg_bot.modules.sql.rules_sql as sql
@@ -45,8 +45,7 @@ def send_rules(update, chat_id, from_pm=False):
             bot.send_message(user.id, "The rules shortcut for this chat hasn't been set properly! Ask admins to "
                                       "fix this.")
             return
-        else:
-            raise
+        raise
 
     rules = sql.get_rules(chat_id)
     text = "The rules for *{}* are:\n\n{}".format(escape_markdown(chat.title), rules)

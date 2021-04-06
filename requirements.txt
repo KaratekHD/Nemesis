@@ -14,5 +14,4 @@ flask-restplus
 Werkzeug==0.16.0
 flask-httpauth
 schedule
-gitpython
-easywebdav
+captcha

@@ -21,10 +21,9 @@ from io import BytesIO
 from typing import Optional, List
 
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
-from telegram import Message, Update, Bot
+from telegram import Message, Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, RegexHandler, CallbackContext, MessageHandler, Filters
-from telegram.ext.dispatcher import run_async
+from telegram.ext import CommandHandler, CallbackContext, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown
 
 import tg_bot.modules.sql.notes_sql as sql
@@ -123,7 +122,7 @@ def get(bot, update, notename, show_none=True, no_format=False):
                     LOGGER.exception("Could not parse message #%s in chat %s", notename, str(chat_id))
                     LOGGER.warning("Message was: %s", str(note.value))
         return
-    elif show_none:
+    if show_none:
         message.reply_text("This note doesn't exist")
 
 

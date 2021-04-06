@@ -22,7 +22,7 @@ import sys
 import telegram.ext as tg
 from tg_bot.strings.string_helper import get_string
 
-VERSION = "2.2.0"
+VERSION = "2.3.0"
 
 # Module name
 module = "init"
@@ -49,7 +49,7 @@ else:
         format=LOGFORMAT,
         level=logging.INFO)
 
-LOGGER.info(f"Nemesis v{VERSION}\n"
+LOGGER.info(f"OpenGM v{VERSION}\n"
             f"This program is free software: you can redistribute it and/or modify\n"
             f"it under the terms of the GNU General Public License as published by\n"
             f"the Free Software Foundation, either version 3 of the License, or\n"
@@ -57,7 +57,7 @@ LOGGER.info(f"Nemesis v{VERSION}\n"
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     LOGGER.error(get_string(module, "ERR_INVALID_PYTHON_VERSION", DEFAULT_LANG)) # ERR_INVALID_PYTHON_VERSION
-    quit(1)
+    sys.exit(1)
 
 
 if ENV:
@@ -76,17 +76,17 @@ if ENV:
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
     try:
-        SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
+        SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
     except ValueError:
         raise Exception(get_string(module, "ERR_INVALID_SUDO_ID", DEFAULT_LANG)) # ERR_INVALID_SUDO_ID
 
     try:
-        SUPPORT_USERS = set(int(x) for x in os.environ.get("SUPPORT_USERS", "").split())
+        SUPPORT_USERS = {int(x) for x in os.environ.get("SUPPORT_USERS", "").split()}
     except ValueError:
         raise Exception(get_string(module, "ERR_INVALID_SUPPORT_ID", DEFAULT_LANG)) # ERR_INVALID_SUPPORT_ID
 
     try:
-        WHITELIST_USERS = set(int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
+        WHITELIST_USERS = {int(x) for x in os.environ.get("WHITELIST_USERS", "").split()}
     except ValueError:
         raise Exception(get_string(module, "ERR_INVALID_WHITELIST_ID", DEFAULT_LANG)) # ERR_INVALID_WHITELIST_ID
 
@@ -122,17 +122,17 @@ else:
     OWNER_USERNAME = Config.OWNER_USERNAME
 
     try:
-        SUDO_USERS = set(int(x) for x in Config.SUDO_USERS or [])
+        SUDO_USERS = {int(x) for x in Config.SUDO_USERS or []}
     except ValueError:
         raise Exception(get_string(module, "ERR_CONFIG_INVALID_SUDO_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_SUDO_ID
 
     try:
-        SUPPORT_USERS = set(int(x) for x in Config.SUPPORT_USERS or [])
+        SUPPORT_USERS = {int(x) for x in Config.SUPPORT_USERS or []}
     except ValueError:
         raise Exception(get_string(module, "ERR_CONFIG_INVALID_SUPPORT_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_SUPPORT_ID
 
     try:
-        WHITELIST_USERS = set(int(x) for x in Config.WHITELIST_USERS or [])
+        WHITELIST_USERS = {int(x) for x in Config.WHITELIST_USERS or []}
     except ValueError:
         raise Exception(get_string(module, "ERR_CONFIG_INVALID_WHITELIST_ID", DEFAULT_LANG)) # ERR_CONFIG_INVALID_WHITELIST_ID
 

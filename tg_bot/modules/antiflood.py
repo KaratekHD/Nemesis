@@ -25,7 +25,7 @@ from telegram.ext import Filters, MessageHandler, CommandHandler, CallbackContex
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher
-from tg_bot.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict, user_not_approved, \
+from tg_bot.modules.helper_funcs.chat_status import user_admin, can_restrict, user_not_approved, \
     user_not_admin
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import antiflood_sql as sql
@@ -86,15 +86,13 @@ def set_flood(update: Update, context: CallbackContext) -> str:
                 message.reply_text(get_string("antiflood", "MSG_DISABLED", lang.get_lang(update.effective_chat.id))) # MSG_DISABLED
                 return get_string("antiflood", "MSG_DISABLED_HTML", lang.get_lang(update.effective_chat.id)).format(html.escape(chat.title), mention_html(user.id, user.first_name)) # MSG_DISABLED_HTML
 
-            elif amount < 3:
+            if amount < 3:
                 message.reply_text(get_string("antiflood", "ERR_BAD_AMOUNT", lang.get_lang(update.effective_chat.id))) # ERR_BAD_AMOUNT
                 return ""
-
-            else:
-                sql.set_flood(chat.id, amount)
-                message.reply_text(get_string("antiflood", "MSG_SUCCESS", lang.get_lang(update.effective_chat.id)).format(amount)) # MSG_SUCCESS
-                return get_string("antiflood", "MSG_SUCCESS_HTML", lang.get_lang(update.effective_chat.id)).format(html.escape(chat.title),
-                                                                    mention_html(user.id, user.first_name), amount) # MSG_SUCCESS_HTML
+            sql.set_flood(chat.id, amount)
+            message.reply_text(get_string("antiflood", "MSG_SUCCESS", lang.get_lang(update.effective_chat.id)).format(amount)) # MSG_SUCCESS
+            return get_string("antiflood", "MSG_SUCCESS_HTML", lang.get_lang(update.effective_chat.id)).format(html.escape(chat.title),
+                                                                mention_html(user.id, user.first_name), amount) # MSG_SUCCESS_HTML
 
         else:
             message.reply_text(get_string("antoflood", "ERR_BAD_REQUEST", lang.get_lang(update.effective_chat.id))) # ERR_BAD_REQUEST
@@ -121,8 +119,7 @@ def __chat_settings__(chat_id, user_id):
     limit = sql.get_flood_limit(chat_id)
     if limit == 0:
         return get_string("antiflood", "CHAT_SETTINGS_OFF", lang.get_lang(chat_id)) # CHAT_SETTINGS_OFF
-    else:
-        return get_string("antiflood", "CHAT_SETTINGS_ON", lang.get_lang(chat_id)).format(limit) # CHAT_SETTINGS_ON
+    return get_string("antiflood", "CHAT_SETTINGS_ON", lang.get_lang(chat_id)).format(limit) # CHAT_SETTINGS_ON
 
 
 def __help__(update: Update) -> str:

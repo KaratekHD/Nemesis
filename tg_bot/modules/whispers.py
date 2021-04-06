@@ -22,9 +22,9 @@ from datetime import datetime
 from uuid import uuid4
 
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, ParseMode, InlineKeyboardButton, \
-    InlineKeyboardMarkup, chat
+    InlineKeyboardMarkup
 from telegram.error import BadRequest
-from telegram.ext import run_async, CallbackContext, InlineQueryHandler, MessageHandler, Filters, CallbackQueryHandler, \
+from telegram.ext import CallbackContext, InlineQueryHandler, CallbackQueryHandler, \
     ChosenInlineResultHandler
 
 from tg_bot import LOGGER, dispatcher
@@ -74,8 +74,7 @@ def button(update: Update, context: CallbackContext):
                                           "You are not permitted to read this message.",
                                           show_alert=False)
         return
-    else:
-        context.bot.answer_callback_query(update.callback_query.id, message, show_alert=True)
+    context.bot.answer_callback_query(update.callback_query.id, message, show_alert=True)
 
 
 def process_inline_query(update: Update, context: CallbackContext):

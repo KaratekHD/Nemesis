@@ -94,9 +94,8 @@ def get_welc_pref(chat_id):
     SESSION.close()
     if welc:
         return welc.should_welcome, welc.custom_welcome, welc.welcome_type
-    else:
-        # Welcome by default.
-        return True, DEFAULT_WELCOME, Types.TEXT
+    # Welcome by default.
+    return True, DEFAULT_WELCOME, Types.TEXT
 
 
 def get_gdbye_pref(chat_id):
@@ -104,9 +103,8 @@ def get_gdbye_pref(chat_id):
     SESSION.close()
     if welc:
         return welc.should_goodbye, welc.custom_leave, welc.leave_type
-    else:
-        # Welcome by default.
-        return True, DEFAULT_GOODBYE, Types.TEXT
+    # Welcome by default.
+    return True, DEFAULT_GOODBYE, Types.TEXT
 
 
 def set_clean_welcome(chat_id, clean_welcome):

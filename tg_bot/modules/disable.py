@@ -19,7 +19,7 @@
 from typing import Union, List, Optional
 
 from future.utils import string_types
-from telegram import ParseMode, Update, Bot, Chat, User
+from telegram import ParseMode, Update, Chat
 from telegram.ext import CommandHandler, RegexHandler, Filters, MessageHandler, CallbackContext
 from telegram.utils.helpers import escape_markdown
 
@@ -86,12 +86,10 @@ if is_module_loaded(FILENAME):
                                 ] in ADMIN_CMDS and is_user_admin(chat, user.id)
                                 if not is_disabled:
                                     return None
-                                else:
-                                    return args, filter_result
+                                return args, filter_result
 
                             return args, filter_result
-                        else:
-                            return False
+                        return False
 
     class DisableAbleMessageHandler(MessageHandler):
         def __init__(self, pattern, callback, friendly="", **kwargs):
