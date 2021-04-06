@@ -33,6 +33,11 @@ from tg_bot.modules.helper_funcs.msg_types import get_welcome_type
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser, \
     escape_invalid_curly_brackets
 from tg_bot.modules.log_channel import loggable
+import random
+import string
+from captcha.image import ImageCaptcha
+import os
+
 
 VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'count', 'chatname', 'mention']
 
@@ -47,6 +52,20 @@ ENUM_FUNC_MAP = {
     sql.Types.VIDEO.value: dispatcher.bot.send_video
 }
 
+
+def send_captcha(update: Update, context: CallbackContext):
+    image = ImageCaptcha()
+    msg_id = update.effective_message.message_id
+    file = str(msg_id) + ".png"
+    output_string = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(5))
+    image.write(output_string, file)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open(file, 'rb'))
+    os.remove(file)
+    update.effective_message.reply_text(output_string)
+    return output_string
+
+CAPTCHA_HANDLER = CommandHandler("captcha", send_captcha, run_async=True)
+dispatcher.add_handler(CAPTCHA_HANDLER)
 
 # do not async
 def send(update, message, keyboard, backup_message):
