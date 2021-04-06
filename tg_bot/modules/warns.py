@@ -165,7 +165,6 @@ def warn_user(update: Update, context: CallbackContext) -> str:
 @loggable
 def reset_warns(update: Update, context: CallbackContext) -> str:
     args = context.args
-    bot = context.bot
     message = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -302,7 +301,6 @@ def list_warn_filters(update: Update, context: CallbackContext):
 
 @loggable
 def reply_filter(update: Update, context: CallbackContext) -> str:
-    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
 

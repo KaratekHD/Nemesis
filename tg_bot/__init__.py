@@ -22,7 +22,7 @@ import sys
 import telegram.ext as tg
 from tg_bot.strings.string_helper import get_string
 
-VERSION = "2.2.0"
+VERSION = "2.3.0"
 
 # Module name
 module = "init"
@@ -49,7 +49,7 @@ else:
         format=LOGFORMAT,
         level=logging.INFO)
 
-LOGGER.info(f"Nemesis v{VERSION}\n"
+LOGGER.info(f"OpenGM v{VERSION}\n"
             f"This program is free software: you can redistribute it and/or modify\n"
             f"it under the terms of the GNU General Public License as published by\n"
             f"the Free Software Foundation, either version 3 of the License, or\n"
