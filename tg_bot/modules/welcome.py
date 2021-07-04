@@ -64,8 +64,9 @@ def send_captcha(update: Update, context: CallbackContext):
     update.effective_message.reply_text(output_string)
     return output_string
 
-CAPTCHA_HANDLER = CommandHandler("captcha", send_captcha, run_async=True)
-dispatcher.add_handler(CAPTCHA_HANDLER)
+# This is not done yet
+# CAPTCHA_HANDLER = CommandHandler("captcha", send_captcha, run_async=True)
+# dispatcher.add_handler(CAPTCHA_HANDLER)
 
 # do not async
 def send(update, message, keyboard, backup_message):
