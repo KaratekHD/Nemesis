@@ -37,7 +37,7 @@ def show_url(update: Update, context: CallbackContext):
         tg_feed_link = args[0]
         link_processed = parse(tg_feed_link)
 
-        if link_processed.bozo == 0:
+        if link_processed.entries:
             feed_title = link_processed.feed.get("title", default="Unknown")
             feed_description = "<i>{}</i>".format(
                 re.sub('<[^<]+?>', '', link_processed.feed.get("description", default="Unknown")))
@@ -105,7 +105,7 @@ def add_url(update: Update, context: CallbackContext):
         link_processed = parse(tg_feed_link)
 
         # check if link is a valid RSS Feed link
-        if link_processed.bozo == 0:
+        if link_processed.entries:
             if len(link_processed.entries[0]) >= 1:
                 tg_old_entry_link = link_processed.entries[0].link
             else:
