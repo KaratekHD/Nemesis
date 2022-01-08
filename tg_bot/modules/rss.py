@@ -20,16 +20,14 @@ import re
 
 from feedparser import parse
 from telegram import ParseMode, constants, Update
-from telegram.ext import CommandHandler, CallbackContext
+from telegram.ext import MessageHandler, CallbackContext, Filters
 
-from tg_bot import dispatcher, updater
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import user_admin
+from tg_bot import dispatcher, updater, LOGGER
 from tg_bot.modules.sql import rss_sql as sql
 
 
 def show_url(update: Update, context: CallbackContext):
-    args = context.args
+    args = update.effective_message.text.split(" ")[1:]
     bot = context.bot
     tg_chat_id = str(update.effective_chat.id)
 
@@ -37,7 +35,7 @@ def show_url(update: Update, context: CallbackContext):
         tg_feed_link = args[0]
         link_processed = parse(tg_feed_link)
 
-        if link_processed.bozo == 0:
+        if link_processed.entries:
             feed_title = link_processed.feed.get("title", default="Unknown")
             feed_description = "<i>{}</i>".format(
                 re.sub('<[^<]+?>', '', link_processed.feed.get("description", default="Unknown")))
@@ -92,9 +90,9 @@ def list_urls(update: Update, context: CallbackContext):
                          text="<b>Warning:</b> The message is too long to be sent")
 
 
-@user_admin
 def add_url(update: Update, context: CallbackContext):
-    args = context.args
+    args = update.effective_message.text.split(" ")[1:]
+    LOGGER.error("TEST")
     if len(args) >= 1:
         chat = update.effective_chat
 
@@ -105,7 +103,7 @@ def add_url(update: Update, context: CallbackContext):
         link_processed = parse(tg_feed_link)
 
         # check if link is a valid RSS Feed link
-        if link_processed.bozo == 0:
+        if link_processed.entries:
             if len(link_processed.entries[0]) >= 1:
                 tg_old_entry_link = link_processed.entries[0].link
             else:
@@ -127,9 +125,8 @@ def add_url(update: Update, context: CallbackContext):
         update.effective_message.reply_text("URL missing")
 
 
-@user_admin
 def remove_url(update: Update, context: CallbackContext):
-    args = context.args
+    args = update.effective_message.text.split(" ")[1:]
     if len(args) >= 1:
         tg_chat_id = str(update.effective_chat.id)
 
@@ -137,7 +134,7 @@ def remove_url(update: Update, context: CallbackContext):
 
         link_processed = parse(tg_feed_link)
 
-        if link_processed.bozo == 0:
+        if link_processed.entries:
             user_data = sql.check_url_availability(tg_chat_id, tg_feed_link)
 
             if user_data:
@@ -258,10 +255,10 @@ job_rss_update = job.run_repeating(rss_update, interval=60, first=60)
 job_rss_set.enabled = True
 job_rss_update.enabled = True
 
-SHOW_URL_HANDLER = DisableAbleCommandHandler("rss", show_url, pass_args=True)
-ADD_URL_HANDLER = CommandHandler("addrss", add_url)
-REMOVE_URL_HANDLER = CommandHandler("removerss", remove_url, pass_args=True)
-LIST_URLS_HANDLER = DisableAbleCommandHandler("listrss", list_urls)
+SHOW_URL_HANDLER = MessageHandler(Filters.regex("^/rss"), show_url, run_async=True)
+ADD_URL_HANDLER = MessageHandler(Filters.regex("^/addrss"), add_url)
+REMOVE_URL_HANDLER = MessageHandler(Filters.regex("^/removerss"), remove_url, run_async=True)
+LIST_URLS_HANDLER = MessageHandler(Filters.regex("^/listrss"), list_urls, run_async=True)
 
 dispatcher.add_handler(SHOW_URL_HANDLER)
 dispatcher.add_handler(ADD_URL_HANDLER)
