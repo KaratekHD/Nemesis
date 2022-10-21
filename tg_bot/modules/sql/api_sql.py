@@ -17,13 +17,13 @@
 
 
 
-from sqlalchemy import Column, UnicodeText, Integer
+from sqlalchemy import Column, UnicodeText, Integer, BigInteger
 from tg_bot.modules.sql import SESSION, BASE
 
 
 class Api(BASE):
     __tablename__ = "api"
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(BigInteger, primary_key=True)
     key = Column(UnicodeText)
 
     def __init__(self, user_id, key=None):

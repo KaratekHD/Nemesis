@@ -19,14 +19,14 @@
 import threading
 from typing import Union
 
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, BigInteger
 
 from tg_bot.modules.sql import SESSION, BASE
 
 
 class ReputationUserSettings(BASE):
     __tablename__ = "user_reputation_settings"
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(BigInteger, primary_key=True)
     should_reputate = Column(Boolean, default=True)
 
     def __init__(self, user_id):
