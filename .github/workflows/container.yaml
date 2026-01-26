@@ -1,5 +1,4 @@
 name: Build and Push Docker Image
-
 on:
   push:
     branches:
@@ -29,3 +28,4 @@ jobs:
           context: ./
           push: true
           tags: ghcr.io/karatekhd/nemesis:latest
+          platforms: linux/amd64,linux/arm64
