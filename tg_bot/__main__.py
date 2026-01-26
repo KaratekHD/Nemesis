@@ -410,13 +410,11 @@ def about(update: Update, context: CallbackContext):
                                         " - [MeiFel10](https://crowdin.com/profile/MeiFel10) - Translation\n" \
                                         " - [KaratekHD](https://github.com/KaratekHD) - Manager\n\n"
 
-    PRODUCTION = " - [KaratekHD](https://github.com/KaratekHD) - Owner\n" \
-                                        " - [Severus Snape](https://t.me/GenosseSeverus) - Co-Owner\n" \
-                                        " - [Luna Loony](https://t.me/Luna_loony) - Admin\n"
+    PRODUCTION = " - [KaratekHD](https://github.com/KaratekHD)\n"
 
     update.effective_message.reply_text("*OpenGM v{} - Powerful open-source group manager*\n"
                                         "Copyright (C) 2017 - 2019 Paul Larsen\n"
-                                        "Copyright (C) 2019 - 2023 KaratekHD\n\n"
+                                        "Copyright (C) 2019 - 2026 KaratekHD\n\n"
                                         "This program is free software: you can redistribute it and/or modify "
                                         "it under the terms of the GNU General Public License as published by "
                                         "the Free Software Foundation, either version 3 of the License, or"
@@ -552,3 +550,5 @@ def process_update(self, update):
 if __name__ == '__main__':
     LOGGER.info(get_string("main", "MODULES_LOADED", DEFAULT_LANG) + str(ALL_MODULES)) # MODULES_LOADED
     main()
+
+
